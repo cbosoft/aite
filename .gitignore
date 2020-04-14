@@ -1,0 +1,11 @@
+__pycache__
+tags
+*.pdf
+gmon.out
+vgcore*
+aite
+obj
+tests
+analysis.txt
+d.dot
+*/.*.un~
