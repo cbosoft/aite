@@ -35,8 +35,26 @@ double uniform_rand(double min, double max)
   return urd(e);
 }
 
-double weibull_rand(double a, double b)
+double lognormal_rand(double mean, double std)
 {
-  std::weibull_distribution<> d(a, b);
+  std::lognormal_distribution<> d(mean, std);
   return d(e);
+}
+
+double binormal_rand(double mn1, double std1, double mn2, double std2, double p)
+{
+  double P = uniform_rand(0.0, 1.0);
+  if (P > p) {
+    return normal_rand(mn1, std1);
+  }
+  return normal_rand(mn2, std2);
+}
+
+double bilognormal_rand(double mn1, double std1, double mn2, double std2, double p)
+{
+  double P = uniform_rand(0.0, 1.0);
+  if (P > p) {
+    return lognormal_rand(mn1, std1);
+  }
+  return lognormal_rand(mn2, std2);
 }
