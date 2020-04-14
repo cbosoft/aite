@@ -13,9 +13,13 @@ class Planet {
     double pressure_low, pressure_high, pressure_average;
     double temp_low, temp_high, temp_average;
 
-    std::list<std::pair<std::shared_ptr<Element>, double>> elemental_makeup;
     // double humidity_low, humidity_high, humidity_average;
     // double water_coverage;
+
+    std::list<std::pair<std::shared_ptr<Element>, double>> surface_makeup;
+    std::list<std::pair<std::shared_ptr<Element>, double>> deep_makeup;
+    std::list<std::pair<std::shared_ptr<Element>, double>> mantle_makeup;
+    std::list<std::pair<std::shared_ptr<Element>, double>> core_makeup;
 
   public:
 
