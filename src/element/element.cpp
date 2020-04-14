@@ -160,17 +160,19 @@ std::shared_ptr<Element> Element::get_element_by_n(int n)
 
 std::list<std::pair<std::shared_ptr<Element>, double>> Element::get_distribution(double density)
 {
-  const double nelem = 118.0;
   const double std = 30.0;
-  double dn_drho = 0.7 * nelem / 5.2;
-  double mean = dn_drho * std::log(density) + 1;
+  const double std_min = 30.0;
+  const double drho = 3.9 - (-2.2);
+
+  double dstd_drho = 40.0 / drho;
+  double mean = dstd_drho * std::log(density) + std_min;
 
 
   std::array<int, 118> hist;
   for (int i = 0; i < 1000; i++) {
     int n = std::abs(std::round(normal_rand(mean, std)));
     if (n > 117)
-      n = (2*117) - n;
+      n = 117 - (n % 117);
     hist[n]++;
   }
 

@@ -114,29 +114,37 @@ def plot_elements(element_ax, density_data):
     mid_density = mn
     high_density = mn + 3.0*std
     nelem = 118.0
-    dndrho = 0.7*nelem / (high_density - low_density)
+    dn = 0.7*nelem
+    dstd = 40
+    drho = high_density - low_density
+    dndrho = dn/drho
+    dstddrho = dstd/drho
+    stdmin = 30
 
-    def rho2n(rho):
+    def rho2std(rho):
         rhomc = np.subtract(rho, low_density)
-        n = (rhomc * dndrho) + 1
-        return n
+        std = (rhomc * dstddrho) + stdmin
+        return std
+
 
     std = 30.0
 
-    plt.text(0.35, 0.9,  'Normal', transform=plt.gca().transAxes)
-    plt.text(0.35, 0.8,  '$\\mu = \\left(\\ln\\rho - \\ln\\rho_{l}\\right) \\frac{0.7N}{(\\ln\\rho_h - \\ln\\rho_l)} + 1$', transform=plt.gca().transAxes)
-    plt.text(0.35, 0.7, f'$\\ln\\rho_l = {low_density:.1f}$', transform=plt.gca().transAxes)
-    plt.text(0.35, 0.6, f'$\\ln\\rho_h = {high_density:.1f}$', transform=plt.gca().transAxes)
-    plt.text(0.35, 0.5, f'$\\sigma = {std:.1f}$', transform=plt.gca().transAxes)
+    plt.text(0.35, 0.95,  'Normal (trunc: 0-117)', transform=plt.gca().transAxes)
+    plt.text(0.35, 0.85,  '$\\mu = 0$', transform=plt.gca().transAxes)
+    plt.text(0.35, 0.75,  '$\\sigma = ' + f'{dstd}' + ' \\frac{\\ln\\rho - \\ln\\rho_{l}}{\\ln\\rho_h - \\ln\\rho_l} + ' + f'{stdmin}' + '$', transform=plt.gca().transAxes)
+    plt.text(0.35, 0.65, f'$\\ln\\rho_l = {low_density:.1f}$', transform=plt.gca().transAxes)
+    plt.text(0.35, 0.55, f'$\\ln\\rho_h = {high_density:.1f}$', transform=plt.gca().transAxes)
 
     for rho in [low_density, mid_density, high_density]:
-        dist = np.random.normal(rho2n(rho), std, 100000)
-        dist = np.where(dist > nelem, np.subtract(2*nelem, dist), dist)
+        dist = np.random.normal(0, rho2std(rho), 100000)
         dist = np.abs(dist)
+        dist = np.where(dist > nelem, np.subtract(nelem, np.fmod(dist, nelem)), dist)
+
         plt.plot(*do_hist(dist))
 
     plt.ylabel('$P(n_E)$')
     plt.xlabel('Element, $n_E$')
+    plt.xticks(ticks=[0, 20, 40, 60, 80, 100, 117], labels=['H', 'Ca', 'Zr', 'Nd', 'Hg', 'Fm', 'Og'])
     plt.yticks([])
 
 
