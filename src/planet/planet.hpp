@@ -8,8 +8,8 @@ class Planet {
 
   private:
 
-    double radius;
     double density_core, density_mantle, density_deep, density_surface;
+    double diameter;
     double pressure_low, pressure_high, pressure_average;
     double temp_low, temp_high, temp_average;
     double humidity_low, humidity_high, humidity_average;
@@ -25,4 +25,6 @@ class Planet {
     static std::shared_ptr<Planet> generate();
 
     std::string describe() const;
+
+    double get_diameter() const;
 };
