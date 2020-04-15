@@ -251,12 +251,21 @@ std::string Planet::describe() const
 
   // TODO check out elements and see what compounds are likely
   ss << "\n\nSpectral emissions indicate the presence of:\n";
+  double trace = 0.0;
   for (auto element_abundance_pair : this->composition_surface) {
     auto element = element_abundance_pair.first;
     double abundance = element_abundance_pair.second;
     double perc = abundance * 100.0;
 
-    ss << "  - " << element->get_name() << " (" << perc << "%)\n";
+    if (perc < 1.0) {
+      trace += perc;
+    }
+    else {
+      ss << "  - " << element->get_name() << " (" << perc << "%)\n";
+    }
+  }
+  if (trace > 0.0) {
+    ss << "  - Trace elements (" << trace << "%)\n";
   }
 
 
