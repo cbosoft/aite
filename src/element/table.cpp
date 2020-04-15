@@ -38,7 +38,7 @@ static std::array<std::shared_ptr<Element>, 118> table = {
 
   E("Zinc",          "Zn", 30,  65.4),
   E("Gallium",       "Ga", 31,  69.7),
-  E("Germanum",      "Ge", 32,  72.6),
+  E("Germanium",     "Ge", 32,  72.6),
   E("Arsenic",       "As", 33,  74.9),
   E("Selenium",      "Se", 34,  79.0),
   E("Bromine",       "Br", 35,  79.9),
