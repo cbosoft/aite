@@ -10,7 +10,9 @@ PLANET = \
 				 obj/planet/generate.o
 
 ELEMENT = \
-					obj/element/element.o
+					obj/element/element.o \
+					obj/element/distribute.o \
+					obj/element/table.o
 
 HDR = $(shell ls src/**/*.hpp)
 OBJ = $(PLANET) $(ELEMENT) $(RANDOM)
