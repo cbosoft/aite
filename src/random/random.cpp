@@ -22,6 +22,11 @@ void seed(std::seed_seq s)
 
 
 
+double exp_rand(double lambda)
+{
+  std::exponential_distribution nd(lambda);
+  return nd(e);
+}
 
 double normal_rand(double mean, double std)
 {
