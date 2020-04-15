@@ -103,6 +103,7 @@ def plot_pressure(pressure_ax):
     plt.xlabel('Atmospheric Pressure $\\ln(P)\\rm/atm$')
     plt.yticks([])
 
+
 def plot_elements(element_ax, density_data):
     plt.sca(element_ax)
 
@@ -115,36 +116,52 @@ def plot_elements(element_ax, density_data):
     high_density = mn + 3.0*std
     nelem = 118.0
     dn = 0.7*nelem
-    dstd = 40
-    drho = high_density - low_density
+    muhigh = 55
+    mulow = 0
+    dmu = muhigh - mulow
+    drho = (high_density - low_density)
     dndrho = dn/drho
-    dstddrho = dstd/drho
-    stdmin = 30
+    dmudrho = dmu/drho
 
-    def rho2std(rho):
+    def rho2mu(rho):
         rhomc = np.subtract(rho, low_density)
-        std = (rhomc * dstddrho) + stdmin
-        return std
+        mu = (rhomc * dmudrho) + mulow
+        return mu
 
+    kws = {
+        'transform': plt.gca().transAxes,
+        'bbox': {'color': 'white', 'alpha':0.8}
+    }
 
-    std = 30.0
-
-    plt.text(0.35, 0.95,  'Normal (trunc: 0-117)', transform=plt.gca().transAxes)
-    plt.text(0.35, 0.85,  '$\\mu = 0$', transform=plt.gca().transAxes)
-    plt.text(0.35, 0.75,  '$\\sigma = ' + f'{dstd}' + ' \\frac{\\ln\\rho - \\ln\\rho_{l}}{\\ln\\rho_h - \\ln\\rho_l} + ' + f'{stdmin}' + '$', transform=plt.gca().transAxes)
-    plt.text(0.35, 0.65, f'$\\ln\\rho_l = {low_density:.1f}$', transform=plt.gca().transAxes)
-    plt.text(0.35, 0.55, f'$\\ln\\rho_h = {high_density:.1f}$', transform=plt.gca().transAxes)
+    std = 10
+    l = 10000
+    plt.text(0.2, 0.9,  '$\\xi = $Normal (trunc: 0-117)', **kws)
+    plt.text(0.2, 0.8,  '$\\mu = ' + f'\\left({muhigh} - {mulow}\\right)' + ' \\frac{\\ln\\rho - \\ln\\rho_{l}}{\\ln\\rho_h - \\ln\\rho_l} + ' + f'{mulow}' + '$', **kws)
+    plt.text(0.2, 0.7, f'$\\sigma = {std}$', **kws)
+    plt.text(0.2, 0.6, f'$\\ln\\rho_l = {low_density:.1f}$', **kws)
+    plt.text(0.2, 0.5, f'$\\ln\\rho_h = {high_density:.1f}$', **kws)
+    # plt.text(0.2, 0.4,  '$n_E = (\\xi < 0) ? \\left|\\xi\\right| + \\mu : \\left[(\\xi > 117) ? 117 - \\xi \\% 117 : \\xi\\right]$', **kws)
 
     for rho in [low_density, mid_density, high_density]:
-        dist = np.random.normal(0, rho2std(rho), 100000)
-        dist = np.abs(dist)
+        mu = rho2mu(rho)
+        dist = np.random.normal(mu, std, l)
+        dist = np.where(dist < 0.0, np.add(np.abs(dist), mu), dist)
         dist = np.where(dist > nelem, np.subtract(nelem, np.fmod(dist, nelem)), dist)
+
+        sdist = np.random.normal(mu, 2*(std+mu), l)
+        print(mu, 2*(std+mu))
+        sdist = np.where(sdist < 0.0, np.add(np.abs(sdist), mu), sdist)
+        sdist = np.where(sdist > nelem, np.subtract(nelem, np.fmod(sdist, nelem)), sdist)
+        dist = np.where(np.random.uniform(0, 1, l) > 0.5, dist, sdist)
+
+
 
         plt.plot(*do_hist(dist))
 
     plt.ylabel('$P(n_E)$')
     plt.xlabel('Element, $n_E$')
     plt.xticks(ticks=[0, 20, 40, 60, 80, 100, 117], labels=['H', 'Ca', 'Zr', 'Nd', 'Hg', 'Fm', 'Og'])
+    #plt.xscale('log')
     plt.yticks([])
 
 
@@ -156,7 +173,7 @@ if __name__ == '__main__':
     plt.rcParams['figure.subplot.wspace'] = 0.4
     plt.rcParams['figure.subplot.hspace'] = 0.4
 
-    fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(10,10))
+    fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(20,10))
 
     size_ax, density_ax, temp_ax, pressure_ax, element_ax, unkn_ax = axes.flatten()
 
