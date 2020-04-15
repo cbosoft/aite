@@ -63,7 +63,7 @@
 ** Technology
 ** Culture
 ** Expansion
-* Elements
+* (Chemical) Elements
   - Everything in the universe will come from the periodic table
   - Gases, metals, some liquids, combinations; all form to make the basis of
     the planets, satellites, the universe
@@ -105,3 +105,9 @@
   - They can only explore where they can; their *technology* will hold them
     back if they can't survive on a planet, or if they can't detect if a planet
     contains what they desire.
+* History
+  - planets and systems will have a coherent history; planets in the same
+    system, if one supports life then it probably does and the other planets
+    will have been colonised.
+  - These xeno-colonies will perhaps linger on, or perhaps they will be
+    gone. Either way there will be evidence of their existence.
