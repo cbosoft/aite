@@ -49,12 +49,12 @@ def plot_density_dist(density_data, density_ax):
     plt.plot(edges, bins)
 
     mn = 0.7; std = 1.0
-    density = np.random.lognormal(mn, std, 1000)
+    density = np.random.lognormal(mn, std, 10000)
     for i, rhoi in enumerate(density):
-        while rhoi >= 10.0:
+        while np.log(rhoi) >= 10.0:
             rhoi = np.random.lognormal(mn, std)
         density[i] = rhoi
-    edges, bins = do_hist(density)
+    edges, bins = do_hist(np.log(density))
     plt.plot(edges, bins)
 
     plt.text(0.6, 0.9, 'LogNormal', transform=plt.gca().transAxes)
