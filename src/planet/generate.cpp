@@ -1,4 +1,5 @@
 #include "planet.hpp"
+#include "../element/element.hpp"
 #include "../random/random.hpp"
 
 std::shared_ptr<Planet> Planet::generate()
@@ -54,6 +55,19 @@ std::shared_ptr<Planet> Planet::generate()
   planet->temp_average = temperatures.front();
   temperatures.pop_front();
   planet->temp_high = temperatures.front();
+
+  // elements
+  planet->composition_surface = Element::get_distribution(planet->density_surface);
+  planet->composition_surface.sort(CompositionSortByAbundanceDescending());
+
+  planet->composition_deep = Element::get_distribution(planet->density_deep);
+  planet->composition_deep.sort(CompositionSortByAbundanceDescending());
+
+  planet->composition_mantle = Element::get_distribution(planet->density_mantle);
+  planet->composition_mantle.sort(CompositionSortByAbundanceDescending());
+
+  planet->composition_core = Element::get_distribution(planet->density_core);
+  planet->composition_core.sort(CompositionSortByAbundanceDescending());
 
   return planet;
 }
