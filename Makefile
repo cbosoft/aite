@@ -1,6 +1,11 @@
 CXX = g++
 CFLAGS = -g -pg -Wall -Wextra -Werror -std=c++17 -O2
 
+COLONY = \
+				 obj/colony/colony.o \
+				 obj/colony/discover.o \
+				 obj/colony/describe.o
+
 RANDOM = \
 				 obj/random/random.o
 
@@ -15,7 +20,7 @@ ELEMENT = \
 					obj/element/table.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(PLANET) $(ELEMENT) $(RANDOM)
+OBJ = $(PLANET) $(ELEMENT) $(RANDOM) $(COLONY)
 LINK =
 DEFS =
 
