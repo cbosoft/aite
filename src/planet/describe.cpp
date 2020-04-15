@@ -1,275 +1,122 @@
-#include <iomanip>
-#include <sstream>
+#include <iostream>
 #include <cmath>
 
 #include "planet.hpp"
 #include "../element/element.hpp"
+#include "../constants.hpp"
 
-std::string Planet::describe() const
+const PlanetDescriptionData &Planet::describe()
 {
+  if (this->description_data.set)
+    return this->description_data;
 
-  int atmosphere = -1, temperature = -1, gravity = -1;
-  //bool has_hydrogen, has_carbon, has_oxygen, has_nitrogen, has_water;
-  int weather_storms = 0;//, weather_rains = 0;
-
-  const double G = 6.67408e-11;
-  const double AU2m = 1.496e11;
-  double g = G * this->density_average * (1./6.) * M_PI * this->diameter * AU2m;
-
-  if (g < 0.001) {
-    gravity = 0;
+  this->description_data.diameter = this->diameter;
+  int logdia = std::round(std::log(this->diameter));
+  if (logdia < -4) {
+    this->description_data.sc = SC_Small;
   }
-  else if (g < 0.1) {
-    gravity = 1; // too weak
+  else if (logdia < -3) {
+    this->description_data.sc = SC_EarthLike;
   }
-  else if (g < 1.0) {
-    gravity = 2; // weak, but manageable
+  else if (logdia < -1) {
+    this->description_data.sc = SC_Large;
   }
-  else if (g < 3.0) {
-    gravity = 3; // ideal
-  }
-  else if (g < 10.0) {
-    gravity = 4; // heavy
-  }
-  else if (g < 100.0) {
-    gravity = 5; // spine-crushing
+  else if (logdia < 2) {
+    this->description_data.sc = SC_Huge;
   }
   else {
-    gravity = 6; // smoosh
+    this->description_data.sc = SC_Giant;
+  }
+
+  this->description_data.density = this->density_average;
+  this->description_data.gravitational_constant = CONST_G * this->density_average * (1./6.) * M_PI * this->diameter * CONST_AUm;
+
+  if (this->description_data.gravitational_constant < 0.001) {
+    this->description_data.gl = GL_NonExistant;
+  }
+  else if (this->description_data.gravitational_constant < 0.5) {
+    this->description_data.gl = GL_Weak;
+  }
+  else if (this->description_data.gravitational_constant < 2.0) {
+    this->description_data.gl = GL_Normal;
+  }
+  else if (this->description_data.gravitational_constant < 5.0) {
+    this->description_data.gl = GL_Heavy;
+  }
+  else if (this->description_data.gravitational_constant < 10.0) {
+    this->description_data.gl = GL_Oppressive;
+  }
+  else { // if (this->description_data.gravitational_constant < 100.0) {
+    this->description_data.gl = GL_SpineCrushing;
   }
 
 
-  if (this->pressure_average > 10.0) {
-    atmosphere = 6;
+  if (this->pressure_average < 0.01) {
+    this->description_data.al = AL_None;
   }
-  else if (this->pressure_average > 5.0) {
-    atmosphere = 5;
+  else if (this->pressure_average < 0.5) {
+    this->description_data.al = AL_Thin;
   }
-  else if (this->pressure_average > 1.5) {
-    atmosphere = 4;
+  else if (this->pressure_average < 1.5) {
+    this->description_data.al = AL_EarthLike;
   }
-  else if (this->pressure_average > 0.5) {
-    atmosphere = 3;
-    double pdiff = (this->pressure_high - this->pressure_low) / this->pressure_average;
-    if (pdiff > 0.1) {
-      weather_storms = std::round(std::log(pdiff*100.0));
-    }
-    else {
-      weather_storms = 0.0;
-    }
-  }
-  else if (this->pressure_average > 0.1) {
-    atmosphere = 2;
-  }
-  else if (this->pressure_average > 0.01) {
-    atmosphere = 1;
+  else if (this->pressure_average < 10.0) {
+    this->description_data.al = AL_Thick;
   }
   else {
-    atmosphere = 0;
+    this->description_data.al = AL_Heavy;
   }
 
+  double pdiff = (this->pressure_high - this->pressure_low) / this->pressure_average;
+  int wl = std::round(std::log(pdiff*10.0));
+  if (wl < 1) {
+    this->description_data.wl = WL_None;
+  }
+  else if (wl < 2) {
+    this->description_data.wl = WL_Negligable;
+  }
+  else if (wl < 3) {
+    this->description_data.wl = WL_Strong;
+  }
+  else if (wl < 4) {
+    this->description_data.wl = WL_Gale;
+  }
+  else {
+    this->description_data.wl = WL_Ferocious;
+  }
+
+
+  this->description_data.temperature = this->temp_average;
   double t = this->temp_average;
   if (t < 10) {
-    temperature = 0; // extreme cold
+    this->description_data.tl = TL_NearAbsoluteZero;
   }
   else if (t < 100) {
-    temperature = 1; // not as extreme, but not much better
+    this->description_data.tl = TL_ExtremeCold;
   }
   else if (t < 250) {
-    temperature = 2; // darn cold!
+    this->description_data.tl = TL_VeryCold;
   }
   else if (t < 270) {
-    temperature = 3; // uncomfortably low, but doable
+    this->description_data.tl = TL_Cold;
   }
   else if (t < 310) {
-    temperature = 4; // ideal!
+    this->description_data.tl = TL_Temperate;
   }
   else if (t < 370) {
-    temperature = 5; // uncomfortably high, but doable
+    this->description_data.tl = TL_Hot;
   }
   else if (t < 500) {
-    temperature = 6; // some soft materials melt. water is gaseous.
+    this->description_data.tl = TL_VeryHot;
   }
   else if (t < 1000) {
-    temperature = 7; // hot!
+    this->description_data.tl = TL_ExtremeHeat;
   }
   else {
-    temperature = 8;
+    this->description_data.tl = TL_Scorching;
   }
+  this->description_data.apparent_composition = this->composition_surface;
+  this->description_data.set = true;
 
-
-
-
-  std::stringstream ss;
-
-  ss << std::setprecision(1) << std::fixed
-    << "This planet has a diameter of " 
-    << this->diameter 
-    << " AU and a density " << this->density_average 
-    << " times Earth's. This results in a";
-
-  switch (gravity) {
-
-    case 0:
-      ss << "n almost none existant";
-      break;
-
-    case 1:
-      ss << " very weak";
-      break;
-
-    case 2:
-      ss << " weak";
-      break;
-
-    case 3:
-      ss << "n Earth-like";
-      break;
-
-    case 4:
-      ss << " opressive";
-      break;
-
-    case 5:
-      ss << " spine-crushing";
-      break;
-
-    case 6:
-      ss << " insurmountable";
-      break;
-  }
-
-  ss << " gravitational field (g = " << g << "). ";
-
-  if (atmosphere) {
-    ss << "The planet has a";
-
-    switch (atmosphere) {
-      case 1:
-        ss << " very thin";
-        break;
-
-      case 2:
-        ss << " thin";
-        break;
-
-      case 3:
-        ss << "n ";
-        break;
-
-      case 4:
-        ss << " thick";
-        break;
-
-      case 5:
-        ss << " very thick";
-        break;
-
-      case 6:
-        ss << "n almost liquid";
-        break;
-    }
-
-    ss << " atmosphere";
-
-    if ((atmosphere >= 2) and (atmosphere <= 4)) {
-      ss << " that could potentially support life";
-    }
-    ss << ". ";
-
-    // weather/wind
-    ss << "Pressure differentials indicate";
-    switch (weather_storms) {
-
-      case 0:
-        ss << " there is little wind";
-        break;
-
-      case 1:
-        ss << " mild winds akin to that on Earth";
-        break;
-
-      case 2:
-        ss << " strong winds, storms uncommon on Earth";
-        break;
-
-      case 3:
-      case 4:
-      case 5:
-        ss << " incredible winds, strong enough to tear down structures";
-        break;
-
-      case 6:
-      case 7:
-        ss << " unrelenting harsh winds and storms bombarding the surface";
-        break;
-
-    }
-    ss << ". ";
-
-  }
-
-  ss << "Average surface temperature is " << this->temp_average << "K; ";
-  switch(temperature) {
-
-    case 0:
-      ss << "not far from absolute zero.";
-      break;
-
-    case 1:
-      ss << "where most elements are solid.";
-      break;
-
-    case 2:
-      ss << "almost inhospitably cold.";
-      break;
-
-    case 3:
-      ss << "very cold.";
-      break;
-
-    case 4:
-      ss << "temperate.";
-      break;
-
-    case 5:
-      ss << "hot.";
-      break;
-
-    case 6:
-      ss << "extremely hot.";
-      break;
-
-    case 7:
-      ss << "scorching.";
-      break;
-
-    case 8:
-      ss << "many materials warp and deform under these temperatures.";
-      break;
-  }
-
-  // TODO check out elements and see what compounds are likely
-  ss << "\n\nSpectral emissions indicate the presence of:\n";
-  double trace = 0.0;
-  for (auto element_abundance_pair : this->composition_surface) {
-    auto element = element_abundance_pair.first;
-    double abundance = element_abundance_pair.second;
-    double perc = abundance * 100.0;
-
-    if (perc < 1.0) {
-      trace += perc;
-    }
-    else {
-      ss << "  - " << element->get_name() << " (" << perc << "%)\n";
-    }
-  }
-  if (trace > 0.0) {
-    ss << "  - Trace elements (" << trace << "%)\n";
-  }
-
-
-  // TODO check if planet has life
-
-  return ss.str();
+  return this->description_data;
 }

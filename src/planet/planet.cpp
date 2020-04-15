@@ -2,7 +2,7 @@
 
 Planet::Planet()
 {
-  // do nothing
+  this->description_data.set = false;
 }
 
 Planet::~Planet()
