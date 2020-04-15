@@ -1,6 +1,9 @@
+#include <iomanip>
 #include <sstream>
 #include <cmath>
+
 #include "planet.hpp"
+#include "../element/element.hpp"
 
 std::string Planet::describe() const
 {
@@ -98,8 +101,8 @@ std::string Planet::describe() const
 
 
   std::stringstream ss;
-  
-  ss 
+
+  ss << std::setprecision(1) << std::fixed
     << "This planet has a diameter of " 
     << this->diameter 
     << " AU and a density " << this->density_average 
@@ -128,7 +131,7 @@ std::string Planet::describe() const
       break;
 
     case 5:
-      ss << "  spine-crushing";
+      ss << " spine-crushing";
       break;
 
     case 6:
@@ -206,7 +209,7 @@ std::string Planet::describe() const
 
   }
 
-  ss << "Average surface temperature is " << this->temp_average << "K, ";
+  ss << "Average surface temperature is " << this->temp_average << "K; ";
   switch(temperature) {
 
     case 0:
@@ -222,7 +225,7 @@ std::string Planet::describe() const
       break;
 
     case 3:
-      ss << "very cold, like the tundra.";
+      ss << "very cold.";
       break;
 
     case 4:
@@ -230,7 +233,7 @@ std::string Planet::describe() const
       break;
 
     case 5:
-      ss << "hot, not unlike the deserts of Earth.";
+      ss << "hot.";
       break;
 
     case 6:
@@ -247,6 +250,16 @@ std::string Planet::describe() const
   }
 
   // TODO check out elements and see what compounds are likely
+  ss << "\n\nSpectral emissions indicate the presence of:\n";
+  for (auto element_abundance_pair : this->composition_surface) {
+    auto element = element_abundance_pair.first;
+    double abundance = element_abundance_pair.second;
+    double perc = abundance * 100.0;
+
+    ss << "  - " << element->get_name() << " (" << perc << "%)\n";
+  }
+
+
   // TODO check if planet has life
 
   return ss.str();
