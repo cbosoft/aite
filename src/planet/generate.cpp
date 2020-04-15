@@ -22,12 +22,9 @@ std::shared_ptr<Planet> Planet::generate()
   }
   densities.sort();
 
-  planet->density_core = densities.front();
-  densities.pop_front();
-  planet->density_mantle = densities.front();
-  densities.pop_front();
-  planet->density_deep = densities.front();
-  densities.pop_front();
+  planet->density_core = densities.front(); densities.pop_front();
+  planet->density_mantle = densities.front(); densities.pop_front();
+  planet->density_deep = densities.front(); densities.pop_front();
   planet->density_surface = densities.front();
 
   planet->density_average = (planet->density_core + 
@@ -42,8 +39,8 @@ std::shared_ptr<Planet> Planet::generate()
     pressures.push_back(pressure_base * normal_rand(1.0, 0.3));
   pressures.sort();
 
-  planet->pressure_low = pressures.front();
-  planet->pressure_average = pressures.front();
+  planet->pressure_low = pressures.front(); pressures.pop_front();
+  planet->pressure_average = pressures.front(); pressures.pop_front();
   planet->pressure_high = pressures.front();
 
   // temperatures
@@ -52,10 +49,9 @@ std::shared_ptr<Planet> Planet::generate()
   for (int i = 0; i < 3; i++)
     temperatures.push_back(base_temperature * normal_rand(1.0, 0.1));
   temperatures.sort();
-  planet->temp_low = temperatures.front();
-  temperatures.pop_front();
-  planet->temp_average = temperatures.front();
-  temperatures.pop_front();
+
+  planet->temp_low = temperatures.front(); temperatures.pop_front();
+  planet->temp_average = temperatures.front(); temperatures.pop_front();
   planet->temp_high = temperatures.front();
 
   // elements
