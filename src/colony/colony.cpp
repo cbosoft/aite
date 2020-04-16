@@ -1,11 +1,21 @@
+#include <iostream>
+
 #include "colony.hpp"
 
-Colony::Colony()
+
+Colony::Colony(std::string name)
 {
-  // do nothing
+  this->name = name;
 }
 
 Colony::~Colony()
 {
   // do nothing
+}
+
+
+
+void Colony::startoff(Planet_ptr planet)
+{
+  std::cerr << this->describe_planet(planet) << std::endl;
 }
