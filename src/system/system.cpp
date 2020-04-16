@@ -32,5 +32,9 @@ static unsigned long id_counter = 0;
 System_ptr System::generate(Vec3 position)
 {
   double size = lognormal_rand(3, 1);
-  return std::make_shared<System>(position, size, id_counter++);
+  auto system = std::make_shared<System>(position, size, id_counter++);
+
+  // TODO generate planets
+
+  return system;
 }
