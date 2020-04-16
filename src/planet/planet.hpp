@@ -73,6 +73,7 @@ class Planet {
   private:
 
     unsigned long long id;
+    double distance;
     double diameter;
     double density_core, density_mantle, density_deep, density_surface, density_average;
     double pressure_low, pressure_high, pressure_average;
@@ -93,7 +94,7 @@ class Planet {
     Planet(unsigned long long id);
     ~Planet();
 
-    static std::shared_ptr<Planet> generate();
+    static Planet_ptr generate(double distance);
 
     const PlanetDescriptionData &describe();
 

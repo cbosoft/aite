@@ -1,12 +1,15 @@
+#include <iostream>
 #include "planet.hpp"
 #include "../element/element.hpp"
 #include "../util/random.hpp"
 
-static unsigned long long id_counter = 0;
+static unsigned long id_counter = 0;
 
-std::shared_ptr<Planet> Planet::generate()
+std::shared_ptr<Planet> Planet::generate(double distance)
 {
-  auto planet = std::make_shared<Planet>(id_counter);
+  auto planet = std::make_shared<Planet>(id_counter++);
+
+  planet->distance = distance;
 
   // diameter
   planet->diameter = bilognormal_rand(-2.5, 0.7, 0.5, 0.6, 0.8);
