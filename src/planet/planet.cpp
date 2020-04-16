@@ -1,6 +1,6 @@
 #include "planet.hpp"
 
-Planet::Planet(unsigned long long id)
+Planet::Planet(unsigned long id)
 {
   this->id = id;
   this->description_data.set = false;
@@ -16,7 +16,7 @@ double Planet::get_diameter() const
   return this->diameter;
 }
 
-unsigned long long Planet::get_id() const
+unsigned long Planet::get_id() const
 {
   return this->id;
 }
