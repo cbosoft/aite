@@ -1,25 +1,15 @@
 #pragma once
 
-#include <memory>
 #include <vector>
 
 #include "../util/vec.hpp"
-
-class Planet;
-typedef std::shared_ptr<Planet> Planet_ptr;
-
-class Star;
-typedef std::shared_ptr<Star> Star_ptr;
-
-class Colony;
-typedef std::shared_ptr<Colony> Colony_ptr;
-
-class System;
-typedef std::shared_ptr<System> System_ptr;
+#include "../types.hpp"
 
 class System {
 
   private:
+
+    static const int max_number_stars = 5;
 
     unsigned long id;
 

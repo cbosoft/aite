@@ -1,9 +1,8 @@
 #pragma once
 #include <list>
 #include <utility>
-#include <memory>
 
-class Element;
+#include "../types.hpp"
 
 enum TemperatureLevel {
   TL_NearAbsoluteZero,
@@ -65,7 +64,7 @@ typedef struct PlanetDescriptionData {
   double gravitational_constant;
   GravityLevel gl;
 
-  std::list<std::pair<std::shared_ptr<Element>, double>> apparent_composition;
+  std::list<std::pair<Element_ptr, double>> apparent_composition;
 } PlanetDescriptionData;
 
 class Planet {
@@ -82,10 +81,10 @@ class Planet {
     // double humidity_low, humidity_high, humidity_average;
     // double water_coverage;
 
-    std::list<std::pair<std::shared_ptr<Element>, double>> composition_surface;
-    std::list<std::pair<std::shared_ptr<Element>, double>> composition_deep;
-    std::list<std::pair<std::shared_ptr<Element>, double>> composition_mantle;
-    std::list<std::pair<std::shared_ptr<Element>, double>> composition_core;
+    std::list<std::pair<Element_ptr, double>> composition_surface;
+    std::list<std::pair<Element_ptr, double>> composition_deep;
+    std::list<std::pair<Element_ptr, double>> composition_mantle;
+    std::list<std::pair<Element_ptr, double>> composition_core;
 
     PlanetDescriptionData description_data;
 
