@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 
+class Event;
+typedef std::shared_ptr<Event> Event_ptr;
 
 class Element;
 typedef std::shared_ptr<Element> Element_ptr;
