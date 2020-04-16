@@ -18,6 +18,11 @@ double Universe::get_time() const
   return this->time;
 }
 
+void Universe::set_time(double new_time)
+{
+  this->time = new_time;
+}
+
 
 static Universe_ptr the_universe = nullptr;
 

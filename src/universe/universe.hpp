@@ -4,26 +4,11 @@
 #include <list>
 #include <string>
 
+#include "../util/safeq.hpp"
 #include "../util/vec.hpp"
+#include "../event/event.hpp"
+#include "../types.hpp"
 
-class Event;
-typedef std::shared_ptr<Event> Event_ptr;
-
-
-class Colony;
-typedef std::shared_ptr<Colony> Colony_ptr;
-
-
-class Galaxy;
-typedef std::shared_ptr<Galaxy> Galaxy_ptr;
-
-
-class System;
-typedef std::shared_ptr<System> System_ptr;
-
-
-class Universe;
-typedef std::shared_ptr<Universe> Universe_ptr;
 
 
 class Universe {
@@ -31,13 +16,16 @@ class Universe {
   private:
 
     double size;
+    bool running;
 
     std::map<std::string, Colony_ptr> colonies;
 
-    std::list<Event_ptr> events;
+    SafeQueue<Event> events;
+
     std::list<Galaxy_ptr> galaxies;
 
-    double time;
+    double time; // "indiction" -> 15 earth years
+    void set_time(double new_time);
 
   public:
 
@@ -50,5 +38,10 @@ class Universe {
 
     Colony_ptr add_colony(std::string name);
     Galaxy_ptr get_galaxy(Vec3 point);
+
+    void run();
+    void stop();
+
+    void add_event(Event_ptr event);
 
 };
