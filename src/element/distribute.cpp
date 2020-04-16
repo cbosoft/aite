@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "element.hpp"
-#include "../random/random.hpp"
+#include "../util/random.hpp"
 
 
 std::list<std::pair<std::shared_ptr<Element>, double>> Element::get_distribution(double density)
