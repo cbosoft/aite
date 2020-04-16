@@ -4,6 +4,7 @@ CFLAGS = -g -pg -Wall -Wextra -Werror -std=c++17 -O2
 UNIVERSE = \
 					 obj/universe/universe.o \
 					 obj/universe/galaxy.o \
+					 obj/universe/run.o \
 					 obj/universe/colony.o
 
 GALAXY = \
@@ -31,6 +32,7 @@ ELEMENT = \
 
 UTIL = \
 			 obj/util/random.o \
+			 obj/util/time.o \
 			 obj/util/vec.o
 
 HDR = $(shell ls src/**/*.hpp)
