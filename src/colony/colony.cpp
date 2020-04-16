@@ -17,5 +17,6 @@ Colony::~Colony()
 
 void Colony::startoff(Planet_ptr planet)
 {
+  this->discover_planet(planet);
   std::cerr << this->describe_planet(planet) << std::endl;
 }
