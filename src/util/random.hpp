@@ -9,3 +9,6 @@ double uniform_rand(double min, double max);
 double lognormal_rand(double mean, double std);
 double binormal_rand(double mn1, double std1, double mn2, double std2, double p);
 double bilognormal_rand(double mn1, double std1, double mn2, double std2, double p);
+
+
+int uniform_rand_i(int min, int max);

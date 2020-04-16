@@ -63,3 +63,10 @@ double bilognormal_rand(double mn1, double std1, double mn2, double std2, double
   }
   return lognormal_rand(mn2, std2);
 }
+
+
+int uniform_rand_i(int min, int max)
+{
+  std::uniform_int_distribution urd(min, max);
+  return urd(e);
+}
