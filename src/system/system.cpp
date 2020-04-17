@@ -38,7 +38,7 @@ System_ptr System::generate(Vec3 position)
   int nplanets = std::round(normal_rand(10, 2));
   double planet_distance = 0.0;
   for (int i = 0; i < nplanets; i++) {
-    planet_distance += lognormal_rand(6, 8);
+    planet_distance += lognormal_rand(10, 1);
     Planet_ptr planet = Planet::generate(planet_distance);
     system->planets.push_back(planet);
   }
