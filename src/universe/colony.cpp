@@ -15,3 +15,8 @@ Colony_ptr Universe::add_colony(std::string name)
 
   return colony;
 }
+
+bool Universe::has_colony(std::string name)
+{
+  return this->colonies.find(name) != this->colonies.end();
+}
