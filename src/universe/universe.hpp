@@ -20,11 +20,8 @@ class Universe {
     int server_fd;
     std::map<std::string, SafeQueue<Message>> colony_messages;
 
-    std::mutex threads_mutex;
-    std::list<std::thread> threads;
-
     double size;
-    bool running, listening;
+    bool running;
 
     std::map<std::string, Colony_ptr> colonies;
 
@@ -34,9 +31,6 @@ class Universe {
 
     double time; // "indiction" -> 15 earth years
     void set_time(double new_time);
-    void listen(int port);
-    void process_client_requests(int client_fd);
-    void process_client_requests_in_bg(int client_fd);
 
   public:
 
@@ -50,7 +44,6 @@ class Universe {
     Colony_ptr add_colony(std::string name);
     Galaxy_ptr get_galaxy(Vec3 point);
 
-    void listen_in_bg(int port);
     void run_events();
     void stop();
 

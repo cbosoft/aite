@@ -45,9 +45,16 @@ CLIENT = \
 				 obj/client/args.o \
 				 obj/client/connect.o
 
+SERVER = \
+				 obj/server/server.o \
+				 obj/server/main.o \
+				 obj/server/listen.o \
+				 obj/server/client.o \
+				 obj/server/args.o
+
 HDR = $(shell ls src/**/*.hpp)
 OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(ELEMENT) $(EVENT) $(UTIL)
-LINK =
+LINK = -lpthread
 DEFS =
 
 .SECONDARY:
@@ -58,20 +65,17 @@ obj/%.o: src/%.cpp $(HDR)
 	@$(CXX) $(CFLAGS) $(DEFS) $< -c -o $@
 
 
-obj/test/%.o: src/test/%.cpp $(HDR)
-	@echo -e "\u001b[33mASSEMBLING OBJECT $@\u001b[0m"
-	@mkdir -p `dirname $@`
-	@$(CXX) $(CFLAGS) $(DEFS) $< -c -o $@
+.PHONY: all
 
+all: aite_client aite_server
 
-aite: obj/main.o $(OBJ) $(HDR)
+aite_client: $(CLIENT) $(OBJ) $(HDR)
 	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
-	@$(CXX) $(CFLAGS) $(DEFS) obj/main.o $(OBJ) -o aite $(LINK)
+	@$(CXX) $(CFLAGS) $(DEFS) $(CLIENT) $(OBJ) -o $@ $(LINK)
 
-
-tests: src/test/main.cpp $(OBJ) $(HDR)
+aite_server: $(SERVER) $(OBJ) $(HDR)
 	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
-	@$(CXX) $(CFLAGS) $(DEFS) src/test/main.cpp $(OBJ) -o $@ $(LINK)
+	@$(CXX) $(CFLAGS) $(DEFS) $(SERVER) $(OBJ) -o $@ $(LINK)
 
 
 prof_pdf:
@@ -81,4 +85,4 @@ prof_pdf:
 
 
 clean:
-	rm -rf obj aite tests
+	rm -rf obj aite_client aite_server
