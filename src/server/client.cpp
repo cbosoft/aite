@@ -6,6 +6,8 @@
 #include <cstring>
 
 #include "../util/exception.hpp"
+#include "../universe/universe.hpp"
+#include "../event/event.hpp"
 
 #include "server.hpp"
 
@@ -21,7 +23,6 @@ void GameServer::process_client_requests(int client_fd)
   while (this->running) {
 
     int l = read(client_fd, buffer, 1023);
-    std::cerr << l << " ";
     if (l < 0) {
       std::cerr << "read error" << std::endl;
     }
@@ -30,7 +31,7 @@ void GameServer::process_client_requests(int client_fd)
       break;
     }
     else {
-      std::cerr << buffer << std::endl;
+      this->process_input(client_fd, std::string(buffer));
     }
 
   }
@@ -46,6 +47,39 @@ void GameServer::process_client_requests_in_bg(int client_fd)
 
   this->threads[client_fd] = std::thread(&GameServer::process_client_requests, this, client_fd);
 }
+
+
+void GameServer::process_input(int client_fd, std::string s)
+{
+  std::stringstream ss(s);
+  std::string type, rest;
+  getline(ss, type, '|');
+  getline(ss, rest, '|');
+
+  std::cerr << "TYPE: " << type << ", REST: " << rest << std::endl;
+
+  if (type.compare("event") == 0) {
+    try {
+      Event_ptr event = Event::from_string(rest);
+      this->universe->add_event(event);
+    }
+    catch (const ArgumentError& e) {
+      this->send(client_fd, "error|event argument error");
+    }
+  }
+  else if (type.compare("join") == 0) {
+
+    // rest is colony name
+    if (!this->universe->has_colony(rest)) {
+      this->universe->add_colony(rest);
+    }
+
+  }
+  else {
+    this->send(client_fd, "error|instruction not understood");
+  }
+}
+
 
 void GameServer::send(int client_fd, std::string message)
 {
