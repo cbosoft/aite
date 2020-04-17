@@ -20,6 +20,7 @@ class GameServer {
     void listen();
     void listen_in_bg();
 
+    void send(int client_fd, std::string message);
     void process_client_requests(int client_fd);
     void process_client_requests_in_bg(int client_fd);
 
