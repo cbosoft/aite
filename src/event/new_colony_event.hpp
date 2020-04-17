@@ -19,6 +19,7 @@ class NewColonyEvent : public virtual Event {
     static NewColonyEvent_ptr create(std::string name);
 
     void execute(Universe_ptr universe) override;
+    double get_time() override { return -1; }
 
 };
 

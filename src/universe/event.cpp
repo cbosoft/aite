@@ -2,5 +2,6 @@
 
 void Universe::add_event(Event_ptr event)
 {
-  this->events.push(event);
+  std::lock_guard<std::mutex> lock(this->events_mutex);
+  this->events.push_back(event);
 }

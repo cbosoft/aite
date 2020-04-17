@@ -1,3 +1,4 @@
+#include <iomanip>
 #include <unistd.h>
 
 #include "universe.hpp"
@@ -18,13 +19,24 @@ void Universe::run_events()
     double new_time = dt_hours;
     this->set_time(new_time);
 
-    if (i % 10 == 0) {
-      std::cerr << this->time << std::endl;
+    if (i % 30 == 0) {
+      std::cerr << "t:" << std::scientific << this->time << std::endl;
     }
 
     if (this->events.size()) {
-      Event_ptr event = this->events.pop();
-      event->execute(this->get_universe());
+      this->events.sort(EventCompareByTime());
+
+      for (auto it = this->events.begin(); it != this->events.end(); it++) {
+        Event_ptr event = (*it);
+        if (event->get_time() < this->time) {
+          event->execute(this->get_universe());
+          this->events.erase(it++);
+        }
+        else {
+          break;
+        }
+      }
+
     }
 
     usleep(100*1000); i++;

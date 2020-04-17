@@ -25,7 +25,8 @@ class Universe {
 
     std::map<std::string, Colony_ptr> colonies;
 
-    SafeQueue<Event> events;
+    std::mutex events_mutex;
+    std::list<Event_ptr> events;
 
     std::list<Galaxy_ptr> galaxies;
 
