@@ -31,13 +31,17 @@ ELEMENT = \
 					obj/element/distribute.o \
 					obj/element/table.o
 
+EVENT = \
+				obj/event/event.o \
+				obj/event/new_colony_event.o
+
 UTIL = \
 			 obj/util/random.o \
 			 obj/util/time.o \
 			 obj/util/vec.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(ELEMENT) $(UTIL)
+OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(ELEMENT) $(EVENT) $(UTIL)
 LINK =
 DEFS =
 
