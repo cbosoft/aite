@@ -5,6 +5,7 @@ UNIVERSE = \
 					 obj/universe/universe.o \
 					 obj/universe/galaxy.o \
 					 obj/universe/run.o \
+					 obj/universe/event.o \
 					 obj/universe/colony.o
 
 GALAXY = \
