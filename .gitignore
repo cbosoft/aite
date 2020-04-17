@@ -3,7 +3,8 @@ tags
 *.pdf
 gmon.out
 vgcore*
-aite
+aite_client
+aite_server
 obj
 tests
 analysis.txt
