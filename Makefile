@@ -33,6 +33,7 @@ ELEMENT = \
 
 EVENT = \
 				obj/event/event.o \
+				obj/event/from_string.o \
 				obj/event/new_colony_event.o
 
 UTIL = \
