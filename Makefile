@@ -40,6 +40,11 @@ UTIL = \
 			 obj/util/time.o \
 			 obj/util/vec.o
 
+CLIENT = \
+				 obj/client/main.o \
+				 obj/client/args.o \
+				 obj/client/connect.o
+
 HDR = $(shell ls src/**/*.hpp)
 OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(ELEMENT) $(EVENT) $(UTIL)
 LINK =
