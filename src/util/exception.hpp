@@ -103,6 +103,7 @@ EXCEPTION(IntersectionError, "IntersectionError");
 EXCEPTION(RecursionError, "RecursionError");
 EXCEPTION(TestError, "TestError");
 EXCEPTION(InactionError, "InactionError");
+EXCEPTION(SocketError, "SocketError");
 
 
 

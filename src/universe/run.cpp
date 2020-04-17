@@ -3,7 +3,7 @@
 #include "universe.hpp"
 #include "../util/time.hpp"
 
-void Universe::run()
+void Universe::run_events()
 {
   this->running = true;
   
