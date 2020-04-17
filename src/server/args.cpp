@@ -1,13 +1,14 @@
 #include <stdlib.h>
 #include "../util/args.hpp"
 #include "../util/exception.hpp"
+#include "../port.hpp"
 #include "args.hpp"
 
 
 ServerArgs default_args()
 {
   ServerArgs args = {
-    867
+    .port = DEFAULT_PORT
   };
 
   return args;
