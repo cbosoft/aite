@@ -114,6 +114,7 @@ class Colony {
     void startoff(Planet_ptr planet);
     void update(double dt);
 
+    Event_ptr get_bootstrap_event();
     double get_number();
 
 };

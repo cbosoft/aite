@@ -16,6 +16,8 @@ Colony_ptr Universe::add_colony(std::string name)
 
   Colony_ptr colony = std::make_shared<Colony>(name, planet, this->time);
   this->colonies[name] = colony;
+
+  this->add_event(colony->get_bootstrap_event());
   return colony;
 }
 

@@ -23,6 +23,7 @@ PLANET = \
 COLONY = \
 				 obj/colony/colony.o \
 				 obj/colony/discover.o \
+				 obj/colony/bootstrap.o \
 				 obj/colony/update.o \
 				 obj/colony/describe.o
 
