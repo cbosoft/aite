@@ -52,10 +52,12 @@ void GameServer::process_client_requests_in_bg(int client_fd)
 
 void GameServer::process_input(int client_fd, std::string s)
 {
-  std::stringstream ss(s);
   std::string type, rest, reply = "error|server error! (author at fault)";
-  getline(ss, type, '|');
-  getline(ss, rest, '|');
+  {
+    std::stringstream ss(s);
+    getline(ss, type, '|');
+    getline(ss, rest, '|');
+  }
 
   if (type.compare("event") == 0) {
 
@@ -92,8 +94,25 @@ void GameServer::process_input(int client_fd, std::string s)
     }
 
   }
+  else if (type.compare("getmessages") == 0) {
+
+    auto colony = this->client_to_colony[client_fd];
+    auto messages = colony->get_messages();
+    if (messages.size()) {
+      std::stringstream ss;
+      ss << "reply|";
+      for (auto message : messages) {
+        ss << message << "|";
+      }
+      reply = ss.str();
+    }
+    else {
+      reply = "reply|No messages.";
+    }
+
+  }
   else {
-    reply = "error|instruction not understood";
+    reply = Formatter() << "error|instruction not understood: \"" << type << "\"";
   }
 
   this->send(client_fd, reply);

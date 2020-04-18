@@ -70,3 +70,16 @@ double Colony::get_inception_time()
   return this->time_of_inception;
 }
 
+void Colony::add_message(std::string message)
+{
+  std::lock_guard<std::mutex> lock(this->messages_mutex);
+  this->messages.push_back(message);
+}
+
+std::list<std::string> Colony::get_messages()
+{
+  std::lock_guard<std::mutex> lock(this->messages_mutex);
+  std::list<std::string> rv(this->messages);
+  this->messages.erase(this->messages.begin(), this->messages.end());
+  return rv;
+}

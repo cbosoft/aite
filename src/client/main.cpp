@@ -13,6 +13,9 @@ int main(int argc, const char **argv)
   std::string reply = conn.send(Formatter() << "join|" << args.colony_name);
   std::cerr << reply << std::endl;
 
-  reply = conn.send(Formatter() << "query|number");
+  reply = conn.send("query|number");
+  std::cerr << reply << std::endl;
+
+  reply = conn.send("getmessages");
   std::cerr << reply << std::endl;
 }

@@ -3,6 +3,7 @@
 #include <memory>
 #include <map>
 #include <list>
+#include <mutex>
 
 #include "../types.hpp"
 
@@ -98,6 +99,9 @@ class Colony {
 
     // std::list<Abilities> // list of abilities the colony has acquired
 
+    std::mutex messages_mutex;
+    std::list<std::string> messages;
+
     double time_of_inception;
     std::string name;
     std::string strategy;
@@ -115,6 +119,9 @@ class Colony {
     std::string describe_planet(const Planet_ptr planet) const;
     void startoff(Planet_ptr planet);
     void update(double dt);
+
+    void add_message(std::string message);
+    std::list<std::string> get_messages();
 
     Event_ptr get_bootstrap_event();
     double get_number();
