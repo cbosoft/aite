@@ -33,6 +33,7 @@ void GameServer::process_client_requests(int client_fd)
     }
     else {
       this->process_input(client_fd, std::string(buffer));
+      memset(buffer, 0, 1024);
     }
 
   }
