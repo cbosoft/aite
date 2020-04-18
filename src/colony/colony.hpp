@@ -94,6 +94,8 @@ class Colony {
     TechnologyStats technology_stats;
     CultureStats culture_stats;
 
+    Universe_ptr universe;
+
     // std::list<Abilities> // list of abilities the colony has acquired
 
     double time_of_inception;

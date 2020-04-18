@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "colony.hpp"
+#include "../universe/universe.hpp"
 
 
 Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
@@ -50,6 +51,7 @@ Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
     .culture_xp = 0.0
   };
 
+  this->universe = Universe::get_universe();
 }
 
 
