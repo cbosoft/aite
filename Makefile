@@ -10,11 +10,10 @@ UNIVERSE = \
 
 GALAXY = \
 				 obj/galaxy/galaxy.o \
-				 obj/galaxy/introduce.o
+				 obj/galaxy/system.o
 
 SYSTEM = \
-				 obj/system/system.o \
-				 obj/system/introduce.o
+				 obj/system/system.o
 
 PLANET = \
 				 obj/planet/planet.o \
@@ -24,6 +23,7 @@ PLANET = \
 COLONY = \
 				 obj/colony/colony.o \
 				 obj/colony/discover.o \
+				 obj/colony/update.o \
 				 obj/colony/describe.o
 
 ELEMENT = \
