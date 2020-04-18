@@ -11,7 +11,7 @@ ClientArgs default_args()
   ClientArgs args = {
     .server_address = "127.0.0.1",
     .server_port = DEFAULT_PORT,
-    .colony_name = nullptr
+    .colony_name = "guest"
   };
 
   return args;
