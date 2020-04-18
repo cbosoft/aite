@@ -1,6 +1,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "server.hpp"
 #include "../util/exception.hpp"
@@ -40,6 +41,8 @@ void GameServer::listen()
     throw SocketError("Failed to set listening.", true);
   }
 
+  fcntl(this->fd, F_SETFL, O_NONBLOCK);
+
   while(this->running) {
 
     {
@@ -54,8 +57,6 @@ void GameServer::listen()
       }
     }
 
-    // TODO I think this will block until a connection is accepted or errored:
-    // is there a way to make it non-blocking?
     int client_fd = accept(this->fd, addr_ptr, (socklen_t*)&addrlen);
     if (client_fd < 0) {
       // connection unsuccessful
@@ -64,6 +65,9 @@ void GameServer::listen()
       std::cerr << "client connected " << client_fd << std::endl;
       this->process_client_requests_in_bg(client_fd);
     }
+
+    usleep(100*1000);
+
   }
 
   std::cerr << "listener stopped" << std::endl;
