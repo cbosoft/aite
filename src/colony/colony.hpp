@@ -76,7 +76,7 @@ typedef struct TechnologyStats {
 
 typedef struct CultureStats {
   double religious_belief;
-  double artistic_outputs;
+  double artistic_output;
   double domestic_peace;
 
   int cultural_finds;
