@@ -1,5 +1,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <unistd.h>
+
 #include "server.hpp"
 #include "../util/exception.hpp"
 
@@ -39,6 +41,19 @@ void GameServer::listen()
   }
 
   while(this->running) {
+
+    {
+      std::lock_guard<std::mutex> lock(this->fds_mutex);
+      if (this->invalid_fds.size()) {
+        for (auto fd : this->invalid_fds) {
+          this->threads[fd].join();
+          this->threads.erase(fd); // okay to delete after thread close?
+          close(fd);
+        }
+        this->invalid_fds = std::list<int>();
+      }
+    }
+
     // TODO I think this will block until a connection is accepted or errored:
     // is there a way to make it non-blocking?
     int client_fd = accept(this->fd, addr_ptr, (socklen_t*)&addrlen);
