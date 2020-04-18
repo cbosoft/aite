@@ -40,11 +40,17 @@ ServerConnection::~ServerConnection()
 }
 
 
-void ServerConnection::send(std::string message)
+std::string ServerConnection::send(std::string message)
 {
-  // add a newline to the end of the message
-  std::stringstream ss;
-  ss << message << "\n";
-  std::string s = ss.str();
-  (*socket_send)(this->fd, s.data(), s.size(), 0);
+  (*socket_send)(this->fd, message.data(), message.size(), 0);
+
+  // get reply
+  char buffer[1024] = {0};
+  int l = read(this->fd, buffer, 1023);
+
+  if (l < 0) {
+    throw SocketError("Error reading reply.", true);
+  }
+
+  return std::string(buffer);
 }

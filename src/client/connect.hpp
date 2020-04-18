@@ -10,5 +10,5 @@ class ServerConnection {
     ServerConnection(const char *address, int port);
     ~ServerConnection();
 
-    void send(std::string message);
+    std::string send(std::string message);
 };
