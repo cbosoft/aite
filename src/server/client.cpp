@@ -7,6 +7,7 @@
 
 #include "../util/exception.hpp"
 #include "../universe/universe.hpp"
+#include "../colony/colony.hpp"
 #include "../event/event.hpp"
 
 #include "server.hpp"
@@ -54,20 +55,21 @@ void GameServer::process_client_requests_in_bg(int client_fd)
 void GameServer::process_input(int client_fd, std::string s)
 {
   std::stringstream ss(s);
-  std::string type, rest;
+  std::string type, rest, reply = "error|server error! (author at fault)";
   getline(ss, type, '|');
   getline(ss, rest, '|');
 
-  std::cerr << "TYPE: " << type << ", REST: " << rest << std::endl;
-
   if (type.compare("event") == 0) {
+
     try {
       Event_ptr event = Event::from_string(rest);
       this->universe->add_event(event);
+      reply = "success|Event created.";
     }
     catch (const ArgumentError& e) {
-      this->send(client_fd, "error|event argument error");
+      reply = "error|event argument error";
     }
+
   }
   else if (type.compare("join") == 0) {
 
@@ -76,10 +78,27 @@ void GameServer::process_input(int client_fd, std::string s)
       this->universe->add_colony(rest);
     }
 
+    Colony_ptr colony = this->universe->get_colony(rest);
+    this->client_to_colony[client_fd] = colony;
+
+    reply = "success|Joined.";
+
+  }
+  else if (type.compare("query") == 0) {
+
+    if (rest.compare("number") == 0) {
+      reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_number() << "\n";
+    }
+    else {
+      reply = Formatter() << "error|query not understood: \"" << rest << "\"";
+    }
+
   }
   else {
-    this->send(client_fd, "error|instruction not understood");
+    reply = "error|instruction not understood";
   }
+
+  this->send(client_fd, reply);
 }
 
 
