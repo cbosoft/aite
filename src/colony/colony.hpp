@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include <map>
+#include <list>
 
 #include "../types.hpp"
 
@@ -95,16 +96,17 @@ class Colony {
 
     // std::list<Abilities> // list of abilities the colony has acquired
 
+    double time_of_inception;
     std::string name;
     std::string strategy;
 
     std::map<int, std::string> planet_log;
-
+    std::list<Planet_ptr> inhabited_planet;
     std::string name_planet(const Planet_ptr planet) const;
 
   public:
 
-    Colony(std::string name);
+    Colony(std::string name, Planet_ptr starting_world, double time_of_inception);
     ~Colony();
 
     void discover_planet(const Planet_ptr planet);
