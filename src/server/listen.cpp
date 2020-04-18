@@ -52,6 +52,7 @@ void GameServer::listen()
           this->threads[fd].join();
           this->threads.erase(fd); // okay to delete after thread close?
           close(fd);
+          std::cerr << "[THREAD EXITED:" << fd << "]" << std::endl;
         }
         this->invalid_fds = std::list<int>();
       }
@@ -62,7 +63,7 @@ void GameServer::listen()
       // connection unsuccessful
     }
     else {
-      std::cerr << "client connected " << client_fd << std::endl;
+      std::cerr << "CLIENT CONNECTED ON " << client_fd << std::endl;
       this->process_client_requests_in_bg(client_fd);
     }
 

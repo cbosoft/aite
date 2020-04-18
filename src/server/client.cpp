@@ -25,10 +25,10 @@ void GameServer::process_client_requests(int client_fd)
 
     int l = read(client_fd, buffer, 1023);
     if (l < 0) {
-      std::cerr << "read error" << std::endl;
+      std::cerr << FG_YELLOW << "WARNING" << RESET << " read error for client " << client_fd << " (" << errno << ", " << strerror(errno) << ")" << std::endl;
     }
     else if (l == 0) {
-      std::cerr << "read of 0 in blocking read: connection is closed." << std::endl;
+      // read of 0 in blocking read: connection is closed.
       break;
     }
     else {
@@ -37,17 +37,14 @@ void GameServer::process_client_requests(int client_fd)
 
   }
 
-  std::cerr << "client exited" << std::endl;
-
   std::lock_guard<std::mutex> lock(this->fds_mutex);
   this->invalid_fds.push_back(client_fd);
 }
 
 void GameServer::process_client_requests_in_bg(int client_fd)
 {
-  std::cerr << "launching connection thread for client " << client_fd << std::endl;
+  std::cerr << "[NEW THREAD:" << client_fd << "]" << std::endl;
   std::lock_guard<std::mutex> lock(this->threads_mutex);
-
   this->threads[client_fd] = std::thread(&GameServer::process_client_requests, this, client_fd);
 }
 
