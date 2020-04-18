@@ -2,6 +2,7 @@
 #include <unistd.h>
 
 #include "universe.hpp"
+#include "../colony/colony.hpp"
 #include "../util/time.hpp"
 
 void Universe::run_events()
@@ -14,13 +15,15 @@ void Universe::run_events()
   while (this->running) {
 
     unsigned long now = get_system_time();
-    unsigned long dt = now - start;
-    double dt_hours = double(dt) / 3600.0;
+    unsigned long dt_seconds = now - start;
+    double dt_hours = double(dt_seconds) / 3600.0;
     double new_time = dt_hours;
+    double prev_time = this->time;
     this->set_time(new_time);
+    double dt = this->time - prev_time;
 
     if (i % 30 == 0) {
-      std::cerr << "t:" << std::scientific << this->time << std::endl;
+      std::cerr << "t:" << std::scientific << this->time << " dt:" << dt << std::endl;
     }
 
     if (this->events.size()) {
@@ -37,6 +40,11 @@ void Universe::run_events()
         }
       }
 
+    }
+    
+    for (auto kv : this->colonies) {
+      auto colony = kv.second;
+      colony->update(dt);
     }
 
     usleep(100*1000); i++;
