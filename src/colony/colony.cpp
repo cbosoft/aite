@@ -64,3 +64,9 @@ double Colony::get_number()
 {
   return this->population_stats.number;
 }
+
+double Colony::get_inception_time()
+{
+  return this->time_of_inception;
+}
+

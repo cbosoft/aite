@@ -118,5 +118,6 @@ class Colony {
 
     Event_ptr get_bootstrap_event();
     double get_number();
+    double get_inception_time();
 
 };
