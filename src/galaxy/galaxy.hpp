@@ -43,7 +43,7 @@ class Galaxy {
 
     static Galaxy_ptr generate(Vec3 position);
 
-    void introduce(Colony_ptr);
+    System_ptr new_system();
 
     Vec3 get_position() const;
     unsigned long get_id() const;

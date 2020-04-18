@@ -27,6 +27,11 @@ unsigned long System::get_id() const
   return this->id;
 }
 
+Planet_ptr System::get_random_planet()
+{
+  return this->planets[uniform_rand_i(0, this->planets.size()-1)];
+}
+
 
 static unsigned long id_counter = 0;
 

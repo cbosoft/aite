@@ -26,7 +26,7 @@ class System {
 
     static System_ptr generate(Vec3 position);
 
-    void introduce(Colony_ptr colony);
+    Planet_ptr get_random_planet();
 
     Vec3 get_position() const;
     unsigned long get_id() const;

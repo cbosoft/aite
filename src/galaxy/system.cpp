@@ -3,7 +3,7 @@
 #include "../system/system.hpp"
 #include "../util/random.hpp"
 
-void Galaxy::introduce(Colony_ptr colony)
+System_ptr Galaxy::new_system()
 {
   Vec3 position;
 
@@ -26,7 +26,5 @@ void Galaxy::introduce(Colony_ptr colony)
 
   }
 
-  System_ptr system = System::generate(position);
-
-  system->introduce(colony);
+  return System::generate(position);
 }
