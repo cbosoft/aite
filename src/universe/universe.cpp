@@ -23,6 +23,11 @@ void Universe::set_time(double new_time)
   this->time = new_time;
 }
 
+Colony_ptr Universe::get_colony(std::string name)
+{
+  return this->colonies[name];
+}
+
 
 static Universe_ptr the_universe = nullptr;
 

@@ -45,6 +45,7 @@ class Universe {
     bool has_colony(std::string name);
     Colony_ptr add_colony(std::string name);
     Galaxy_ptr get_galaxy(Vec3 point);
+    Colony_ptr get_colony(std::string name);
 
     void run_events();
     void stop();
