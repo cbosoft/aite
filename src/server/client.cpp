@@ -37,7 +37,9 @@ void GameServer::process_client_requests(int client_fd)
   }
 
   std::cerr << "client exited" << std::endl;
-  // TODO mark this fd as exit
+
+  std::lock_guard<std::mutex> lock(this->fds_mutex);
+  this->invalid_fds.push_back(client_fd);
 }
 
 void GameServer::process_client_requests_in_bg(int client_fd)
