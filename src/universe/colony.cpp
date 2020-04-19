@@ -11,6 +11,7 @@ Colony_ptr Universe::add_colony(std::string name)
   Galaxy_ptr galaxy = this->get_galaxy(vec3_urand(-this->size, this->size));
   System_ptr system = galaxy->new_system();
   Planet_ptr planet = system->get_random_planet();
+  // TODO make planet surviveable
 
   std::cerr << "new colony being introduced: " << name << " on Planet #" << planet->get_id() << std::endl;
 
