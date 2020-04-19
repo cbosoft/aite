@@ -17,3 +17,13 @@ Galaxy_ptr Universe::get_galaxy(Vec3 position)
   return Galaxy::generate(position);
 }
 
+
+Galaxy_ptr Universe::get_galaxy(unsigned long id) const
+{
+  auto it = this->galaxies_by_id.find(id);
+  if (it == this->galaxies_by_id.end()) {
+    throw IndexError(Formatter() << "Galaxy with ID " << id << " not in universe.");
+  }
+
+  return (*it).second;
+}

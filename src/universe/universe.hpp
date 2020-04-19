@@ -29,6 +29,7 @@ class Universe {
     std::list<Event_ptr> events;
 
     std::list<Galaxy_ptr> galaxies;
+    std::map<unsigned long, Galaxy_ptr> galaxies_by_id;
 
     double time; // "indiction" -> 15 earth years
     void set_time(double new_time);
@@ -45,6 +46,7 @@ class Universe {
     bool has_colony(std::string name);
     Colony_ptr add_colony(std::string name);
     Galaxy_ptr get_galaxy(Vec3 point);
+    Galaxy_ptr get_galaxy(unsigned long id) const;
     Colony_ptr get_colony(std::string name);
 
     void run_events();
