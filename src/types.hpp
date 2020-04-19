@@ -1,4 +1,6 @@
 #pragma once
+#include <list>
+#include <map>
 #include <memory>
 
 class HistoryElement;
@@ -15,6 +17,7 @@ typedef std::shared_ptr<Event> Event_ptr;
 
 class Element;
 typedef std::shared_ptr<Element> Element_ptr;
+typedef std::list<std::pair<std::shared_ptr<Element>, double>> ElementalAbundance;
 
 class Compound;
 typedef std::shared_ptr<Compound> Compound_ptr;
