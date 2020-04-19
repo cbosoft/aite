@@ -3,11 +3,12 @@
 #include "../util/random.hpp"
 
 
-System::System(Vec3 position, double size, unsigned long id)
+System::System(Vec3 position, double size, unsigned long id, Galaxy_ptr galaxy)
 {
   this->position = position;
   this->size = size;
   this->id = id;
+  this->galaxy = galaxy;
 }
 
 
@@ -32,19 +33,25 @@ Planet_ptr System::get_random_planet()
   return this->planets[uniform_rand_i(0, this->planets.size()-1)];
 }
 
+Galaxy_ptr System::get_galaxy() const
+{
+  return this->galaxy;
+}
+
+
 
 static unsigned long id_counter = 0;
 
-System_ptr System::generate(Vec3 position)
+System_ptr System::generate(Vec3 position, Galaxy_ptr galaxy)
 {
   double size = lognormal_rand(3, 1);
-  auto system = std::make_shared<System>(position, size, id_counter++);
+  System_ptr system = std::make_shared<System>(position, size, id_counter++, galaxy);
 
   int nplanets = std::round(normal_rand(10, 2));
   double planet_distance = 0.0;
   for (int i = 0; i < nplanets; i++) {
     planet_distance += lognormal_rand(10, 1);
-    Planet_ptr planet = Planet::generate(planet_distance);
+    Planet_ptr planet = Planet::generate(planet_distance, system);
     system->planets.push_back(planet);
   }
 
