@@ -14,7 +14,10 @@ Galaxy_ptr Universe::get_galaxy(Vec3 position)
     }
   }
 
-  return Galaxy::generate(position);
+  Galaxy_ptr galaxy = Galaxy::generate(position);
+  this->galaxies.push_back(galaxy);
+  this->galaxies_by_id[galaxy->get_id()] = galaxy;
+  return galaxy;
 }
 
 
