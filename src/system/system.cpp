@@ -33,6 +33,22 @@ Planet_ptr System::get_random_planet()
   return this->planets[uniform_rand_i(0, this->planets.size()-1)];
 }
 
+unsigned int System::get_planet_index(Planet_ptr planet) const
+{
+  unsigned int index = 0;
+  auto it = this->planets.begin();
+  for (;it != this->planets.end(); it++, index++) {
+    auto other_planet = (*it);
+
+    if (planet == other_planet) {
+      return index;
+    }
+
+  }
+
+  throw IndexError("Planet not found in system!");
+}
+
 Galaxy_ptr System::get_galaxy() const
 {
   return this->galaxy;

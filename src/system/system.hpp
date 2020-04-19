@@ -32,6 +32,7 @@ class System {
 
     Vec3 get_position() const;
     unsigned long get_id() const;
+    unsigned int get_planet_index(Planet_ptr planet) const;
     Galaxy_ptr get_galaxy() const;
 
 
