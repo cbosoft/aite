@@ -5,11 +5,9 @@
 
 static unsigned long id_counter = 0;
 
-std::shared_ptr<Planet> Planet::generate(double distance, System_ptr system)
+std::shared_ptr<Planet> Planet::generate(double position, System_ptr system)
 {
-  auto planet = std::make_shared<Planet>(id_counter++, system);
-
-  planet->distance = distance;
+  auto planet = std::make_shared<Planet>(id_counter++, position, system);
 
   // diameter
   planet->diameter = bilognormal_rand(-2.5, 0.7, 0.5, 0.6, 0.8);

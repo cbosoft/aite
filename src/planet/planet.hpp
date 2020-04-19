@@ -4,14 +4,14 @@
 
 #include "../types.hpp"
 #include "description.hpp"
+#include "../system/object.hpp"
 
-class Planet {
+class Planet : public SystemObject {
 
   private:
 
     unsigned long id;
 
-    double distance;
     double diameter;
     double density_core, density_mantle, density_deep, density_surface, density_average;
     double pressure_low, pressure_high, pressure_average;
@@ -31,10 +31,10 @@ class Planet {
 
   public:
 
-    Planet(unsigned long id, System_ptr);
+    Planet(unsigned long id, double position, System_ptr system);
     ~Planet();
 
-    static Planet_ptr generate(double distance, System_ptr system);
+    static Planet_ptr generate(double position, System_ptr system);
 
     const PlanetDescriptionData &describe();
 

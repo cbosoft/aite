@@ -1,8 +1,8 @@
 #include "planet.hpp"
 
-Planet::Planet(unsigned long id, System_ptr system) : system(system)
+Planet::Planet(unsigned long id, double position, System_ptr system) 
+  : SystemObject(position), id(id), system(system)
 {
-  this->id = id;
   this->description_data.set = false;
 }
 
