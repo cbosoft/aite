@@ -5,8 +5,8 @@ gmon.out
 vgcore*
 aite_client
 aite_server
+test
 obj
-tests
 analysis.txt
 d.dot
 */.*.un~

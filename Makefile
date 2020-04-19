@@ -81,6 +81,12 @@ aite_server: $(SERVER) $(OBJ) $(HDR)
 	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
 	@$(CXX) $(CFLAGS) $(DEFS) $(SERVER) $(OBJ) -o $@ $(LINK)
 
+test: obj/main.o $(OBJ) $(HDR)
+	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
+	@$(CXX) $(CFLAGS) $(DEFS) obj/main.o $(OBJ) -o $@ $(LINK)
+
+
+
 
 prof_pdf:
 	gprof aite gmon.out > analysis.txt
