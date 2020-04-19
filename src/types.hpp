@@ -1,6 +1,9 @@
 #pragma once
 #include <memory>
 
+class HistoryElement;
+typedef std::shared_ptr<HistoryElement> HistoryElement_ptr;
+
 class Activity;
 typedef std::shared_ptr<Activity> Activity_ptr;
 
