@@ -104,6 +104,7 @@ EXCEPTION(RecursionError, "RecursionError");
 EXCEPTION(TestError, "TestError");
 EXCEPTION(InactionError, "InactionError");
 EXCEPTION(SocketError, "SocketError");
+EXCEPTION(WordNotFoundError, "WordNotFoundError");
 
 
 
