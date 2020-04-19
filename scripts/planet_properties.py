@@ -1,8 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-import lmfit
-
 from csv import read_csv
 
 def do_hist(v):
@@ -163,6 +161,7 @@ def plot_elements(element_ax, density_data):
     plt.xticks(ticks=[0, 20, 40, 60, 80, 100, 117], labels=['H', 'Ca', 'Zr', 'Nd', 'Hg', 'Fm', 'Og'])
     #plt.xscale('log')
     plt.yticks([])
+
 
 
 
