@@ -1,7 +1,7 @@
 #include "element.hpp"
 
 
-#define E(name, symbol, electrons, weight) std::make_shared<Element>(Element(name, symbol, electrons, weight))
+#define E(name, symbol, electrons, weight) std::make_shared<Element>(Element(name, symbol, electrons, weight, 0.0, 0.0, 0.0))
 
 static std::array<std::shared_ptr<Element>, 118> table = {
   E("Hydrogen",      "H",   1,   1.0),

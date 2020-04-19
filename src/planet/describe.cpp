@@ -2,7 +2,7 @@
 #include <cmath>
 
 #include "planet.hpp"
-#include "../element/element.hpp"
+#include "../chemistry/element.hpp"
 #include "../constants.hpp"
 
 const PlanetDescriptionData &Planet::describe()

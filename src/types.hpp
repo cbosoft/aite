@@ -13,6 +13,9 @@ typedef std::shared_ptr<Event> Event_ptr;
 class Element;
 typedef std::shared_ptr<Element> Element_ptr;
 
+class Compound;
+typedef std::shared_ptr<Compound> Compound_ptr;
+
 class Colony;
 typedef std::shared_ptr<Colony> Colony_ptr;
 

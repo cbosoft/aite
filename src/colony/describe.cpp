@@ -3,7 +3,7 @@
 
 #include "colony.hpp"
 #include "../planet/planet.hpp"
-#include "../element/element.hpp"
+#include "../chemistry/element.hpp"
 
 std::string Colony::describe(const Galaxy_ptr galaxy)
 {

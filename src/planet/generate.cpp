@@ -1,6 +1,6 @@
 #include <iostream>
 #include "planet.hpp"
-#include "../element/element.hpp"
+#include "../chemistry/element.hpp"
 #include "../util/random.hpp"
 
 static unsigned long id_counter = 0;

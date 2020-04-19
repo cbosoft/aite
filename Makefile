@@ -27,10 +27,11 @@ COLONY = \
 				 obj/colony/update.o \
 				 obj/colony/describe.o
 
-ELEMENT = \
-					obj/element/element.o \
-					obj/element/distribute.o \
-					obj/element/table.o
+CHEMISTRY = \
+					obj/chemistry/element.o \
+					obj/chemistry/distribute.o \
+					obj/chemistry/electrons.o \
+					obj/chemistry/table.o
 
 EVENT = \
 				obj/event/event.o \
@@ -57,7 +58,7 @@ SERVER = \
 				 obj/server/args.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(ELEMENT) $(EVENT) $(UTIL)
+OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(CHEMISTRY) $(EVENT) $(UTIL)
 LINK = -lpthread
 DEFS =
 
