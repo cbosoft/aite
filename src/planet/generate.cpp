@@ -5,9 +5,9 @@
 
 static unsigned long id_counter = 0;
 
-std::shared_ptr<Planet> Planet::generate(double distance)
+std::shared_ptr<Planet> Planet::generate(double distance, System_ptr system)
 {
-  auto planet = std::make_shared<Planet>(id_counter++);
+  auto planet = std::make_shared<Planet>(id_counter++, system);
 
   planet->distance = distance;
 
