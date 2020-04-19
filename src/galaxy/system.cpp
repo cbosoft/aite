@@ -1,4 +1,5 @@
 #include "galaxy.hpp"
+#include "../universe/universe.hpp"
 #include "../colony/colony.hpp"
 #include "../system/system.hpp"
 #include "../util/random.hpp"
@@ -26,5 +27,6 @@ System_ptr Galaxy::new_system()
 
   }
 
-  return System::generate(position);
+  Galaxy_ptr self_ptr = Universe::get_universe()->get_galaxy(this->id);
+  return System::generate(position, self_ptr);
 }
