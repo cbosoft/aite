@@ -17,5 +17,5 @@ int main(void)
   universe->add_event(NewColonyEvent::create("new1"));
 
   // run event processing loop
-  universe->run();
+  universe->run_events();
 }
