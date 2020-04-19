@@ -123,6 +123,7 @@ class Colony {
     Colony(std::string name, Planet_ptr starting_world, double time_of_inception);
     ~Colony();
 
+    // TODO add moons, stars, nebula, asteroid fields
     void discover(const Planet_ptr planet);
     void discover(const System_ptr system);
     void discover(const Galaxy_ptr galaxy);
