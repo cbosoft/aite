@@ -5,7 +5,23 @@
 #include "../planet/planet.hpp"
 #include "../element/element.hpp"
 
-std::string Colony::describe_planet(const std::shared_ptr<Planet> planet) const
+std::string Colony::describe(const Galaxy_ptr galaxy)
+{
+  // TODO
+  (void) galaxy;
+  return "nope";
+}
+
+
+std::string Colony::describe(const System_ptr system)
+{
+  // TODO
+  (void) system;
+  return "nope";
+}
+
+
+std::string Colony::describe(const Planet_ptr planet)
 {
   auto d = planet->describe();
 

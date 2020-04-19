@@ -2,13 +2,19 @@
 
 #include "colony.hpp"
 #include "../universe/universe.hpp"
+#include "../planet/planet.hpp"
+#include "../system/system.hpp"
 
 
 Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
 {
   this->name = name;
-  this->discover_planet(planet);
-  this->inhabited_planet.push_back(planet);
+  this->discover(planet);
+  this->inhabited_planets.push_back(planet);
+  auto system = planet->get_system();
+  this->inhabited_systems.push_back(system);
+  auto galaxy = system->get_galaxy();
+  this->inhabited_galaxies.push_back(galaxy);
   this->time_of_inception = time_of_inception;
 
   this->population_stats = {

@@ -107,16 +107,34 @@ class Colony {
     std::string strategy;
 
     std::map<int, std::string> planet_log;
-    std::list<Planet_ptr> inhabited_planet;
-    std::string name_planet(const Planet_ptr planet) const;
+    std::map<int, std::string> system_log;
+    std::map<int, std::string> galaxy_log;
+    std::string get_name(const Planet_ptr planet);
+    std::string get_name(const System_ptr planet);
+    std::string get_name(const Galaxy_ptr planet);
+    std::list<Planet_ptr> inhabited_planets;
+    std::list<System_ptr> inhabited_systems;
+    std::list<Galaxy_ptr> inhabited_galaxies;
+
+
 
   public:
 
     Colony(std::string name, Planet_ptr starting_world, double time_of_inception);
     ~Colony();
 
-    void discover_planet(const Planet_ptr planet);
-    std::string describe_planet(const Planet_ptr planet) const;
+    void discover(const Planet_ptr planet);
+    void discover(const System_ptr system);
+    void discover(const Galaxy_ptr galaxy);
+
+    std::string describe(const Planet_ptr planet);
+    std::string describe(const System_ptr system);
+    std::string describe(const Galaxy_ptr galaxy);
+
+    bool have_discovered(const Planet_ptr planet) const;
+    bool have_discovered(const System_ptr system) const;
+    bool have_discovered(const Galaxy_ptr galaxy) const;
+
     void startoff(Planet_ptr planet);
     void update(double dt);
 
