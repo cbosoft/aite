@@ -31,7 +31,5 @@ Galaxy_ptr Galaxy::generate(Vec3 position)
 {
 
   double size = lognormal_rand(9, 2);
-  Galaxy_ptr galaxy = std::make_shared<Galaxy>(position, size, id_counter++);
-
-  return galaxy;
+  return std::make_shared<Galaxy>(position, size, id_counter++);
 }
