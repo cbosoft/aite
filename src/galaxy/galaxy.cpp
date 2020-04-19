@@ -19,6 +19,11 @@ Vec3 Galaxy::get_position() const
   return this->position;
 }
 
+unsigned long Galaxy::get_id() const
+{
+  return this->id;
+}
+
 
 static unsigned long id_counter = 0;
 
