@@ -72,6 +72,7 @@ class Planet {
   private:
 
     unsigned long id;
+
     double distance;
     double diameter;
     double density_core, density_mantle, density_deep, density_surface, density_average;
@@ -88,16 +89,19 @@ class Planet {
 
     PlanetDescriptionData description_data;
 
+    System_ptr system;
+
   public:
 
-    Planet(unsigned long id);
+    Planet(unsigned long id, System_ptr);
     ~Planet();
 
-    static Planet_ptr generate(double distance);
+    static Planet_ptr generate(double distance, System_ptr system);
 
     const PlanetDescriptionData &describe();
 
     double get_diameter() const;
     unsigned long get_id() const;
+    System_ptr get_system() const;
 };
 
