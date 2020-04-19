@@ -4,22 +4,7 @@
 #include <memory>
 
 #include "../util/vec.hpp"
-
-
-class System;
-typedef std::shared_ptr<System> System_ptr;
-
-
-class Colony;
-typedef std::shared_ptr<Colony> Colony_ptr;
-
-
-class Galaxy;
-typedef std::shared_ptr<Galaxy> Galaxy_ptr;
-
-
-class Universe;
-typedef std::shared_ptr<Universe> Universe_ptr;
+#include "../types.hpp"
 
 
 class Galaxy {
