@@ -98,13 +98,70 @@
 ** Nebulae
 * Galaxies
 * Colonies
-  - Colonies are groups of people seeking to explore and expand through the
-    territories of the universe.
-  - A colony will grow and thrive on a planet, but will eventually need to move
-    onward, seeking new lands and materials.
-  - They can only explore where they can; their *technology* will hold them
-    back if they can't survive on a planet, or if they can't detect if a planet
-    contains what they desire.
+
+  Colonies are groups of people seeking to explore and expand through the
+  territories of the universe.
+
+  A colony will grow and thrive on a planet, but will eventually need to move
+  onward, seeking new lands and materials.
+
+  They can only explore where they can; their *technology* will hold them
+  back if they can't survive on a planet, or if they can't detect if a planet
+  contains what they desire.
+
+** Statistics
+
+   Colony stats are split into three groups: Population, Technology,
+   Culture. Each group has different effects on the effectiveness of your
+   society. Setting activities for the colony will grow or shrink a set of
+   stats, and alter the course of development for your colony!
+
+*** Population
+    
+    Population stats covers the size and survivability of a colony. Things
+    like growth rate (birth rate - death rate), resilience, diversity, and mood
+    are affected by the technology you have and the culture available.
+
+    Number is the pure size of the colony; just the number of people. Having
+    more people will allow activities to proceed faster as more people work
+    towards them, but will increase reliance on natural resources.
+
+*** Technology
+
+    As an isolated colony on a harsh exoplanet, there is probably little more
+    important than a technology for survival. Tech stats govern travel speed,
+    survivability in limbo --- the space between --- as well as ability to learn
+    new technologies, assimilate alien technology (if there is any ;) and so on.
+
+    Initially, a colony is placed on a survivable planet. As the colony grows,
+    it is necessary to expand out, thus new technologies are required to
+    facilitate survival on oppressive high-G planets; on titanic gas giants; or
+    scorching hot solar neighbours.
+
+*** Culture
+
+    Cultural stats govern the non-technology creations of a colony. Religion is
+    not inherent to a colony, but may arise naturally as time goes on, or
+    perhaps events will lead to belief...
+
+    Artistic and religiious output will, generally, positively affect a colony,
+    but only a small percentage of the population can work towards either of
+    these goals.
+
+    Peace is the result of having enough to do but not toomuch, enough food, and
+    not being overcrowded. Having a high peace stat ensures maximum
+    efficiency. However, what if working people a little too hard is the better
+    option? (reduced efficiency, but longer hours = more work output?)
+
+** Activity
+   - A colony may engage in activity to pursue a goal. Activity might be
+     research of a technology, investigation of surroundings, exploration etc
+   - These are updated with time. e.g. having a portion of the population on
+     research duty will result in a continuous advance
+   - Some activities are on going, others are limited (more like temporary push)
+   - In-game, these are seen as like governing policy; the people are told that
+     /this/ is the best route for success.
+   - There may be dissenters, and people may ignore policy. This will scale with
 * History
   - planets and systems will have a coherent history; planets in the same
     system, if one supports life then it probably does and the other planets
