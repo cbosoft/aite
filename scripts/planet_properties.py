@@ -163,6 +163,7 @@ def plot_elements(element_ax, density_data):
     plt.yticks([])
 
 def plot_colour(colour_ax):
+    # https://stackoverflow.com/questions/3018313/algorithm-to-convert-rgb-to-hsv-and-hsv-to-rgb-in-range-0-255-for-both
     # rgb hsv2rgb(hsv in)
     # {
     #     double      hh, p, q, t, ff;
