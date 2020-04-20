@@ -2,6 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from csv import read_csv
+from colour_names import name_colour
 
 def do_hist(v):
     v = [vi for vi in v if not np.isnan(vi)]
@@ -147,7 +148,6 @@ def plot_elements(element_ax, density_data):
         dist = np.where(dist > nelem, np.subtract(nelem, np.fmod(dist, nelem)), dist)
 
         sdist = np.random.normal(mu, 2*(std+mu), l)
-        print(mu, 2*(std+mu))
         sdist = np.where(sdist < 0.0, np.add(np.abs(sdist), mu), sdist)
         sdist = np.where(sdist > nelem, np.subtract(nelem, np.fmod(sdist, nelem)), sdist)
         dist = np.where(np.random.uniform(0, 1, l) > 0.5, dist, sdist)
@@ -162,67 +162,105 @@ def plot_elements(element_ax, density_data):
     #plt.xscale('log')
     plt.yticks([])
 
-def plot_colour(colour_ax):
+
+def hsv2rgb(h, s, v):
+
+    if s > 1.0:
+        s = 1.0
+    if s < 0.0:
+        s = 0.0
+    if v > 1.0:
+        v = 1.0
+    if v < 0.0:
+        v = 0.0
     # https://stackoverflow.com/questions/3018313/algorithm-to-convert-rgb-to-hsv-and-hsv-to-rgb-in-range-0-255-for-both
-    # rgb hsv2rgb(hsv in)
-    # {
-    #     double      hh, p, q, t, ff;
-    #     long        i;
-    #     rgb         out;
-    # 
     #     if(in.s <= 0.0) {       // < is bogus, just shuts up warnings
     #         out.r = in.v;
     #         out.g = in.v;
     #         out.b = in.v;
     #         return out;
     #     }
-    #     hh = in.h;
-    #     if(hh >= 360.0) hh = 0.0;
-    #     hh /= 60.0;
-    #     i = (long)hh;
-    #     ff = hh - i;
-    #     p = in.v * (1.0 - in.s);
-    #     q = in.v * (1.0 - (in.s * ff));
-    #     t = in.v * (1.0 - (in.s * (1.0 - ff)));
-    # 
-    #     switch(i) {
-    #     case 0:
-    #         out.r = in.v;
-    #         out.g = t;
-    #         out.b = p;
-    #         break;
-    #     case 1:
-    #         out.r = q;
-    #         out.g = in.v;
-    #         out.b = p;
-    #         break;
-    #     case 2:
-    #         out.r = p;
-    #         out.g = in.v;
-    #         out.b = t;
-    #         break;
-    # 
-    #     case 3:
-    #         out.r = p;
-    #         out.g = q;
-    #         out.b = in.v;
-    #         break;
-    #     case 4:
-    #         out.r = t;
-    #         out.g = p;
-    #         out.b = in.v;
-    #         break;
-    #     case 5:
-    #     default:
-    #         out.r = in.v;
-    #         out.g = p;
-    #         out.b = q;
-    #         break;
-    #     }
-    #     return out;     
-    # }
-    # TODO
-    pass
+    if s == 0.0:
+        return (v, v, v)
+
+    hh = np.fmod(h, 360.0)
+    hh /= 60.0
+    i = int(hh);
+    ff = hh - float(i)
+    p = v*(1.0 - s)
+    q = v*(1.0 - s*ff)
+    t = v*(1.0 - (s*(1.0 - ff)))
+    if i == 0:
+        return v, t, p
+    elif i == 1:
+        return q, v, p
+    elif i == 2:
+        return p, v, t
+    elif i == 3:
+        return p, q, v
+    elif i == 4:
+        return t, p, v
+    else:
+        return v, p, q
+
+
+
+
+
+
+def choose_palette():
+    primary_colour = [
+        np.random.uniform(0.0, 360.0), 
+        np.subtract(1.0, np.abs(np.subtract(np.random.normal(1.0, 0.3), 1.0))),
+        np.subtract(1.0, np.abs(np.subtract(np.random.normal(1.0, 0.3), 1.0)))
+    ]
+
+    light_colour = list(primary_colour)
+    light_colour[0] *= np.random.normal(1.0, 0.1)
+    light_colour[1] *= np.random.normal(1.0, 0.1)
+    light_colour[2] *= 1.1
+    light_colour[2] = min([light_colour[2], 1.0])
+
+    unsat_colour = list(primary_colour)
+    unsat_colour[0] *= np.random.normal(1.0, 0.1)
+    unsat_colour[1] -= np.random.uniform(0.2, 0.4)
+    unsat_colour[2] *= np.random.normal(1.0, 0.1)
+
+    complementary_colour = [
+        primary_colour[0] + np.random.normal(180.0, 10.0), 
+        primary_colour[1]*np.random.uniform(0.9, 1.1),
+        primary_colour[2]*np.random.uniform(0.9, 1.1)
+    ]
+
+    complementary_light = list(complementary_colour)
+    complementary_light[0] *= np.random.normal(1.0, 0.1)
+    complementary_light[1] *= np.random.normal(1.0, 0.1)
+    complementary_light[2] *= 1.1
+    complementary_light[2] = min([light_colour[2], 1.0])
+
+    complementary_unsat = list(complementary_colour)
+    complementary_unsat[0] *= np.random.normal(1.0, 0.1)
+    complementary_unsat[1] -= np.random.uniform(0.2, 0.4)
+    complementary_unsat[2] *= np.random.normal(1.0, 0.1)
+
+    colours = [primary_colour, light_colour, unsat_colour,
+            complementary_colour, complementary_light, complementary_unsat]
+    categories = ['primary', 'light', 'unsaturated', 'complementary', 'compl. light', 'compl. unsat']
+    return categories, colours
+
+def plot_colour(colour_ax):
+    plt.sca(colour_ax)
+
+    n = 5
+
+    for i in range(n):
+        categories, colours = choose_palette()
+        for j, colour in enumerate(colours):
+            colour_ax.add_artist(plt.Circle([i, j], 0.3, color=hsv2rgb(*colour)))
+            plt.text(i,j,name_colour(colour), ha='center', va='center')
+    plt.xlim(left=-0.5, right=n-0.5)
+    plt.ylim(bottom=-0.5, top=len(colours)-0.5)
+    plt.yticks(ticks=list(range(len(categories))), labels=categories)
 
 
 
@@ -236,7 +274,7 @@ if __name__ == '__main__':
 
     fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(20,10))
 
-    size_ax, density_ax, temp_ax, pressure_ax, element_ax, unkn_ax = axes.flatten()
+    size_ax, density_ax, temp_ax, pressure_ax, element_ax, colour_ax = axes.flatten()
 
     size_data = planet_data['fpl_smax']
     plot_size_dist(size_data, size_ax)
@@ -249,7 +287,8 @@ if __name__ == '__main__':
 
     plot_pressure(pressure_ax)
 
-    plot_elements(element_ax, density_data)
+    #plot_elements(element_ax, density_data)
 
+    plot_colour(colour_ax)
 
     plt.savefig('plot.pdf', bbox_inches='tight')
