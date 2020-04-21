@@ -1,5 +1,7 @@
 #pragma once
 #include <random>
+#include <iterator>
+
 enum RandomLikelihood {
   Likelihood_Impossible,   // nothing is truly impossible!
   Likelihood_VeryRare,     // unheard of, thought impossible, not even considered
@@ -24,3 +26,9 @@ int uniform_rand_i(int min, int max);
 bool check_likelihood(RandomLikelihood likelihood);
 
 
+// https://stackoverflow.com/questions/6942273/how-to-get-a-random-element-from-a-c-container
+template<typename Iter>
+Iter select_randomly(Iter start, Iter end) {
+    std::advance(start, uniform_rand_i(0, std::distance(start, end)-1));
+    return start;
+}
