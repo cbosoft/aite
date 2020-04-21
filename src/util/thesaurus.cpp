@@ -11,13 +11,98 @@ const static std::regex RE_THESA("\\{\\{([\\w\\s]*)(?:,(\\w+))?(?:,(\\w+))?\\}\\
 
 // not actually a fully fledged thesaurus, just fetches words from a category
 static const std::map<std::string, std::vector<std::array<const char *, 5>>> THESAURUS = {
-  { 
-    "start", {
-      {"start", NULL, "started", "starting", "start"},
-      {"beginning", NULL, "begun", "beginning", "begin"},
-      {"Caledonia", NULL, NULL, NULL, NULL},
-    },
-  }
+
+  // MOSTLY NOUNS
+  {"start", {
+              {"start", nullptr, "started", "starting", "start"},
+              {"beginning", nullptr, "begun", "beginning", "begin"},
+              {"Caledonia", nullptr, nullptr, nullptr, nullptr},
+            }},
+  {"phenomenon", {
+                   {"phenomenon", nullptr, nullptr, nullptr, nullptr},
+                   {"property", nullptr, nullptr, nullptr, nullptr}
+                 }},
+
+  // WEATHER
+  {"weather", {
+                {"weather", nullptr, nullptr, nullptr, nullptr},
+                {"climate", nullptr, nullptr, nullptr, nullptr}
+              }},
+  {"rain", {
+             {"rain", nullptr, "rained", "raining", "rain"},
+             {"showers", nullptr, nullptr, "showering", nullptr},
+             {"precipitation", nullptr, "precipitated", "precipitating", "precipitate"}
+           }},
+  {"winds", {
+             {"winds", nullptr, "rained", "raining", "rain"},
+             {"gusts", nullptr, "precipitated", "precipitating", "precipitate"}
+           }},
+  {"strong winds", {
+             {"gales", nullptr, "precipitated", "precipitating", "precipitate"},
+             {"cylcones", nullptr, "precipitated", "precipitating", "precipitate"},
+             {"typhoons", nullptr, "precipitated", "precipitating", "precipitate"},
+           }},
+
+  // ADJECTIVES
+  {"very small", {
+            {nullptr, "very small", nullptr, nullptr, nullptr},
+            {nullptr, "tiny", nullptr, nullptr, nullptr}
+           }},
+  {"small", {
+            {nullptr, "small", nullptr, nullptr, nullptr},
+            {nullptr, "slight", nullptr, nullptr, nullptr}
+           }},
+  {"big", {
+            {nullptr, "big", nullptr, nullptr, nullptr},
+            {nullptr, "large", nullptr, nullptr, nullptr},
+            {nullptr, "not inconsiderably sized", nullptr, nullptr, nullptr},
+            {nullptr, "sizeable", nullptr, nullptr, nullptr},
+            {nullptr, "hefty", nullptr, nullptr, nullptr},
+            {nullptr, "substantial", nullptr, nullptr, nullptr},
+            {nullptr, "ample", nullptr, nullptr, nullptr},
+          }},
+  {"very big", {
+            {nullptr, "very big", nullptr, nullptr, nullptr},
+            {nullptr, "huge", nullptr, nullptr, nullptr},
+            {nullptr, "enormous", nullptr, nullptr, nullptr},
+            {nullptr, "tremendous", nullptr, nullptr, nullptr},
+          }},
+  {"very very big", {
+            {nullptr, "colosal", nullptr, nullptr, nullptr},
+            {nullptr, "immense", nullptr, nullptr, nullptr},
+            {nullptr, "humongous", nullptr, nullptr, nullptr},
+            {nullptr, "vast", nullptr, nullptr, nullptr},
+            {nullptr, "brobdingnagian", nullptr, nullptr, nullptr},
+          }},
+  {"strong", {
+            {nullptr, "strong", nullptr, nullptr, nullptr},
+            {nullptr, "severe", nullptr, nullptr, nullptr},
+            {nullptr, "intense", nullptr, nullptr, nullptr},
+            {nullptr, "forceful", nullptr, nullptr, nullptr},
+          }},
+  {"lively", {
+            {nullptr, "lively", nullptr, nullptr, nullptr},
+            {nullptr, "active", nullptr, nullptr, nullptr}
+           }},
+  {"violent", {
+            {nullptr, "violent", nullptr, nullptr, nullptr},
+            {nullptr, "tumultuous", nullptr, nullptr, nullptr},
+            {nullptr, "riotous", nullptr, nullptr, nullptr},
+            {nullptr, "turbulent", nullptr, nullptr, nullptr},
+           }},
+  {"elaborate", {
+            {nullptr, "elaborate", nullptr, nullptr, nullptr},
+            {nullptr, "complex", nullptr, nullptr, nullptr},
+            {nullptr, "labyrinthine", nullptr, nullptr, nullptr},
+           }},
+
+
+  // PHRASES
+  {"occasionally", {
+                   {"from time to time", nullptr, nullptr, nullptr, nullptr},
+                   {"occasionally", nullptr, nullptr, nullptr, nullptr}
+                 }},
+
 };
 
 static const char *FORM_TO_STR[] = {"Noun", "Adjective", "Verb (past tense)", "Verb (present tense)", "Verb (future tense)"};
