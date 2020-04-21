@@ -9,6 +9,7 @@
 
 const static std::regex RE_THESA("\\{\\{([\\w\\s]*)(?:,(\\w+))?(?:,(\\w+))?\\}\\}");
 
+// TODO read this from file
 // not actually a fully fledged thesaurus, just fetches words from a category
 static const std::map<std::string, std::vector<std::array<const char *, 5>>> THESAURUS = {
 

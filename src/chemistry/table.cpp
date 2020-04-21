@@ -3,6 +3,7 @@
 
 #define E(name, symbol, electrons, weight) std::make_shared<Element>(Element(name, symbol, electrons, weight, 0.0, 0.0, 0.0))
 
+// TODO load from file
 static std::array<std::shared_ptr<Element>, 118> table = {
   E("Hydrogen",      "H",   1,   1.0),
   E("Helium",        "He",  2,   4.0),
