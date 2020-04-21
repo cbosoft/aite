@@ -6,16 +6,14 @@
 #include "universe/universe.hpp"
 #include "util/random.hpp"
 #include "event/new_colony_event.hpp"
+#include "feature/feature.hpp"
 
 int main(void)
 {
   seed(time(NULL));
 
-  Universe_ptr universe = Universe::get_universe();
-
-  // ask the universe to create new colony
-  universe->add_event(NewColonyEvent::create("new1"));
-
-  // run event processing loop
-  universe->run_events();
+  for (int i = 0; i < 100; i++) {
+    Feature_ptr feat = Feature::generate(FO_Planet);
+    std::cerr << feat->describe() << "\n\n";
+  }
 }

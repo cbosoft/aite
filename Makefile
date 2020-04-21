@@ -38,6 +38,10 @@ EVENT = \
 				obj/event/from_string.o \
 				obj/event/new_colony_event.o
 
+FEATURE = \
+					obj/feature/feature.o \
+					obj/feature/generate.o
+
 UTIL = \
 			 obj/util/random.o \
 			 obj/util/time.o \
@@ -58,7 +62,7 @@ SERVER = \
 				 obj/server/args.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(CHEMISTRY) $(EVENT) $(UTIL)
+OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(CHEMISTRY) $(EVENT) $(FEATURE) $(UTIL)
 LINK = -lpthread
 DEFS =
 

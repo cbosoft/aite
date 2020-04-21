@@ -3,6 +3,9 @@
 #include <map>
 #include <memory>
 
+class Feature;
+typedef std::shared_ptr<Feature> Feature_ptr;
+
 class HistoryElement;
 typedef std::shared_ptr<HistoryElement> HistoryElement_ptr;
 
