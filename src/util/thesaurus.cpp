@@ -26,6 +26,10 @@ static const char *FORM_TO_STR[] = {"Noun", "Adjective", "Verb (past tense)", "V
 
 std::string get_random_synonym(std::string word, NOUN_ADJECTIVE_VERB form, TENSE tense)
 {
+  // TODO: if keyword is capitalised, the result should be too.
+  // TODO: if word is plural, result should be too
+  
+
   auto result = THESAURUS.find(word);
   if (result == THESAURUS.end())
     throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
