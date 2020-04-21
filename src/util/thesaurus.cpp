@@ -45,7 +45,7 @@ std::string get_random_synonym(std::string word, NOUN_ADJECTIVE_VERB form, TENSE
   }
 
   const char *synonym = nullptr;
-  for (int i = 0; synonym != nullptr; i++) {
+  for (int i = 0; synonym == nullptr; i++) {
 
     if (i > 100) {
       throw WordNotFoundError(Formatter() << "Could not find word for category " << word << " of type " << FORM_TO_STR[cindex] << "." );
