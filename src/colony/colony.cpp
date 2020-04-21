@@ -18,14 +18,17 @@ Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
   this->time_of_inception = time_of_inception;
 
   this->population_stats = {
-    .birth_rate = 0.5,
-    .death_rate = 0.2,
+    .growth_rate = 0.5,
     .resilience = 1.0,
     .diversity = 1.0,
+    .mood = 0.0,
    
     .number = 100.0,
    
-    .genetics_xp = 0.0
+    .genetics_xp = 0.0,
+
+    .inhabitable_volume = 0.0, // TODO check sensible defaults
+    .food = 0.0
   };
 
   this->technology_stats = {
@@ -43,7 +46,9 @@ Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
    
     .alien_technologies = 0,
    
-    .technology_xp = 0.0
+    .technology_xp = 0.0,
+
+    .energy = 0.0
   };
 
   this->culture_stats = {
