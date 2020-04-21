@@ -1,5 +1,6 @@
-#include "random.hpp"
 #include <random>
+#include "random.hpp"
+#include "exception.hpp"
 
 static std::mt19937 e;
 
@@ -69,4 +70,43 @@ int uniform_rand_i(int min, int max)
 {
   std::uniform_int_distribution urd(min, max);
   return urd(e);
+}
+
+
+
+double likelihood_to_chance(RandomLikelihood likelihood)
+{
+  switch (likelihood) {
+
+    case Likelihood_Impossible:
+      return 1e-4;
+
+    case Likelihood_VeryRare:
+      return 0.01;
+
+    case Likelihood_Rare:
+      return 0.05;
+
+    case Likelihood_Uncommon:
+      return 0.1;
+
+    case Likelihood_Common:
+      return 0.55;
+
+    case Likelihood_Ubiquitious:
+      return 0.85;
+
+    case Likelihood_Certain:
+      return 99.9;
+  }
+
+  // switch above means control will never reach here. throw exception *just in
+  // case* I break something and control *does* reach here.
+  throw AuthorError("control reaches end of likelihood_to_chance in src/util/random.cpp.");
+}
+
+
+bool check_likelihood(RandomLikelihood likelihood)
+{
+  return uniform_rand(0.0, 1.0) < likelihood_to_chance(likelihood);
 }
