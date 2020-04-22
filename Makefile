@@ -45,6 +45,7 @@ FEATURE = \
 UTIL = \
 			 obj/util/random.o \
 			 obj/util/time.o \
+			 obj/util/sqlite.o \
 			 obj/util/alphabet.o \
 			 obj/util/thesaurus.o \
 			 obj/util/vec.o

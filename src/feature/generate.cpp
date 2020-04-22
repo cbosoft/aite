@@ -44,7 +44,7 @@ Feature_ptr Feature::generate(FeatureObject obj)
 
   FeaturePrototype proto = *select_randomly(likely_prototypes.begin(), likely_prototypes.end());
 
-  std::string description = substitute_in_prototype(proto.description_prototype);
+  std::string description = Thesaurus::getref().substitute_in_prototype(proto.description_prototype);
 
   return std::make_shared<Feature>(proto.name, description, proto.existence_likelihood, proto.occurrence_likelihood);
 }

@@ -6,152 +6,77 @@
 #include "random.hpp"
 #include "thesaurus.hpp"
 #include "exception.hpp"
-
-const static std::regex RE_THESA("\\{\\{([\\w\\s]*)(?:,(\\w+))?(?:,(\\w+))?\\}\\}");
-
-// TODO read this from file
-// not actually a fully fledged thesaurus, just fetches words from a category
-static const std::map<std::string, std::vector<std::array<const char *, 5>>> THESAURUS = {
-
-  // MOSTLY NOUNS
-  {"start", {
-              {"start", nullptr, "started", "starting", "start"},
-              {"beginning", nullptr, "begun", "beginning", "begin"},
-              {"Caledonia", nullptr, nullptr, nullptr, nullptr},
-            }},
-  {"phenomenon", {
-                   {"phenomenon", nullptr, nullptr, nullptr, nullptr},
-                   {"property", nullptr, nullptr, nullptr, nullptr}
-                 }},
-
-  // WEATHER
-  {"weather", {
-                {"weather", nullptr, nullptr, nullptr, nullptr},
-                {"climate", nullptr, nullptr, nullptr, nullptr}
-              }},
-  {"rain", {
-             {"rain", nullptr, "rained", "raining", "rain"},
-             {"showers", nullptr, nullptr, "showering", nullptr},
-             {"precipitation", nullptr, "precipitated", "precipitating", "precipitate"}
-           }},
-  {"winds", {
-             {"winds", nullptr, "rained", "raining", "rain"},
-             {"gusts", nullptr, "precipitated", "precipitating", "precipitate"}
-           }},
-  {"strong winds", {
-             {"gales", nullptr, "precipitated", "precipitating", "precipitate"},
-             {"cylcones", nullptr, "precipitated", "precipitating", "precipitate"},
-             {"typhoons", nullptr, "precipitated", "precipitating", "precipitate"},
-           }},
-
-  // ADJECTIVES
-  {"very small", {
-            {nullptr, "very small", nullptr, nullptr, nullptr},
-            {nullptr, "tiny", nullptr, nullptr, nullptr}
-           }},
-  {"small", {
-            {nullptr, "small", nullptr, nullptr, nullptr},
-            {nullptr, "slight", nullptr, nullptr, nullptr}
-           }},
-  {"big", {
-            {nullptr, "big", nullptr, nullptr, nullptr},
-            {nullptr, "large", nullptr, nullptr, nullptr},
-            {nullptr, "not inconsiderably sized", nullptr, nullptr, nullptr},
-            {nullptr, "sizeable", nullptr, nullptr, nullptr},
-            {nullptr, "hefty", nullptr, nullptr, nullptr},
-            {nullptr, "substantial", nullptr, nullptr, nullptr},
-            {nullptr, "ample", nullptr, nullptr, nullptr},
-          }},
-  {"very big", {
-            {nullptr, "very big", nullptr, nullptr, nullptr},
-            {nullptr, "huge", nullptr, nullptr, nullptr},
-            {nullptr, "enormous", nullptr, nullptr, nullptr},
-            {nullptr, "tremendous", nullptr, nullptr, nullptr},
-          }},
-  {"very very big", {
-            {nullptr, "colosal", nullptr, nullptr, nullptr},
-            {nullptr, "immense", nullptr, nullptr, nullptr},
-            {nullptr, "humongous", nullptr, nullptr, nullptr},
-            {nullptr, "vast", nullptr, nullptr, nullptr},
-            {nullptr, "brobdingnagian", nullptr, nullptr, nullptr},
-          }},
-  {"strong", {
-            {nullptr, "strong", nullptr, nullptr, nullptr},
-            {nullptr, "severe", nullptr, nullptr, nullptr},
-            {nullptr, "intense", nullptr, nullptr, nullptr},
-            {nullptr, "forceful", nullptr, nullptr, nullptr},
-          }},
-  {"lively", {
-            {nullptr, "lively", nullptr, nullptr, nullptr},
-            {nullptr, "active", nullptr, nullptr, nullptr}
-           }},
-  {"violent", {
-            {nullptr, "violent", nullptr, nullptr, nullptr},
-            {nullptr, "tumultuous", nullptr, nullptr, nullptr},
-            {nullptr, "riotous", nullptr, nullptr, nullptr},
-            {nullptr, "turbulent", nullptr, nullptr, nullptr},
-           }},
-  {"elaborate", {
-            {nullptr, "elaborate", nullptr, nullptr, nullptr},
-            {nullptr, "complex", nullptr, nullptr, nullptr},
-            {nullptr, "labyrinthine", nullptr, nullptr, nullptr},
-           }},
+#include "sqlite.hpp"
 
 
-  // PHRASES
-  {"occasionally", {
-                   {"from time to time", nullptr, nullptr, nullptr, nullptr},
-                   {"occasionally", nullptr, nullptr, nullptr, nullptr}
-                 }},
-
-};
-
-static const char *FORM_TO_STR[] = {"Noun", "Adjective", "Verb (past tense)", "Verb (present tense)", "Verb (future tense)"};
-
-
-
-std::string get_random_synonym(std::string word, NOUN_ADJECTIVE_VERB form, TENSE tense)
+std::string Thesaurus::get_random_synonym(std::string word, std::string form, std::string tense)
 {
-  // TODO: if keyword is capitalised, the result should be too.
-  // TODO: if word is plural, result should be too
-  
-
-  auto result = THESAURUS.find(word);
-  if (result == THESAURUS.end())
-    throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
-
-  auto rows = (*result).second;
-  int cindex = 0;
-
-  switch (form) {
-
-    case VERB:
-      cindex += int(tense);
-      /* fall through */
-    case NOUN:
-    case ADJECTIVE:
-      cindex += int(form);
-      break;
-  }
-
-  const char *synonym = nullptr;
-  for (int i = 0; synonym == nullptr; i++) {
-
-    if (i > 100) {
-      throw WordNotFoundError(Formatter() << "Could not find word for category " << word << " of type " << FORM_TO_STR[cindex] << "." );
-    }
-
-    int rindex = uniform_rand_i(0, rows.size()-1);
-    auto row = rows[rindex];
-
-    synonym = row[cindex];
-  }
-
-  return std::string(synonym);
+  return this->get_random_synonym(word, Thesaurus::str2type(form), Thesaurus::str2tense(tense));
 }
 
 
-TENSE str2tense(std::string tense)
+std::string Thesaurus::get_random_synonym(std::string word, NOUN_ADJECTIVE_VERB form, TENSE tense)
+{
+  // TODO: if keyword is capitalised, the result should be too.
+  // TODO: if word is plural, result should be too
+
+  bool capitalised = false;
+
+  switch (form) {
+    case NOUN:
+      return this->get_random_noun_synonym(word, capitalised);
+
+    case ADJECTIVE:
+      return this->get_random_adjective_synonym(word, capitalised);
+
+    default:
+    case VERB:
+      return this->get_random_verb_synonym(word, tense, capitalised);
+  };
+
+}
+
+
+std::string Thesaurus::get_random_noun_synonym(std::string word, bool capitalised)
+{
+  (void) capitalised;
+
+  auto result = this->nouns.find(word);
+  if (result == this->nouns.end())
+    throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
+
+  auto rows = (*result).second;
+  return std::string(*select_randomly(rows.begin(), rows.end()));
+}
+
+
+std::string Thesaurus::get_random_adjective_synonym(std::string word, bool capitalised)
+{
+  (void) capitalised;
+
+  auto result = this->adjectives.find(word);
+  if (result == this->adjectives.end())
+    throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
+
+  auto rows = (*result).second;
+  return std::string(*select_randomly(rows.begin(), rows.end()));
+}
+
+
+std::string Thesaurus::get_random_verb_synonym(std::string word, TENSE tense, bool capitalised)
+{
+  (void) capitalised;
+
+  auto result = this->verbs.find(word);
+  if (result == this->verbs.end())
+    throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
+
+  auto rows = (*result).second;
+  return std::string( (*select_randomly(rows.begin(), rows.end()))[int(tense)] );
+}
+
+
+TENSE Thesaurus::str2tense(std::string tense)
 {
   if (tense.compare("past") == 0) {
     return PAST_TENSE;
@@ -167,7 +92,7 @@ TENSE str2tense(std::string tense)
 }
 
 
-NOUN_ADJECTIVE_VERB str2type (std::string type)
+NOUN_ADJECTIVE_VERB Thesaurus::str2type (std::string type)
 {
   if (type.compare("noun") == 0) {
     return NOUN;
@@ -198,7 +123,8 @@ bool is_vowel(char c)
   return false;
 }
 
-std::string get_indefinite_article(std::string word)
+
+std::string Thesaurus::get_indefinite_article(std::string word)
 {
   char *chars = word.data();
   char first = chars[0];
@@ -212,8 +138,7 @@ std::string get_indefinite_article(std::string word)
 }
 
 
-
-std::string substitute_in_prototype(std::string prototype)
+std::string Thesaurus::substitute_in_prototype(std::string prototype)
 {
   auto beg = std::sregex_iterator(prototype.begin(), prototype.end(), RE_THESA);
   auto end = std::sregex_iterator();
@@ -240,21 +165,21 @@ std::string substitute_in_prototype(std::string prototype)
         add_article = true;
       }
       else {
-        thesaurus_result = get_random_synonym(keyword);
+        thesaurus_result = this->get_random_synonym(keyword);
       }
     }
     else{
       if (tense.size() == 0) {
-        thesaurus_result = get_random_synonym(keyword, str2type(type));
+        thesaurus_result = this->get_random_synonym(keyword, type);
       }
       else {
-        thesaurus_result = get_random_synonym(keyword, str2type(type), str2tense(tense));
+        thesaurus_result = this->get_random_synonym(keyword, type, tense);
       }
     }
 
     if (thesaurus_result.size()) {
       if (add_article) {
-        ss << get_indefinite_article(thesaurus_result) << " ";
+        ss << Thesaurus::get_indefinite_article(thesaurus_result) << " ";
         add_article = false;
       }
 
@@ -268,4 +193,82 @@ std::string substitute_in_prototype(std::string prototype)
 
   std::string result = ss.str();
   return result;
+}
+
+
+void Thesaurus::load()
+{
+  SQLiteInterface db("resources.db");
+  SQLiteResults res = db.execute("SELECT DISTINCT Category FROM ThesaurusNouns;");
+  std::list<std::string> categories;
+
+  for (unsigned int i = 0; i < res.size(); i++) {
+    categories.push_back(res[i]["Category"]);
+  }
+
+  for (auto category : categories) {
+    this->nouns[category] = std::list<std::string>();
+
+    res = db.execute(Formatter() << "SELECT Synonym FROM ThesaurusNouns WHERE Category=\"" << category << "\";");
+    for (unsigned int i = 0; i < res.size(); i++) {
+      this->nouns[category].push_back(res[i]["Synonym"]);
+    }
+  }
+
+  res = db.execute("SELECT DISTINCT Category FROM ThesaurusAdjectives;");
+  categories = std::list<std::string>();
+
+  for (unsigned int i = 0; i < res.size(); i++) {
+    categories.push_back(res[i]["Category"]);
+  }
+
+  for (auto category : categories) {
+    this->adjectives[category] = std::list<std::string>();
+
+    res = db.execute(Formatter() << "SELECT Synonym FROM ThesaurusAdjectives WHERE Category=\"" << category << "\";");
+    for (unsigned int i = 0; i < res.size(); i++) {
+      this->nouns[category].push_back(res[i]["Synonym"]);
+    }
+  }
+
+  res = db.execute("SELECT DISTINCT Category FROM ThesaurusVerbs;");
+  categories = std::list<std::string>();
+
+  for (unsigned int i = 0; i < res.size(); i++) {
+    categories.push_back(res[i]["Category"]);
+  }
+
+  for (auto category : categories) {
+    this->adjectives[category] = std::list<std::string>();
+
+    res = db.execute(Formatter() << "SELECT Synonym FROM ThesaurusVerbs WHERE Category=\"" << category << "\";");
+    for (unsigned int i = 0; i < res.size(); i++) {
+      this->verbs[category].push_back({res[i]["PastTense"], res[i]["PresentTense"], res[i]["FutureTense"]});
+    }
+  }
+}
+
+
+static Thesaurus __thesaurus;
+Thesaurus &Thesaurus::getref()
+{
+  if (not __thesaurus.is_loaded())
+    __thesaurus.load();
+
+  return __thesaurus;
+}
+
+
+bool Thesaurus::is_loaded()
+{
+  return this->loaded;
+}
+
+Thesaurus::~Thesaurus()
+{
+}
+
+Thesaurus::Thesaurus()
+{
+  this->loaded = false;
 }
