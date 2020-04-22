@@ -61,9 +61,13 @@ SERVER = \
 				 obj/server/client.o \
 				 obj/server/args.o
 
+RESOURCE_EDITOR = \
+									obj/devtools/resource_editor/main.o \
+									obj/util/sqlite.o
+
 HDR = $(shell ls src/**/*.hpp)
 OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(CHEMISTRY) $(EVENT) $(FEATURE) $(UTIL)
-LINK = -lpthread
+LINK = -lpthread -lsqlite3
 DEFS =
 
 .SECONDARY:
@@ -89,6 +93,11 @@ aite_server: $(SERVER) $(OBJ) $(HDR)
 test: obj/main.o $(OBJ) $(HDR)
 	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
 	@$(CXX) $(CFLAGS) $(DEFS) obj/main.o $(OBJ) -o $@ $(LINK)
+
+
+resed: $(RESOURCE_EDITOR) $(HDR)
+	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
+	@$(CXX) $(CFLAGS) $(DEFS) $(RESOURCE_EDITOR) -o $@ $(LINK)
 
 
 
