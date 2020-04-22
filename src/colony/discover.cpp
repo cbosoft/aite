@@ -25,7 +25,7 @@ std::string Colony::get_name(Galaxy_ptr galaxy)
   }
 
   if (this->galaxy_log.size() == 0) {
-    return get_random_synonym("start", NOUN);
+    return Thesaurus::getref().get_random_synonym("start");
   }
 
   // TODO: name galaxies
