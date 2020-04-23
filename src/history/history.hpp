@@ -20,9 +20,38 @@
  *
  * */
 
-enum HistoryElementTriggerType {HE_TriggerUnderground, HE_TriggerSurface, HE_TriggerOuterSpace};
 
-enum HistoryElementRewardType {HE_RewardTechnology, HE_RewardCulture};
+enum HistoryElementTriggerType {HT_Underground, HT_Surface, HT_Space};
+
+enum HistoryElementRewardType {HR_Technology, HR_Culture, HR_Mixed};
+
+enum HistoryElementObjectType {
+  HO_Galaxy,
+  HO_System,
+  HO_InterSystem,
+  HO_Planet,
+  HO_Star,
+  HO_Moon,
+  HO_Asteroid,
+  HO_Nebula,
+  HO_Any
+};
+
+
+typedef struct HistoryPrototype {
+  std::string name;
+  std::string description;
+  double relative_date_mean;
+  double relative_date_std;
+  HistoryElementObjectType object_type;
+  HistoryElementTriggerType trigger_type;
+  HistoryElementRewardType reward_type;
+  double reward_xp_mean;
+  double reward_xp_std;
+  bool has_linked_feature;
+  std::string linked_feature_name;
+} HistoryPrototype;
+
 
 class HistoryElement {
 
@@ -30,11 +59,25 @@ class HistoryElement {
 
     std::string name, description;
     double date, xp_reward;
+    HistoryElementObjectType object_type;
+    HistoryElementTriggerType trigger_type;
+    HistoryElementRewardType reward_type;
+    
+    static HistoryElementRewardType str2reward(std::string s);
+    static HistoryElementTriggerType str2trigger(std::string s);
+    static HistoryElementObjectType str2object(std::string s);
+    static std::list<HistoryPrototype> &get_prototypes_list();
 
   public:
 
-    HistoryElement(std::string name, std::string description, double date);
+    HistoryElement(std::string name, std::string description, double date, double reward, HistoryElementObjectType object_type, HistoryElementTriggerType trigger_type, HistoryElementRewardType reward_type);
+    HistoryElement(std::string name, std::string description, double date, double reward, HistoryElementObjectType object_type, HistoryElementTriggerType trigger_type, HistoryElementRewardType reward_type, Feature_ptr feat);
     ~HistoryElement();
 
-    static HistoryElement_ptr get_history(HistoryElementTriggerType trigger);
+    std::string describe() const;
+
+    static HistoryElement_ptr generate(HistoryElementObjectType object);
+    static HistoryElement_ptr generate(HistoryElementObjectType object, HistoryElementTriggerType trigger);
+    static HistoryElement_ptr generate(HistoryElementObjectType object, HistoryElementRewardType reward);
+    static HistoryElement_ptr generate(HistoryElementObjectType object, HistoryElementTriggerType trigger, HistoryElementRewardType reward);
 };
