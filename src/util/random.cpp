@@ -68,6 +68,9 @@ double bilognormal_rand(double mn1, double std1, double mn2, double std2, double
 
 int uniform_rand_i(int min, int max)
 {
+  if (min > max)
+    throw MathError("in uniform_rand_i: max is less than min!");
+
   std::uniform_int_distribution urd(min, max);
   return urd(e);
 }
