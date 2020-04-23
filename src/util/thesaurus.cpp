@@ -7,6 +7,7 @@
 #include "thesaurus.hpp"
 #include "exception.hpp"
 #include "sqlite.hpp"
+#include "../resources/resources.hpp"
 
 
 std::string Thesaurus::get_random_synonym(std::string word, std::string form, std::string tense)
@@ -198,7 +199,7 @@ std::string Thesaurus::substitute_in_prototype(std::string prototype)
 
 void Thesaurus::load()
 {
-  SQLiteInterface db("resources.db");
+  SQLiteInterface db(get_resource_path());
   SQLiteResults res = db.execute("SELECT DISTINCT Category FROM ThesaurusNouns;");
   std::list<std::string> categories;
 

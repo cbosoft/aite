@@ -105,6 +105,7 @@ EXCEPTION(TestError, "TestError");
 EXCEPTION(InactionError, "InactionError");
 EXCEPTION(SocketError, "SocketError");
 EXCEPTION(WordNotFoundError, "WordNotFoundError");
+EXCEPTION(ResourceError, "ResourceError");
 
 
 

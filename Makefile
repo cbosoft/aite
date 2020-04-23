@@ -48,7 +48,11 @@ UTIL = \
 			 obj/util/sqlite.o \
 			 obj/util/alphabet.o \
 			 obj/util/thesaurus.o \
+			 obj/util/file.o \
 			 obj/util/vec.o
+
+RESOURCES = \
+					 obj/resources/path.o
 
 CLIENT = \
 				 obj/client/main.o \
@@ -67,7 +71,7 @@ RESOURCE_EDITOR = \
 									obj/util/sqlite.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(CHEMISTRY) $(EVENT) $(FEATURE) $(UTIL)
+OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(CHEMISTRY) $(EVENT) $(FEATURE) $(UTIL) $(RESOURCES)
 LINK = -lpthread -lsqlite3
 DEFS =
 
