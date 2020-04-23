@@ -11,20 +11,54 @@ namespace __sqlite3 {
 
 
 EXCEPTION(SQLiteError, "SQLiteError");
+EXCEPTION(SQLiteNullError, "SQLiteNullError");
 
+class SQLiteValue {
+
+  private:
+    std::string value;
+    bool null;
+
+  public:
+
+    SQLiteValue() : SQLiteValue(nullptr){}
+    SQLiteValue(const char *value);
+    ~SQLiteValue();
+
+    std::string as_string();
+    int as_int();
+    double as_double();
+    bool is_null();
+
+    operator std::string()
+    {
+      return this->as_string();
+    }
+
+    operator double()
+    {
+      return this->as_double();
+    }
+
+    operator bool()
+    {
+      return this->is_null();
+    }
+
+};
 
 class SQLiteRow {
 
   private:
 
-    std::map<std::string, std::string> map;
+    std::map<std::string, SQLiteValue> map;
 
   public:
 
     SQLiteRow(char **values, char **fields, int n);
     ~SQLiteRow();
-    std::string get(std::string);
-    std::string operator[](std::string k) { return this->get(k); }
+    SQLiteValue get(const std::string&);
+    SQLiteValue operator[](const std::string &k) { return this->get(k); }
 
 };
 

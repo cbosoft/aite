@@ -1,6 +1,47 @@
 #include "sqlite.hpp"
 
 
+SQLiteValue::SQLiteValue(const char *value)
+{
+  if (value != nullptr) {
+    this->value = std::string(value);
+    this->null = false;
+  }
+  else {
+    this->null = true;
+    this->value = "";
+  }
+}
+
+SQLiteValue::~SQLiteValue()
+{
+}
+
+std::string SQLiteValue::as_string()
+{
+  return std::string(this->value);
+}
+
+int SQLiteValue::as_int()
+{
+  return std::stoi(this->value);
+}
+
+double SQLiteValue::as_double()
+{
+  return std::stod(this->value);
+}
+
+bool SQLiteValue::is_null()
+{
+  return this->null;
+}
+
+
+
+
+
+
 SQLiteResults::SQLiteResults()
 {
   // do nothing
@@ -45,8 +86,8 @@ unsigned int SQLiteResults::size() const
 SQLiteRow::SQLiteRow(char **values, char **fields, int n)
 {
   for (int i = 0; i < n; i++) {
-    std::string key(fields[i]), value(values[i]);
-    this->map[key] = value;
+    std::string key(fields[i]);
+    this->map[key] = SQLiteValue(values[i]);
   }
 }
 
@@ -55,7 +96,8 @@ SQLiteRow::~SQLiteRow()
   // do nothing
 }
 
-std::string SQLiteRow::get(std::string k)
+
+SQLiteValue SQLiteRow::get(const std::string &k)
 {
   auto it = this->map.find(k);
   if (it == this->map.end())
@@ -63,7 +105,6 @@ std::string SQLiteRow::get(std::string k)
 
   return (*it).second;
 }
-
 
 
 
