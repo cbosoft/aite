@@ -8,7 +8,7 @@ enum RandomLikelihood {
   Likelihood_Rare,         // not seen much, maybe once-in-a-lifetime
   Likelihood_Uncommon,     // heard of, and seen from time to time
   Likelihood_Common,       // more often than not
-  Likelihood_Ubiquitious,  // frequently seen
+  Likelihood_Ubiquitous,  // frequently seen
   Likelihood_Certain       // nothing is truly certain!
 };
 
@@ -24,6 +24,7 @@ double bilognormal_rand(double mn1, double std1, double mn2, double std2, double
 int uniform_rand_i(int min, int max);
 
 bool check_likelihood(RandomLikelihood likelihood);
+RandomLikelihood str2likelihood(std::string s);
 
 
 // https://stackoverflow.com/questions/6942273/how-to-get-a-random-element-from-a-c-container

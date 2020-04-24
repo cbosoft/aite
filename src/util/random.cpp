@@ -96,7 +96,7 @@ double likelihood_to_chance(RandomLikelihood likelihood)
     case Likelihood_Common:
       return 0.55;
 
-    case Likelihood_Ubiquitious:
+    case Likelihood_Ubiquitous:
       return 0.85;
 
     case Likelihood_Certain:
@@ -112,4 +112,33 @@ double likelihood_to_chance(RandomLikelihood likelihood)
 bool check_likelihood(RandomLikelihood likelihood)
 {
   return uniform_rand(0.0, 1.0) < likelihood_to_chance(likelihood);
+}
+
+
+RandomLikelihood str2likelihood(std::string s)
+{
+  if (s.compare("impossible") == 0) {
+    return Likelihood_Impossible;
+  }
+  else if (s.compare("very rare") == 0) {
+    return Likelihood_VeryRare;
+  }
+  else if (s.compare("rare") == 0) {
+    return Likelihood_Rare;
+  }
+  else if (s.compare("uncommon") == 0) {
+    return Likelihood_Uncommon;
+  }
+  else if (s.compare("common") == 0) {
+    return Likelihood_Common;
+  }
+  else if (s.compare("ubiquitous") == 0) {
+    return Likelihood_Ubiquitous;
+  }
+  else if (s.compare("certain") == 0) {
+    return Likelihood_Certain;
+  }
+  else {
+    throw AuthorError(Formatter() << "Uknown likelihood: " << s << ".");
+  }
 }
