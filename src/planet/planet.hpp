@@ -14,8 +14,8 @@ class Planet : public SystemObject {
 
     double diameter;
     double density_core, density_mantle, density_deep, density_surface, density_average;
-    double pressure_low, pressure_high, pressure_average;
-    double temp_low, temp_high, temp_average;
+    double pressure_low, pressure_high;
+    double temp_low, temp_high;
 
     // double humidity_low, humidity_high, humidity_average;
     // double water_coverage;
@@ -42,5 +42,7 @@ class Planet : public SystemObject {
     double get_diameter() const;
     unsigned long get_id() const;
     System_ptr get_system() const;
+    double get_g() const;
+
 };
 
