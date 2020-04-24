@@ -64,10 +64,15 @@ void ServerConnection::join(std::string colony_name)
     this->welcome();
   }
 
+  std::cout << "Syncing with server... " << std::flush;
   this->sync();
+  std::cout << "done!" << std::endl;
 
-  for (auto m : this->state.messages) {
-    std::cerr << m << std::endl;
+  if (this->state.messages.size()) {
+    std::cout << "You have messages:" << std::endl;
+    for (auto m : this->state.messages) {
+      std::cout << "  " << m << std::endl;
+    }
   }
 
 }
