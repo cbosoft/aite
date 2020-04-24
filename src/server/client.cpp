@@ -89,7 +89,7 @@ void GameServer::process_input(int client_fd, std::string s)
   else if (type.compare("query") == 0) {
 
     if (rest.compare("number") == 0) {
-      reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_number() << "\n";
+      reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_number();
     }
     else {
       reply = Formatter() << "error|query not understood: \"" << rest << "\"";
@@ -124,8 +124,5 @@ void GameServer::process_input(int client_fd, std::string s)
 void GameServer::send(int client_fd, std::string message)
 {
   // add a newline to the end of the message
-  std::stringstream ss;
-  ss << message << "\n";
-  std::string s = ss.str();
-  (*socket_send)(client_fd, s.data(), s.size(), 0);
+  (*socket_send)(client_fd, message.data(), message.size(), 0);
 }
