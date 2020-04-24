@@ -7,6 +7,7 @@
 #include "util/thesaurus.hpp"
 #include "util/random.hpp"
 #include "history/history.hpp"
+#include "feature/feature.hpp"
 
 int main(void)
 {
@@ -17,7 +18,10 @@ int main(void)
 
   // std::cerr << thesaurus.get_random_synonym("home", "noun") << std::endl;
 
-  auto history = HistoryElement::generate(HO_Any);
-  std::cerr << history->describe() << std::endl;
+  //auto history = HistoryElement::generate(HO_Any);
+  //std::cerr << history->describe() << std::endl;
+
+  auto feature = Feature::generate(FO_Any);
+  std::cerr << feature->describe() << std::endl;
 
 }
