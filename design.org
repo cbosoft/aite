@@ -63,6 +63,31 @@
 ** Technology
 ** Culture
 ** Expansion
+** Commands
+*** Requirements
+
+    A player controls their colony through /commands/. Each command specifies an
+    activity that can be in progress, each requires a certain number of people,
+    limiting the number of simultaneous activities.
+
+*** Reward
+
+    Once an activity is underway, it updates every event-step. Every so often, a
+    goal is met and the colony receives a reward.
+
+*** Syntax
+    Commands may be issued with a target, or not, depending on the command. For
+    example, "focus on technology" could apply to the colony across any number of
+    locations, or limited to the colony on a single location "focus on technology
+    only on Seti B".
+
+    In general the syntax is described by:
+
+      <command> [only on/in <location>]
+
+    Where on or in may be used interchangeably, whichever makes sense to you.
+
+   
 * (Chemical) Elements
   - Everything in the universe will come from the periodic table
   - Gases, metals, some liquids, combinations; all form to make the basis of
