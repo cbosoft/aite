@@ -20,9 +20,9 @@ void ServerConnection::welcome()
     << "orders, to check status, and to vicariously explore a far region of "
     << "the universe.\n"
     << "\n"
-    << "Your fledging colony has been dropped somewhere within " BOLD "àite "
-    << "domhainn" RESET ". You should start by settling your planet, and "
-    << "seeing what your new home has to offer. Resources are likely scarce, "
-    << "make them count."
+    << "Your fledgling colony has been dropped somewhere within " BOLD "àite "
+    << "domhainn" RESET ". You should start by settling in to your planet, and "
+    << "seeing what your new home has to offer. Resources are likely scarce: "
+    << "make them count.\n"
     << std::endl;
 }
