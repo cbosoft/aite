@@ -76,12 +76,14 @@ void GameServer::process_input(int client_fd, std::string s)
     // rest is colony name
     if (!this->universe->has_colony(rest)) {
       this->universe->add_colony(rest);
+      reply = "welcome|Joined.";
+    }
+    else {
+      reply = "success|Joined.";
     }
 
     Colony_ptr colony = this->universe->get_colony(rest);
     this->client_to_colony[client_fd] = colony;
-
-    reply = "success|Joined.";
 
   }
   else if (type.compare("query") == 0) {
