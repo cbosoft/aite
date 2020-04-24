@@ -78,7 +78,7 @@ std::shared_ptr<Planet> Planet::generate(double position, System_ptr system)
 void Planet::make_earthlike(Planet_ptr planet)
 {
   // diameter
-  planet->diameter = normal_rand(8.5269e-04, 0.05);
+  planet->diameter = 0.1 * normal_rand(1.0, 0.1);
 
   // densities
   std::list<double> densities;
@@ -115,7 +115,7 @@ void Planet::make_earthlike(Planet_ptr planet)
   double base_temperature = normal_rand(310, 10.0);
   std::list<double> temperatures;
   for (int i = 0; i < 3; i++)
-    temperatures.push_back(base_temperature * normal_rand(1.0, 0.3));
+    temperatures.push_back(base_temperature * normal_rand(1.0, 0.15));
   temperatures.sort();
 
   planet->temp_low = temperatures.front(); temperatures.pop_front();
