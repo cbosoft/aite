@@ -20,6 +20,9 @@ typedef struct PopulationStats {
   // number of people in the colony
   double number;
 
+  // number of people with jobs
+  double number_in_work;
+
   // covers the general genetic "stock". High genetic_xp gives chance of
   // the population developing abilities that could help (or hinder) their
   // ability to survive on a harsh exoplanet
