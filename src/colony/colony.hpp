@@ -68,4 +68,6 @@ class Colony {
     double get_number();
     double get_inception_time();
 
+    bool can_inhabit(const SystemObject &object);
+
 };

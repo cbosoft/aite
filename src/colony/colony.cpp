@@ -8,9 +8,6 @@
 
 Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
 {
-  this->name = name;
-  this->startoff(planet);
-  this->time_of_inception = time_of_inception;
 
   this->population_stats = {
     .growth_rate = 0.5,
@@ -58,6 +55,9 @@ Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
     .culture_xp = 0.0
   };
 
+  this->name = name;
+  this->startoff(planet);
+  this->time_of_inception = time_of_inception;
   this->universe = Universe::get_universe();
 }
 
@@ -95,7 +95,7 @@ void Colony::startoff(Planet_ptr planet)
 {
   this->discover(planet);
   this->inhabited_planets.push_back(planet);
-  if (not planet->try_inhabit(this->population_stats.number)) {
+  if (not planet->try_inhabit(this->population_stats.number, *this)) {
     throw AuthorError(Formatter() << "Starting planet not inhabitable!");
   }
 
@@ -103,4 +103,30 @@ void Colony::startoff(Planet_ptr planet)
   this->inhabited_systems.push_back(system);
   auto galaxy = system->get_galaxy();
   this->inhabited_galaxies.push_back(galaxy);
+}
+
+bool Colony::can_inhabit(const SystemObject &obj)
+{
+  const double p = obj.get_pressure();
+  const double t = obj.get_temp();
+  const double g = obj.get_gravity();
+
+  bool pressure_ok = (p < this->technology_stats.max_pressure) && (p > this->technology_stats.min_pressure);
+  bool temp_ok = (t < this->technology_stats.max_temperature) && (t > this->technology_stats.min_temperature);
+  bool gravity_ok = (g < this->technology_stats.max_g) && (g > this->technology_stats.min_g);
+
+  if (!pressure_ok) {
+    std::cerr << "pressure " << p << std::endl;
+  }
+  if (!temp_ok) {
+    std::cerr << "temperature " << t 
+      << " " << this->technology_stats.min_temperature 
+      << " " << this->technology_stats.max_temperature 
+      << std::endl;
+  }
+  if (!gravity_ok) {
+    std::cerr << "gravity " << g << std::endl;
+  }
+
+  return pressure_ok and temp_ok and gravity_ok;
 }
