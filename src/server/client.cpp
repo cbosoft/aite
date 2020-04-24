@@ -113,6 +113,9 @@ void GameServer::process_input(int client_fd, std::string s)
     }
 
   }
+  else if (type.compare("leaving") == 0) {
+    reply = "acknowledged|acknowledged";
+  }
   else {
     reply = Formatter() << "error|instruction not understood: \"" << type << "\"";
   }
