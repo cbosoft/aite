@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include "reply.hpp"
+
 
 class ServerConnection {
 
@@ -10,5 +12,5 @@ class ServerConnection {
     ServerConnection(const char *address, int port);
     ~ServerConnection();
 
-    std::string send(std::string message);
+    ServerReply send(std::string message);
 };

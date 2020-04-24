@@ -40,7 +40,7 @@ ServerConnection::~ServerConnection()
 }
 
 
-std::string ServerConnection::send(std::string message)
+ServerReply ServerConnection::send(std::string message)
 {
   (*socket_send)(this->fd, message.data(), message.size(), 0);
 
@@ -52,5 +52,5 @@ std::string ServerConnection::send(std::string message)
     throw SocketError("Error reading reply.", true);
   }
 
-  return std::string(buffer);
+  return ServerReply(buffer);
 }
