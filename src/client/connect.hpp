@@ -18,10 +18,11 @@ class ServerConnection {
     int fd;
     ColonyState state;
 
+    ServerReply send(std::string message);
   public:
     ServerConnection(const char *address, int port);
     ~ServerConnection();
 
-    ServerReply send(std::string message);
+    void join(std::string colony_name);
     void sync();
 };
