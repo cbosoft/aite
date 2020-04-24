@@ -28,6 +28,9 @@ typedef std::shared_ptr<Compound> Compound_ptr;
 class Colony;
 typedef std::shared_ptr<Colony> Colony_ptr;
 
+class SystemObject;
+typedef std::shared_ptr<SystemObject> SystemObject_ptr;
+
 class Planet;
 typedef std::shared_ptr<Planet> Planet_ptr;
 
