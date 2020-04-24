@@ -35,6 +35,7 @@ class Planet : public SystemObject {
     ~Planet();
 
     static Planet_ptr generate(double position, System_ptr system);
+    static void make_earthlike(Planet_ptr planet);
 
     const PlanetDescriptionData &describe();
 
