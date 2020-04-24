@@ -192,18 +192,37 @@
     efficiency. However, what if working people a little too hard is the better
     option? (reduced efficiency, but longer hours = more work output?)
 
-** Activity
-   - A colony may engage in activity to pursue a goal. Activity might be
-     research of a technology, investigation of surroundings, exploration etc
-   - These are updated with time. e.g. having a portion of the population on
-     research duty will result in a continuous advance
-   - Some activities are on going, others are limited (more like temporary push)
-   - In-game, these are seen as like governing policy; the people are told that
-     /this/ is the best route for success.
-   - There may be dissenters, and people may ignore policy. This will scale with
 * History
   - planets and systems will have a coherent history; planets in the same
     system, if one supports life then it probably does and the other planets
     will have been colonised.
   - These xeno-colonies will perhaps linger on, or perhaps they will be
     gone. Either way there will be evidence of their existence.
+* Activities
+
+  - A colony may engage in activity to pursue a goal. Activity might be
+    research of a technology, investigation of surroundings, exploration etc
+  - These are updated with time. e.g. having a portion of the population on
+    research duty will result in a continuous advance of tech xp and rewards
+    like tech-related abilities.
+  - Some activities are on going (like "do this job", others are limited (more
+    like temporary push; "concentrate on this now")
+  - In-game, these are seen as like governing policy; the people are told that
+    /this/ is the best route for success.
+  - There may be dissenters, and people may ignore policy. This will scale with
+    mood/domestic peace.
+  - People are required to complete an activity, size of population will limit
+    number of simultaneous tasks that can be undertaken
+
+** Recon
+
+   A group of the population concentrate on the surrounding bodies in space:
+   they will look for and discover objects nearby. The discovered object will be
+   assessed for habitability, for resources available, and so on. This task
+   generally requires only a few people, but takes a long time.
+
+** Geological Survey
+
+   A geological survey is conducted on a planet to find out more about its
+   composition. This task yields *resources*, perhaps also uncovering *features*
+   and *history* of the planet too!
