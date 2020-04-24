@@ -54,3 +54,33 @@ ServerReply ServerConnection::send(std::string message)
 
   return ServerReply(buffer);
 }
+
+
+
+
+
+
+void ServerConnection::join(std::string colony_name)
+{
+  auto reply = this->send(Formatter() << "join|" <<colony_name);
+
+  if (reply.category().compare("welcome") == 0) {
+    this->welcome();
+  }
+
+  this->sync();
+
+}
+
+
+void ServerConnection::sync()
+{
+  auto reply = this->send("getmessages");
+  if (reply.contents().front().compare("No messages.") != 0) {
+    for (auto message : reply.contents()) {
+      this->state.messages.push_back(message);
+    }
+  }
+
+  // TODO sync activities
+}

@@ -11,7 +11,8 @@ ClientArgs default_args()
   ClientArgs args = {
     .server_address = "127.0.0.1",
     .server_port = DEFAULT_PORT,
-    .colony_name = "guest"
+    .colony_name = "guest",
+    .mode = CM_GUI
   };
 
   return args;
@@ -32,6 +33,21 @@ ClientArgs parse_args(int argc, const char **argv)
     }
     else if (ARG_EITHER("-c", "--colony-name")) {
       args.colony_name = argv[++i];
+    }
+    else if (ARG_EITHER("-m", "--mode")) {
+      i++;
+      if (ARG_EQ("batch")) {
+        args.mode = CM_Batch;
+      }
+      else if (ARG_EQ("tui")) {
+        args.mode = CM_TUI;
+      }
+      else if (ARG_EQ("gui")) {
+        args.mode = CM_GUI;
+      }
+      else {
+        throw ArgumentError(Formatter() << "Argument " << argv[i] << " not a valid mode.");
+      }
     }
     else {
       throw ArgumentError(Formatter() << "Argument " << argv[i] << " not recognised.");
