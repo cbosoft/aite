@@ -9,7 +9,7 @@ class ServerReply {
     std::list<std::string> __contents;
 
   public:
-    ServerReply(const char *v);
+    ServerReply(std::string);
     ~ServerReply();
 
     const std::string &category();

@@ -6,24 +6,22 @@
 #include <cstring>
 
 #include "../util/exception.hpp"
+#include "../util/socket.hpp"
 #include "../universe/universe.hpp"
 #include "../colony/colony.hpp"
 #include "../event/event.hpp"
+#include "../limits.hpp"
 
 #include "server.hpp"
-
-// GameServer method "send" overshadows socket send function. Create ref
-// with different name to alleviate this.
-static ssize_t (*socket_send)(int, const void *, size_t, int) = &send;
 
 
 void GameServer::process_client_requests(int client_fd)
 {
-  char buffer[1024] = {0};
+  std::string buffer;
 
   while (this->running) {
 
-    int l = read(client_fd, buffer, 1023);
+    int l = buffered_read(client_fd, buffer);
     if (l < 0) {
       std::cerr << FG_YELLOW << "WARNING" << RESET << " read error for client " << client_fd << " (" << errno << ", " << strerror(errno) << ")" << std::endl;
     }
@@ -33,7 +31,6 @@ void GameServer::process_client_requests(int client_fd)
     }
     else {
       this->process_input(client_fd, std::string(buffer));
-      memset(buffer, 0, 1024);
     }
 
   }
@@ -126,6 +123,5 @@ void GameServer::process_input(int client_fd, std::string s)
 
 void GameServer::send(int client_fd, std::string message)
 {
-  // add a newline to the end of the message
-  (*socket_send)(client_fd, message.data(), message.size(), 0);
+  buffered_send(client_fd, message);
 }

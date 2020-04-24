@@ -5,7 +5,7 @@
 #include "reply.hpp"
 
 
-ServerReply::ServerReply(const char *s)
+ServerReply::ServerReply(std::string s)
 {
   std::stringstream ss(s);
 

@@ -5,11 +5,7 @@
 
 #include "connect.hpp"
 #include "../util/exception.hpp"
-
-
-// ServerConnection method "send" overshadows socket send function. Create ref
-// with different name to alleviate this.
-static ssize_t (*socket_send)(int, const void *, size_t, int) = &send;
+#include "../util/socket.hpp"
 
 
 ServerConnection::ServerConnection(const char *ip_address, int port)
@@ -42,11 +38,11 @@ ServerConnection::~ServerConnection()
 
 ServerReply ServerConnection::send(std::string message)
 {
-  (*socket_send)(this->fd, message.data(), message.size(), 0);
+  buffered_send(this->fd, message);
 
   // get reply
-  char buffer[1024] = {0};
-  int l = read(this->fd, buffer, 1023);
+  std::string buffer;
+  int l = buffered_read(this->fd, buffer);
 
   if (l < 0) {
     throw SocketError("Error reading reply.", true);
@@ -69,6 +65,10 @@ void ServerConnection::join(std::string colony_name)
   }
 
   this->sync();
+
+  for (auto m : this->state.messages) {
+    std::cerr << m << std::endl;
+  }
 
 }
 

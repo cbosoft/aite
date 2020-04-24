@@ -55,6 +55,7 @@ UTIL = \
 			 obj/util/alphabet.o \
 			 obj/util/thesaurus.o \
 			 obj/util/file.o \
+			 obj/util/socket.o \
 			 obj/util/vec.o
 
 RESOURCES = \
