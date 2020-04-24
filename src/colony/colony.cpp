@@ -9,12 +9,7 @@
 Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
 {
   this->name = name;
-  this->discover(planet);
-  this->inhabited_planets.push_back(planet);
-  auto system = planet->get_system();
-  this->inhabited_systems.push_back(system);
-  auto galaxy = system->get_galaxy();
-  this->inhabited_galaxies.push_back(galaxy);
+  this->startoff(planet);
   this->time_of_inception = time_of_inception;
 
   this->population_stats = {
@@ -24,6 +19,7 @@ Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
     .mood = 0.0,
    
     .number = 100.0,
+    .number_in_work = 0.0,
    
     .genetics_xp = 0.0,
 
@@ -93,4 +89,18 @@ std::list<std::string> Colony::get_messages()
   std::list<std::string> rv(this->messages);
   this->messages.erase(this->messages.begin(), this->messages.end());
   return rv;
+}
+
+void Colony::startoff(Planet_ptr planet)
+{
+  this->discover(planet);
+  this->inhabited_planets.push_back(planet);
+  if (not planet->try_inhabit(this->population_stats.number)) {
+    throw AuthorError(Formatter() << "Starting planet not inhabitable!");
+  }
+
+  auto system = planet->get_system();
+  this->inhabited_systems.push_back(system);
+  auto galaxy = system->get_galaxy();
+  this->inhabited_galaxies.push_back(galaxy);
 }
