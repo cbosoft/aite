@@ -9,7 +9,7 @@ void ServerConnection::welcome()
 {
   std::cout
     << "\n"
-    << "Welcome to " BOLD "Àite" RESET "; a game about new horizons and final frontiers"
+    << "Welcome to " BOLD "Àite" RESET ", a game about new horizons and final frontiers."
     << std::endl;
 
   usleep(200*1000);
