@@ -64,6 +64,7 @@ CLIENT = \
 				 obj/client/main.o \
 				 obj/client/args.o \
 				 obj/client/reply.o \
+				 obj/client/welcome.o \
 				 obj/client/connect.o
 
 SERVER = \

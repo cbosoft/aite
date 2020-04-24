@@ -19,6 +19,8 @@ class ServerConnection {
     ColonyState state;
 
     ServerReply send(std::string message);
+    void welcome();
+
   public:
     ServerConnection(const char *address, int port);
     ~ServerConnection();
