@@ -32,6 +32,8 @@ std::shared_ptr<Planet> Planet::generate(double position, System_ptr system)
       planet->density_mantle + planet->density_deep + 
       planet->density_surface)*0.25;
 
+  planet->gravitational_constant = planet->get_g();
+
   // atmospheric pressure
   double pressure_base = lognormal_rand(-2, 1.0);
 
@@ -76,12 +78,12 @@ std::shared_ptr<Planet> Planet::generate(double position, System_ptr system)
 void Planet::make_earthlike(Planet_ptr planet)
 {
   // diameter
-  planet->diameter = normal_rand(1.0, 0.1);
+  planet->diameter = normal_rand(8.5269e-04, 0.05);
 
   // densities
   std::list<double> densities;
   for (int i = 0; i < 4; i++) {
-    double rn = normal_rand(1.0, 0.1);
+    double rn = normal_rand(1.0, 0.05);
     densities.push_back(rn);
   }
   densities.sort();
@@ -94,6 +96,8 @@ void Planet::make_earthlike(Planet_ptr planet)
   planet->density_average = (planet->density_core + 
       planet->density_mantle + planet->density_deep + 
       planet->density_surface)*0.25;
+
+  planet->gravitational_constant = planet->get_g();
 
   // atmospheric pressure
   double pressure_base = normal_rand(1.0, 0.1);
