@@ -31,7 +31,7 @@ enum FeatureType {
   // Weather, if present, is the likely the first discovered feature and coveres
   // air and wind patterns, as well as cycles similar to the water cycle on
   // earth, and astro-weather such as solar and radiation "storms".
-  FT_Weather,
+  FT_Meteorological,
 
   // Geological features are centred around the mineral make-up of the object;
   // normally applying to solid objects (planets, moons, asteroids), it can also
@@ -44,7 +44,11 @@ enum FeatureType {
 
   // A zoological feature relates to non-sentient life discovery and associated
   // effects.
-  FT_Zoological
+  FT_Zoological,
+
+  // not a type of a feature, but used when a feature type is not specifically
+  // desired
+  FT_Any
 };
 
 enum FeatureObject {
@@ -55,9 +59,19 @@ enum FeatureObject {
   FO_Star,
   FO_Moon,
   FO_Asteroid,
-  FO_Nebula
+  FO_Nebula,
+  FO_Any
 };
 
+
+typedef struct FeaturePrototype {
+  std::string name;
+  std::string description_prototype;
+  RandomLikelihood existence_likelihood;
+  RandomLikelihood occurrence_likelihood;
+  FeatureObject object_type;
+  FeatureType type;
+} FeaturePrototype;
 
 
 class Feature {
@@ -67,22 +81,23 @@ class Feature {
     std::string name;
     std::string description;
     // existence is the likelihood that the feature exists at all and occurrence
-    // is likelihood that a colony, inhabiting the object experiences the
+    // is likelihood that a colony, inhabiting the object, experiences the
     // feature
     RandomLikelihood existence_likelihood, occurence_likelihood;
+    FeatureObject object_type;
     HistoryElement_ptr associated_history;
 
+    static FeatureObject str2object(std::string s);
+    static FeatureType str2type(std::string s);
+    static std::list<FeaturePrototype> &get_prototypes_list();
+
   public:
-    Feature(std::string name, std::string description, RandomLikelihood existence_likelihood, 
-        RandomLikelihood occurence_likelihood);
-    Feature(std::string name, std::string description, RandomLikelihood existence_likelihood, 
-        RandomLikelihood occurence_likelihood, HistoryElement_ptr associated_history);
+    Feature(FeaturePrototype prototype);
     ~Feature();
 
     std::string describe() const;
     bool has_history() const;
     HistoryElement_ptr get_history() const;
 
-    static Feature_ptr generate(FeatureObject obj);
-    static Feature_ptr generate(FeatureObject obj, FeatureType type);
+    static Feature_ptr generate(FeatureObject obj, FeatureType type=FT_Any);
 };

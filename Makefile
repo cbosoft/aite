@@ -40,6 +40,7 @@ EVENT = \
 
 FEATURE = \
 					obj/feature/feature.o \
+					obj/feature/load.o \
 					obj/feature/generate.o
 
 HISTORY = \
