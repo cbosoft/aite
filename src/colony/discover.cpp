@@ -85,6 +85,10 @@ void Colony::discover(const Planet_ptr planet)
 {
   std::string name = this->get_name(planet);
   this->planet_log[planet->get_id()] = name;
+
+  this->add_message(Formatter() 
+      << BOLD << "Discovered a planet" << RESET << ". It has been named " << name 
+      << ". " << this->describe(planet) );
 }
 
 
