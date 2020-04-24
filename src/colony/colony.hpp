@@ -13,13 +13,14 @@ class Colony {
 
   private:
 
+    // TODO overhaul stats; they're a bit of a mish-mash rn
     PopulationStats population_stats;
     TechnologyStats technology_stats;
     CultureStats culture_stats;
 
     Universe_ptr universe;
 
-    // std::list<Abilities> // list of abilities the colony has acquired
+    // std::list<Abilities> abilites; // list of abilities the colony has acquired
 
     std::mutex messages_mutex;
     std::list<std::string> messages;
@@ -37,7 +38,6 @@ class Colony {
     std::list<Planet_ptr> inhabited_planets;
     std::list<System_ptr> inhabited_systems;
     std::list<Galaxy_ptr> inhabited_galaxies;
-
 
 
   public:
