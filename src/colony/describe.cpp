@@ -33,7 +33,7 @@ std::string Colony::describe(const Planet_ptr planet)
 
  std::string name = this->planet_log.at(planet->get_id());
 
-  ss << std::setprecision(1) << std::fixed
+  ss << std::setprecision(3) << std::scientific
     << name << " has a diameter of "
     << d.diameter
     << " AU and a density " << d.density
@@ -120,7 +120,7 @@ std::string Colony::describe(const Planet_ptr planet)
   ss << ". ";
 
 
-  ss << "Average surface temperature is " << d.temperature << "K; ";
+  ss << "Average surface temperature is " << std::setprecision(1) << std::fixed << d.temperature << "K; ";
   switch(d.tl) {
 
     case TL_NearAbsoluteZero:
