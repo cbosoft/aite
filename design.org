@@ -87,13 +87,27 @@
 
     Where on or in may be used interchangeably, whichever makes sense to you.
 
-   
 * (Chemical) Elements
   - Everything in the universe will come from the periodic table
   - Gases, metals, some liquids, combinations; all form to make the basis of
     the planets, satellites, the universe
   - combinations are important as this describes the chemistry and makeup of
     the planet (water+carbon-chains? life!) Other forms of life?
+* Resource
+
+  Despite the detail of the previous section, I don't want to have to deal too
+  much in specifics like chemical make up; it gets very complicated very
+  quickly.
+
+  So, we can generalise elements and compounds into categories; precious metals,
+  energy source, construction material. As technology advances, materials
+  advance too; their uses change. What was once useless may be precious
+  tomorrow: metals may be useful to start, but advanced materials like graphene
+  or similar will become more important later on.
+
+  Radiation sources (both known and fictitous radiations!) could be a part of
+  any category, depending on the state-of-the-art!
+
 * Planets
   - climate is defined by temperature, density, atmospheric pressure, and
     elemental composition.
