@@ -10,38 +10,49 @@
 #include "../resources/resources.hpp"
 
 
-std::string Thesaurus::get_random_synonym(std::string word, std::string form, std::string tense)
+std::string Thesaurus::get_random_synonym(std::string word, std::string wordclass, std::string tense)
 {
-  return this->get_random_synonym(word, Thesaurus::str2type(form), Thesaurus::str2tense(tense));
+  return this->get_random_synonym(word, Thesaurus::str2class(wordclass), Thesaurus::str2tense(tense));
 }
 
 
-std::string Thesaurus::get_random_synonym(std::string word, NOUN_ADJECTIVE_VERB form, TENSE tense)
+std::string Thesaurus::get_random_synonym(std::string word, WordClass wordclass, WordTense tense)
 {
   // TODO: if keyword is capitalised, the result should be too.
   // TODO: if word is plural, result should be too
 
-  bool capitalised = false;
+  std::string synonym;
+  switch (wordclass) {
+    case WC_Noun:
+      synonym = this->get_random_noun_synonym(word);
+      break;
 
-  switch (form) {
-    case NOUN:
-      return this->get_random_noun_synonym(word, capitalised);
+    case WC_Adjective:
+      synonym = this->get_random_adjective_synonym(word);
+      break;
 
-    case ADJECTIVE:
-      return this->get_random_adjective_synonym(word, capitalised);
+    case WC_Verb:
+      synonym = this->get_random_verb_synonym(word, tense);
+      break;
+
+    case WC_Adverb:
+      synonym = this->get_random_adverb_synonym(word);
+      break;
 
     default:
-    case VERB:
-      return this->get_random_verb_synonym(word, tense, capitalised);
+    case WC_Default:
+      synonym = this->get_random_default_synonym(word);
+      break;
   };
+
+  // TODO capitalise and pluralise here
+  return synonym;
 
 }
 
 
-std::string Thesaurus::get_random_noun_synonym(std::string word, bool capitalised)
+std::string Thesaurus::get_random_noun_synonym(std::string word)
 {
-  (void) capitalised;
-
   auto result = this->nouns.find(word);
   if (result == this->nouns.end())
     throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
@@ -51,10 +62,8 @@ std::string Thesaurus::get_random_noun_synonym(std::string word, bool capitalise
 }
 
 
-std::string Thesaurus::get_random_adjective_synonym(std::string word, bool capitalised)
+std::string Thesaurus::get_random_adjective_synonym(std::string word)
 {
-  (void) capitalised;
-
   auto result = this->adjectives.find(word);
   if (result == this->adjectives.end())
     throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
@@ -64,10 +73,8 @@ std::string Thesaurus::get_random_adjective_synonym(std::string word, bool capit
 }
 
 
-std::string Thesaurus::get_random_verb_synonym(std::string word, TENSE tense, bool capitalised)
+std::string Thesaurus::get_random_verb_synonym(std::string word, WordTense tense)
 {
-  (void) capitalised;
-
   auto result = this->verbs.find(word);
   if (result == this->verbs.end())
     throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
@@ -77,32 +84,98 @@ std::string Thesaurus::get_random_verb_synonym(std::string word, TENSE tense, bo
 }
 
 
-TENSE Thesaurus::str2tense(std::string tense)
+std::string Thesaurus::get_random_adverb_synonym(std::string word)
+{
+  auto result = this->adverbs.find(word);
+  if (result == this->adverbs.end())
+    throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
+
+  auto rows = (*result).second;
+  return (*select_randomly(rows.begin(), rows.end()));
+}
+
+
+std::string Thesaurus::get_random_default_synonym(std::string word)
+{
+  int classes = 0;
+  WordClass cls = WC_Default;
+  {
+    auto result = this->nouns.find(word);
+    if (result != this->nouns.end()) {
+      classes ++;
+      cls = WC_Noun;
+    }
+  }
+  {
+    auto result = this->adjectives.find(word);
+    if (result != this->adjectives.end()) {
+      classes ++;
+      cls = WC_Adjective;
+    }
+  }
+  {
+    auto result = this->adverbs.find(word);
+    if (result != this->adverbs.end()) {
+      classes ++;
+      cls = WC_Adverb;
+    }
+  }
+
+  if (classes > 1) {
+    AuthorError(Formatter() << "Ambiguous default for \"" << word << "\": use a class qualifier in prototype.");
+  }
+  else if (classes == 0) {
+    throw WordNotFoundError(Formatter() << "Could not find category " << word << "." );
+  }
+
+  return this->get_random_synonym(word, cls);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+WordTense Thesaurus::str2tense(std::string tense)
 {
   if (tense.compare("past") == 0) {
-    return PAST_TENSE;
+    return WT_Past;
   }
   else if (tense.compare("present") == 0) {
-    return PRESENT_TENSE;
+    return WT_Present;
   }
   else if (tense.compare("future") == 0) {
-    return FUTURE_TENSE;
+    return WT_Future;
   }
 
   throw AuthorError(Formatter() << "Tense \"" << tense << "\" not understood.");
 }
 
 
-NOUN_ADJECTIVE_VERB Thesaurus::str2type (std::string type)
+WordClass Thesaurus::str2class(std::string type)
 {
   if (type.compare("noun") == 0) {
-    return NOUN;
+    return WC_Noun;
   }
   else if (type.compare("adjective") == 0) {
-    return ADJECTIVE;
+    return WC_Adjective;
   }
   else if (type.compare("verb") == 0) {
-    return VERB;
+    return WC_Verb;
+  }
+  else if (type.compare("adverb") == 0) {
+    return WC_Adverb;
+  }
+  else if (type.compare("default") == 0) {
+    return WC_Default;
   }
 
   throw AuthorError(Formatter() << "Word type \"" << type << "\" not understood.");
@@ -228,7 +301,23 @@ void Thesaurus::load()
 
     res = db.execute(Formatter() << "SELECT Synonym FROM ThesaurusAdjectives WHERE Category=\"" << category << "\";");
     for (unsigned int i = 0; i < res.size(); i++) {
-      this->nouns[category].push_back(res[i]["Synonym"]);
+      this->adjectives[category].push_back(res[i]["Synonym"]);
+    }
+  }
+
+  res = db.execute("SELECT DISTINCT Category FROM ThesaurusAdverbs;");
+  categories = std::list<std::string>();
+
+  for (unsigned int i = 0; i < res.size(); i++) {
+    categories.push_back(res[i]["Category"]);
+  }
+
+  for (auto category : categories) {
+    this->adverbs[category] = std::list<std::string>();
+
+    res = db.execute(Formatter() << "SELECT Synonym FROM ThesaurusAdverbs WHERE Category=\"" << category << "\";");
+    for (unsigned int i = 0; i < res.size(); i++) {
+      this->adverbs[category].push_back(res[i]["Synonym"]);
     }
   }
 
