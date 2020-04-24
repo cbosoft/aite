@@ -31,10 +31,10 @@ std::string Colony::describe(const Planet_ptr planet)
     return "There is no description for that planet.";
   }
 
-  ss << this->planet_log.at(planet->get_id()) << "\n";
+ std::string name = this->planet_log.at(planet->get_id());
 
   ss << std::setprecision(1) << std::fixed
-    << "This planet has a diameter of "
+    << name << " has a diameter of "
     << d.diameter
     << " AU and a density " << d.density
     << " times Earth's. This results in a";
@@ -77,7 +77,7 @@ std::string Colony::describe(const Planet_ptr planet)
         break;
 
       case AL_EarthLike:
-        ss << "n ";
+        ss << "n";
         break;
 
       case AL_Thick:
@@ -161,23 +161,23 @@ std::string Colony::describe(const Planet_ptr planet)
   }
 
   // TODO come up with nice way of disseminating composition data
-  ss << "\n\nSpectral emissions indicate the presence of:\n";
-  double trace = 0.0;
-  for (auto element_abundance_pair : d.apparent_composition) {
-    auto element = element_abundance_pair.first;
-    double abundance = element_abundance_pair.second;
-    double perc = abundance * 100.0;
+  // ss << "\n\nSpectral emissions indicate the presence of:\n";
+  // double trace = 0.0;
+  // for (auto element_abundance_pair : d.apparent_composition) {
+  //   auto element = element_abundance_pair.first;
+  //   double abundance = element_abundance_pair.second;
+  //   double perc = abundance * 100.0;
 
-    if (perc < 1.0) {
-      trace += perc;
-    }
-    else {
-      ss << "  - " << element->get_name() << " (" << perc << "%)\n";
-    }
-  }
-  if (trace > 0.0) {
-    ss << "  - Trace elements (" << trace << "%)\n";
-  }
+  //   if (perc < 1.0) {
+  //     trace += perc;
+  //   }
+  //   else {
+  //     ss << "  - " << element->get_name() << " (" << perc << "%)\n";
+  //   }
+  // }
+  // if (trace > 0.0) {
+  //   ss << "  - Trace elements (" << trace << "%)\n";
+  // }
 
 
   // TODO check if planet has life
