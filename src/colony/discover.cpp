@@ -63,11 +63,8 @@ std::string Colony::get_name(System_ptr system)
     return this->system_log[id];
   }
 
-  // TODO: name system
-  // possible naming rules:
-  //   random combination of syllables
-  //   names of famous scientists (esp astronomers/physicists/explorers)
-  return "system";
+  auto thesaurus = Thesaurus::getref();
+  return thesaurus.capitalise(thesaurus.generate_from_syllables());
 }
 
 bool Colony::have_discovered(const System_ptr system) const
@@ -100,14 +97,8 @@ std::string Colony::get_name(SystemObject_ptr object)
     return (*res).second;
   }
 
-  System_ptr system = object->get_system();
-  if (!this->have_discovered(system)) {
-    this->discover(system);
-  }
-
-  auto planet_number = system->get_object_index(object);
-
-  return Formatter() << this->get_name(system) << " " << latin_alphabet(planet_number);
+  auto thesaurus = Thesaurus::getref();
+  return thesaurus.capitalise(thesaurus.generate_from_syllables());
 }
 
 bool Colony::have_discovered(const SystemObject_ptr object) const
