@@ -3,6 +3,10 @@
 #include "element.hpp"
 #include "../util/random.hpp"
 
+// TODO: planets are generally made of elements, but stars and the weirder parts
+// of space can be composed of not much more than subatomic particles or
+// smaller. This system needs to be reworked I think.
+
 
 std::list<std::pair<std::shared_ptr<Element>, double>> Element::get_distribution(double density)
 {
