@@ -87,7 +87,7 @@ void Colony::discover(const SystemObject_ptr object)
   this->object_log[object->get_id()] = name;
 
   this->add_message(Formatter() 
-      << BOLD << "Discovered a planet" << RESET << ". It has been named " << name 
+      << BOLD << "Discovered " << object->get_object_name() << RESET << ". It has been named " << name 
       << ". " << this->describe(object) );
 }
 
