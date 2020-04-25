@@ -390,3 +390,84 @@ std::string Thesaurus::generate_from_syllables()
 }
 
 
+char get_capital(char c)
+{
+  int ci = int(c);
+
+  if (ci < 97)
+    return c;
+
+  ci -= 32;
+
+  return char(ci);
+}
+
+
+std::string Thesaurus::capitalise(std::string word) const
+{
+  char *cstr = word.data();
+  cstr[0] = get_capital(cstr[0]);
+  return std::string(cstr);
+}
+
+std::string Thesaurus::pluralise(std::string word) const
+{
+  // regex is your friend
+  // TODO
+
+  return word;
+}
+
+bool Thesaurus::is_capitalised(std::string word) const
+{
+  static std::regex re("[A-Z].*");
+  return std::regex_match(word, re);
+}
+
+
+bool Thesaurus::is_plural(std::string word) const
+{
+  // TODO
+  (void) word;
+  return false;
+}
+
+std::string Thesaurus::position(int i) const
+{
+
+  std::stringstream ss;
+
+  ss << i;
+
+  int unit = i % 10;
+  int tens = i / 10;
+
+  if (tens == 1) {
+    ss << "th";
+  }
+  else {
+
+    switch (unit) {
+
+      case 1:
+        ss << "st";
+        break;
+
+      case 2:
+        ss << "nd";
+        break;
+
+      case 3:
+        ss << "rd";
+        break;
+
+      default:
+        ss << "th";
+        break;
+
+    }
+
+  }
+
+  return ss.str();
+}

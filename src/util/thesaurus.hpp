@@ -41,6 +41,11 @@ class Thesaurus {
     static Thesaurus& getref();
     bool is_loaded();
 
+    bool is_capitalised(std::string word) const;
+    bool is_plural(std::string word) const;
+    std::string capitalise(std::string word) const;
+    std::string pluralise(std::string word) const;
+    std::string position(int) const;
 
     std::string generate_from_syllables();
     std::string get_random_synonym(std::string word, std::string form="default", std::string tense="past"); // tense is ignored for nouns and adjectives
