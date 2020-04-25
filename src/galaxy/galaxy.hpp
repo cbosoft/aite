@@ -29,6 +29,7 @@ class Galaxy {
     static Galaxy_ptr generate(Vec3 position);
 
     System_ptr new_system();
+    System_ptr new_inhabitable_system(SystemObject_ptr &object);
 
     Vec3 get_position() const;
     unsigned long get_id() const;

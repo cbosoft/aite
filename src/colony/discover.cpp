@@ -4,7 +4,7 @@
 
 #include "../galaxy/galaxy.hpp"
 #include "../system/system.hpp"
-#include "../planet/planet.hpp"
+#include "../object/object.hpp"
 
 #include "../util/alphabet.hpp"
 #include "../util/thesaurus.hpp"
@@ -78,39 +78,40 @@ bool Colony::have_discovered(const System_ptr system) const
 
 
 
-// PLANET
+// OBJECT
 
 
-void Colony::discover(const Planet_ptr planet)
+void Colony::discover(const SystemObject_ptr object)
 {
-  std::string name = this->get_name(planet);
-  this->planet_log[planet->get_id()] = name;
+  std::string name = this->get_name(object);
+  this->object_log[object->get_id()] = name;
 
   this->add_message(Formatter() 
       << BOLD << "Discovered a planet" << RESET << ". It has been named " << name 
-      << ". " << this->describe(planet) );
+      << ". " << this->describe(object) );
 }
 
 
-std::string Colony::get_name(Planet_ptr planet)
+std::string Colony::get_name(SystemObject_ptr object)
 {
-  auto id = planet->get_id();
-  if (this->planet_log.find(id) != this->planet_log.end()) {
-    return this->planet_log[id];
+  auto id = object->get_id();
+  auto res = this->object_log.find(id);
+  if (res != this->object_log.end()) {
+    return (*res).second;
   }
 
-  System_ptr system = planet->get_system();
+  System_ptr system = object->get_system();
   if (!this->have_discovered(system)) {
     this->discover(system);
   }
 
-  auto planet_number = system->get_planet_index(planet);
+  auto planet_number = system->get_object_index(object);
 
   return Formatter() << this->get_name(system) << " " << latin_alphabet(planet_number);
 }
 
-bool Colony::have_discovered(const Planet_ptr planet) const
+bool Colony::have_discovered(const SystemObject_ptr object) const
 {
-  unsigned long id = planet->get_id();
-  return (this->planet_log.find(id) != this->planet_log.end());
+  unsigned long id = object->get_id();
+  return (this->object_log.find(id) != this->object_log.end());
 }

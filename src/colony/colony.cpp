@@ -2,11 +2,11 @@
 
 #include "colony.hpp"
 #include "../universe/universe.hpp"
-#include "../planet/planet.hpp"
+#include "../object/object.hpp"
 #include "../system/system.hpp"
 
 
-Colony::Colony(std::string name, Planet_ptr planet, double time_of_inception)
+Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_inception)
 {
 
   this->population_stats = {
@@ -91,13 +91,13 @@ std::list<std::string> Colony::get_messages()
   return rv;
 }
 
-void Colony::startoff(Planet_ptr planet)
+void Colony::startoff(SystemObject_ptr planet)
 {
   this->discover(planet);
-  this->inhabited_planets.push_back(planet);
   if (not planet->try_inhabit(this->population_stats.number, *this)) {
     throw AuthorError(Formatter() << "Starting planet not inhabitable!");
   }
+  this->inhabited_objects.push_back(planet);
 
   auto system = planet->get_system();
   this->inhabited_systems.push_back(system);
@@ -108,7 +108,7 @@ void Colony::startoff(Planet_ptr planet)
 bool Colony::can_inhabit(const SystemObject &obj)
 {
   const double p = obj.get_pressure();
-  const double t = obj.get_temp();
+  const double t = obj.get_temperature();
   const double g = obj.get_gravity();
 
   bool pressure_ok = (p < this->technology_stats.max_pressure) && (p > this->technology_stats.min_pressure);

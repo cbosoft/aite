@@ -16,8 +16,7 @@ class System {
     double size;
     Vec3 position; // position within galaxy, in units of light years
 
-    std::vector<Planet_ptr> planets;
-    std::vector<Star_ptr> stars;
+    std::vector<SystemObject_ptr> objects;
 
     Galaxy_ptr galaxy;
 
@@ -27,12 +26,13 @@ class System {
     ~System();
 
     static System_ptr generate(Vec3 position, Galaxy_ptr galaxy);
+    static System_ptr generate_inhabitable(Vec3 position, Galaxy_ptr galaxy, SystemObject_ptr &object);
 
-    Planet_ptr get_random_planet();
+    SystemObject_ptr get_random_object();
 
     Vec3 get_position() const;
     unsigned long get_id() const;
-    unsigned int get_planet_index(Planet_ptr planet) const;
+    unsigned int get_object_index(SystemObject_ptr object) const;
     Galaxy_ptr get_galaxy() const;
 
 

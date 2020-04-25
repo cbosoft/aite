@@ -40,13 +40,13 @@ enum GravityLevel {
 
 enum SizeCategory {
   SC_Small,
-  SC_EarthLike,
+  SC_EarthSized,
   SC_Large,
   SC_Huge,
   SC_Giant
 };
 
-typedef struct PlanetDescriptionData {
+typedef struct ObjectDescriptionData {
   bool set;
 
   double diameter;
@@ -62,4 +62,4 @@ typedef struct PlanetDescriptionData {
   GravityLevel gl;
 
   ElementalAbundance apparent_composition;
-} PlanetDescriptionData;
+} ObjectDescriptionData;

@@ -15,10 +15,12 @@ GALAXY = \
 SYSTEM = \
 				 obj/system/system.o
 
-PLANET = \
-				 obj/planet/planet.o \
-				 obj/planet/describe.o \
-				 obj/planet/generate.o
+OBJECT = \
+				 obj/object/object.o \
+				 obj/object/describe.o \
+				 obj/object/planet.o \
+				 obj/object/earthlike_planet.o \
+				 obj/object/generate.o
 
 COLONY = \
 				 obj/colony/colony.o \
@@ -80,7 +82,7 @@ RESOURCE_EDITOR = \
 									obj/util/sqlite.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(PLANET) $(COLONY) $(CHEMISTRY) $(EVENT) $(FEATURE) $(HISTORY) $(UTIL) $(RESOURCES)
+OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(OBJECT) $(COLONY) $(CHEMISTRY) $(EVENT) $(FEATURE) $(HISTORY) $(UTIL) $(RESOURCES)
 LINK = -lpthread -lsqlite3
 DEFS =
 

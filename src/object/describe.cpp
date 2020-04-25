@@ -1,22 +1,22 @@
 #include <iostream>
 #include <cmath>
 
-#include "planet.hpp"
+#include "object.hpp"
 #include "../chemistry/element.hpp"
 #include "../constants.hpp"
 
-const PlanetDescriptionData &Planet::describe()
+const ObjectDescriptionData &SystemObject::describe()
 {
   if (this->description_data.set)
     return this->description_data;
 
-  this->description_data.diameter = this->diameter;
-  int logdia = std::round(std::log(this->diameter));
+  this->description_data.diameter = this->object_diameter;
+  int logdia = std::round(std::log(this->object_diameter));
   if (logdia < -4) {
     this->description_data.sc = SC_Small;
   }
   else if (logdia < -3) {
-    this->description_data.sc = SC_EarthLike;
+    this->description_data.sc = SC_EarthSized;
   }
   else if (logdia < -1) {
     this->description_data.sc = SC_Large;
@@ -28,8 +28,8 @@ const PlanetDescriptionData &Planet::describe()
     this->description_data.sc = SC_Giant;
   }
 
-  this->description_data.density = this->density_average;
-  this->description_data.gravitational_constant = CONST_G * this->density_average * (1./6.) * M_PI * this->diameter * CONST_AUm;
+  this->description_data.density = this->density[3];
+  this->description_data.gravitational_constant = CONST_G * this->density[3] * (1./6.) * M_PI * this->object_diameter * CONST_AUm;
 
   if (this->description_data.gravitational_constant < 0.001) {
     this->description_data.gl = GL_NonExistant;
@@ -51,23 +51,23 @@ const PlanetDescriptionData &Planet::describe()
   }
 
 
-  if (this->pressure_average < 0.01) {
+  if (this->pressure[2] < 0.01) {
     this->description_data.al = AL_None;
   }
-  else if (this->pressure_average < 0.5) {
+  else if (this->pressure[2] < 0.5) {
     this->description_data.al = AL_Thin;
   }
-  else if (this->pressure_average < 1.5) {
+  else if (this->pressure[2] < 1.5) {
     this->description_data.al = AL_EarthLike;
   }
-  else if (this->pressure_average < 10.0) {
+  else if (this->pressure[2] < 10.0) {
     this->description_data.al = AL_Thick;
   }
   else {
     this->description_data.al = AL_Heavy;
   }
 
-  double pdiff = (this->pressure_high - this->pressure_low) / this->pressure_average;
+  double pdiff = (this->pressure[1] - this->pressure[0]) / this->pressure[2];
   int wl = std::round(std::log(pdiff*10.0));
   if (wl < 1) {
     this->description_data.wl = WL_None;
@@ -86,8 +86,8 @@ const PlanetDescriptionData &Planet::describe()
   }
 
 
-  this->description_data.temperature = this->temp_average;
-  double t = this->temp_average;
+  this->description_data.temperature = this->temperature[2];
+  double t = this->temperature[2];
   if (t < 10) {
     this->description_data.tl = TL_NearAbsoluteZero;
   }
@@ -115,8 +115,9 @@ const PlanetDescriptionData &Planet::describe()
   else {
     this->description_data.tl = TL_Scorching;
   }
-  this->description_data.apparent_composition = this->composition_surface;
+  this->description_data.apparent_composition = this->composition[2];
   this->description_data.set = true;
 
   return this->description_data;
 }
+

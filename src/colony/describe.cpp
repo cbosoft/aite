@@ -2,7 +2,7 @@
 #include <sstream>
 
 #include "colony.hpp"
-#include "../planet/planet.hpp"
+#include "../object/object.hpp"
 #include "../chemistry/element.hpp"
 
 std::string Colony::describe(const Galaxy_ptr galaxy)
@@ -21,17 +21,17 @@ std::string Colony::describe(const System_ptr system)
 }
 
 
-std::string Colony::describe(const Planet_ptr planet)
+std::string Colony::describe(const SystemObject_ptr object)
 {
-  auto d = planet->describe();
+  auto d = object->describe();
 
   std::stringstream ss;
 
-  if (this->planet_log.find(planet->get_id()) == this->planet_log.end()) {
-    return "There is no description for that planet.";
+  if (this->object_log.find(object->get_id()) == this->object_log.end()) {
+    return "There is no description for that object.";
   }
 
- std::string name = this->planet_log.at(planet->get_id());
+ std::string name = this->object_log.at(object->get_id());
 
   ss << std::setprecision(3) << std::scientific
     << name << " has a diameter of "
@@ -69,7 +69,7 @@ std::string Colony::describe(const Planet_ptr planet)
   ss << " gravitational field (g = " << d.gravitational_constant << "). ";
 
   if (d.al != AL_None) {
-    ss << "The planet has a";
+    ss << "The object has a";
 
     switch (d.al) {
       case AL_Thin:
@@ -180,7 +180,7 @@ std::string Colony::describe(const Planet_ptr planet)
   // }
 
 
-  // TODO check if planet has life
+  // TODO check if object has life
 
   return ss.str();
 }
