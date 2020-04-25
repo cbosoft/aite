@@ -184,12 +184,13 @@ WordClass Thesaurus::str2class(std::string type)
 
 bool is_vowel(char c)
 {
-  const char vowels[] = {
+  constexpr int NVOWELS = 10;
+  const char vowels[NVOWELS] = {
     'a', 'e', 'i', 'o', 'u',
     'A', 'E', 'I', 'O', 'U',
   };
 
-  for (int i = 0; i < 10; i ++) {
+  for (int i = 0; i < NVOWELS; i ++) {
     if (c == vowels[i])
       return true;
   }
