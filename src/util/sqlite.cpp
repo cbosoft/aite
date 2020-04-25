@@ -17,22 +17,22 @@ SQLiteValue::~SQLiteValue()
 {
 }
 
-std::string SQLiteValue::as_string()
+std::string SQLiteValue::as_string() const
 {
   return std::string(this->value);
 }
 
-int SQLiteValue::as_int()
+int SQLiteValue::as_int() const
 {
   return std::stoi(this->value);
 }
 
-double SQLiteValue::as_double()
+double SQLiteValue::as_double() const
 {
   return std::stod(this->value);
 }
 
-bool SQLiteValue::is_null()
+bool SQLiteValue::is_null() const
 {
   return this->null;
 }
@@ -52,7 +52,7 @@ SQLiteResults::~SQLiteResults()
   // do nothing
 }
 
-SQLiteRow SQLiteResults::get(unsigned int i)
+const SQLiteRow &SQLiteResults::get(unsigned int i) const
 {
   if (i > this->rows.size() - 1)
     throw IndexError(Formatter() << "Index " << i << " invalid for vector of size " << this->rows.size() << ".");
@@ -97,7 +97,7 @@ SQLiteRow::~SQLiteRow()
 }
 
 
-SQLiteValue SQLiteRow::get(const std::string &k)
+const SQLiteValue &SQLiteRow::get(const std::string &k) const
 {
   auto it = this->map.find(k);
   if (it == this->map.end())

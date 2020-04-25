@@ -25,22 +25,22 @@ class SQLiteValue {
     SQLiteValue(const char *value);
     ~SQLiteValue();
 
-    std::string as_string();
-    int as_int();
-    double as_double();
-    bool is_null();
+    std::string as_string() const;
+    int as_int() const;
+    double as_double() const;
+    bool is_null() const;
 
-    operator std::string()
+    operator std::string() const
     {
       return this->as_string();
     }
 
-    operator double()
+    operator double() const
     {
       return this->as_double();
     }
 
-    operator bool()
+    operator bool() const
     {
       return this->is_null();
     }
@@ -57,8 +57,8 @@ class SQLiteRow {
 
     SQLiteRow(char **values, char **fields, int n);
     ~SQLiteRow();
-    SQLiteValue get(const std::string&);
-    SQLiteValue operator[](const std::string &k) { return this->get(k); }
+    const SQLiteValue &get(const std::string&) const;
+    const SQLiteValue &operator[](const std::string &k) const { return this->get(k); }
 
 };
 
@@ -76,8 +76,8 @@ class SQLiteResults {
 
     static int factory(void *addr, int ncol, char** values, char **fields);
 
-    SQLiteRow get(unsigned int i);
-    SQLiteRow operator[](int i) { return this->get(i); }
+    const SQLiteRow &get(unsigned int i) const;
+    const SQLiteRow &operator[](int i) const { return this->get(i); }
     unsigned int size() const;
 };
 
