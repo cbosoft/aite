@@ -28,7 +28,7 @@ std::string Colony::describe(const SystemObject_ptr object)
   std::stringstream ss;
 
   if (this->object_log.find(object->get_id()) == this->object_log.end()) {
-    return "There is no description for that object.";
+    return "Yet to discover that object, you cannot describe it. It remains a mystery to you.";
   }
 
  std::string name = this->object_log.at(object->get_id());
@@ -69,7 +69,7 @@ std::string Colony::describe(const SystemObject_ptr object)
   ss << " gravitational field (g = " << d.gravitational_constant << "). ";
 
   if (d.al != AL_None) {
-    ss << "The object has a";
+    ss << "The " << object->get_object_name() << " has a";
 
     switch (d.al) {
       case AL_Thin:
@@ -91,33 +91,9 @@ std::string Colony::describe(const SystemObject_ptr object)
       default:
         break;
     }
+
+    ss << " atmosphere. ";
   }
-
-  ss << " atmosphere. Pressure differentials indicate";
-  switch (d.wl) {
-
-    case WL_None:
-      ss << " there is little wind";
-      break;
-
-    case WL_Negligable:
-      ss << " there are infrequent, very mild winds";
-      break;
-
-    case WL_Strong:
-      ss << " there are strong winds and storms";
-      break;
-
-    case WL_Gale:
-      ss << " there are frequent bouts of gale-force winds";
-      break;
-
-    case WL_Ferocious:
-      ss << " that there are constant ferocious wind ravaging the surface";
-      break;
-
-  }
-  ss << ". ";
 
 
   ss << "Average surface temperature is " << std::setprecision(1) << std::fixed << d.temperature << "K; ";
@@ -128,19 +104,19 @@ std::string Colony::describe(const SystemObject_ptr object)
       break;
 
     case TL_ExtremeCold:
-      ss << "where most elements are solid.";
+      ss << "extremely cold.";
       break;
 
     case TL_VeryCold:
-      ss << "almost inhospitably cold.";
-      break;
-
-    case TL_Cold:
       ss << "very cold.";
       break;
 
+    case TL_Cold:
+      ss << "cold.";
+      break;
+
     case TL_Temperate:
-      ss << "temperate.";
+      ss << "relatively mild.";
       break;
 
     case TL_Hot:
@@ -148,15 +124,19 @@ std::string Colony::describe(const SystemObject_ptr object)
       break;
 
     case TL_VeryHot:
-      ss << "extremely hot.";
+      ss << "very hot.";
       break;
 
     case TL_ExtremeHeat:
-      ss << "scorching.";
+      ss << "extremely hot.";
       break;
 
     case TL_Scorching:
-      ss << "many materials warp and deform under these temperatures.";
+      ss << "scorching.";
+      break;
+
+    case TL_Unfathomable:
+      ss << "unfathomably hot.";
       break;
   }
 
@@ -178,9 +158,6 @@ std::string Colony::describe(const SystemObject_ptr object)
   // if (trace > 0.0) {
   //   ss << "  - Trace elements (" << trace << "%)\n";
   // }
-
-
-  // TODO check if object has life
 
   return ss.str();
 }

@@ -11,22 +11,6 @@ const ObjectDescriptionData &SystemObject::describe()
     return this->description_data;
 
   this->description_data.diameter = this->object_diameter;
-  int logdia = std::round(std::log(this->object_diameter));
-  if (logdia < -4) {
-    this->description_data.sc = SC_Small;
-  }
-  else if (logdia < -3) {
-    this->description_data.sc = SC_EarthSized;
-  }
-  else if (logdia < -1) {
-    this->description_data.sc = SC_Large;
-  }
-  else if (logdia < 2) {
-    this->description_data.sc = SC_Huge;
-  }
-  else {
-    this->description_data.sc = SC_Giant;
-  }
 
   this->description_data.density = this->density[3];
   this->description_data.gravitational_constant = CONST_G * this->density[3] * (1./6.) * M_PI * this->object_diameter * CONST_AUm;
@@ -51,40 +35,48 @@ const ObjectDescriptionData &SystemObject::describe()
   }
 
 
-  if (this->pressure[2] < 0.01) {
+  double avp = this->pressure[2];
+  if (this->get_object_type() == SO_Planet)
+  {
+    if (avp < 0.01) {
+      this->description_data.al = AL_None;
+      this->description_data.pl = PL_Negligable;
+    }
+    else if (avp < 0.5) {
+      this->description_data.al = AL_Thin;
+      this->description_data.pl = PL_Low;
+    }
+    else if (avp < 1.5) {
+      this->description_data.al = AL_EarthLike;
+      this->description_data.pl = PL_Medium;
+    }
+    else if (avp < 10.0) {
+      this->description_data.al = AL_Thick;
+      this->description_data.pl = PL_High;
+    }
+    else {
+      this->description_data.al = AL_Heavy;
+      this->description_data.pl = PL_Crushing;
+    }
+  }
+  else {
     this->description_data.al = AL_None;
+    if (avp < 0.01) {
+      this->description_data.pl = PL_Negligable;
+    }
+    else if (avp < 0.5) {
+      this->description_data.pl = PL_Low;
+    }
+    else if (avp < 1.5) {
+      this->description_data.pl = PL_Medium;
+    }
+    else if (avp < 10.0) {
+      this->description_data.pl = PL_High;
+    }
+    else {
+      this->description_data.pl = PL_Crushing;
+    }
   }
-  else if (this->pressure[2] < 0.5) {
-    this->description_data.al = AL_Thin;
-  }
-  else if (this->pressure[2] < 1.5) {
-    this->description_data.al = AL_EarthLike;
-  }
-  else if (this->pressure[2] < 10.0) {
-    this->description_data.al = AL_Thick;
-  }
-  else {
-    this->description_data.al = AL_Heavy;
-  }
-
-  double pdiff = (this->pressure[1] - this->pressure[0]) / this->pressure[2];
-  int wl = std::round(std::log(pdiff*10.0));
-  if (wl < 1) {
-    this->description_data.wl = WL_None;
-  }
-  else if (wl < 2) {
-    this->description_data.wl = WL_Negligable;
-  }
-  else if (wl < 3) {
-    this->description_data.wl = WL_Strong;
-  }
-  else if (wl < 4) {
-    this->description_data.wl = WL_Gale;
-  }
-  else {
-    this->description_data.wl = WL_Ferocious;
-  }
-
 
   this->description_data.temperature = this->temperature[2];
   double t = this->temperature[2];

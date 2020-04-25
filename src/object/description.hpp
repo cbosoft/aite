@@ -10,7 +10,8 @@ enum TemperatureLevel {
   TL_Hot,
   TL_VeryHot,
   TL_ExtremeHeat,
-  TL_Scorching
+  TL_Scorching,
+  TL_Unfathomable
 };
 
 enum AtmosphereLevel {
@@ -21,12 +22,12 @@ enum AtmosphereLevel {
   AL_Heavy
 };
 
-enum WindLevel {
-  WL_None,
-  WL_Negligable,
-  WL_Strong,
-  WL_Gale,
-  WL_Ferocious
+enum PressureLevel {
+  PL_Negligable,
+  PL_Low,
+  PL_Medium,
+  PL_High,
+  PL_Crushing
 };
 
 enum GravityLevel {
@@ -38,24 +39,16 @@ enum GravityLevel {
   GL_SpineCrushing
 };
 
-enum SizeCategory {
-  SC_Small,
-  SC_EarthSized,
-  SC_Large,
-  SC_Huge,
-  SC_Giant
-};
 
 typedef struct ObjectDescriptionData {
   bool set;
 
   double diameter;
-  SizeCategory sc;
 
   double temperature;
   TemperatureLevel tl;
   AtmosphereLevel al;
-  WindLevel wl;
+  PressureLevel pl;
 
   double density;
   double gravitational_constant;
