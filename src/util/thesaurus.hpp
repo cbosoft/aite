@@ -16,6 +16,7 @@ class Thesaurus {
 
     std::regex RE_THESA = std::regex("\\{\\{([\\w\\s]*)(?:,(\\w+))?(?:,(\\w+))?\\}\\}");
 
+    std::list<std::string> syllables;
     std::map<std::string, std::list<std::string>> nouns;
     std::map<std::string, std::list<std::string>> adjectives;
     std::map<std::string, std::list<std::string>> adverbs;
@@ -40,6 +41,8 @@ class Thesaurus {
     static Thesaurus& getref();
     bool is_loaded();
 
+
+    std::string generate_from_syllables();
     std::string get_random_synonym(std::string word, std::string form="default", std::string tense="past"); // tense is ignored for nouns and adjectives
     std::string get_random_synonym(std::string word, WordClass wordclass, WordTense tense=WT_Present); // tense is ignored for nouns and adjectives
     std::string substitute_in_prototype(std::string prototype);

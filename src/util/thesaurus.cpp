@@ -289,6 +289,14 @@ void Thesaurus::load()
     }
   }
 
+  res = db.execute("SELECT * FROM EnglishSyllables;");
+
+  for (unsigned int i = 0; i < res.size(); i++) {
+    const SQLiteRow &row = res[i];
+
+    this->syllables.push_back(row["Syllable"]);
+  }
+
   res = db.execute("SELECT DISTINCT Category FROM ThesaurusAdjectives;");
   categories = std::list<std::string>();
 
@@ -362,3 +370,22 @@ Thesaurus::Thesaurus()
 {
   this->loaded = false;
 }
+
+
+std::string Thesaurus::generate_from_syllables()
+{
+
+  if (not this->is_loaded())
+    this->load();
+
+  int nsyllables = std::abs(std::round(normal_rand(3, 1)));
+
+  std::stringstream ss;
+  for (int i = 0; i < nsyllables; i++) {
+    ss << *select_randomly(this->syllables.begin(), this->syllables.end());
+  }
+
+  return ss.str();
+}
+
+
