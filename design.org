@@ -87,6 +87,13 @@
 
     Where on or in may be used interchangeably, whichever makes sense to you.
 
+* Language
+
+  I want Gaelic to feature prominently in the game as a lingua franca or something.
+
+  Could use the Gaelic names for elements?
+
+  https://elements.vanderkrogt.net/language.php?language=gd
 * (Chemical) Elements
   - Everything in the universe will come from the periodic table
   - Gases, metals, some liquids, combinations; all form to make the basis of
