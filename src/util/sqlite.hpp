@@ -45,6 +45,11 @@ class SQLiteValue {
       return this->is_null();
     }
 
+    operator int() const
+    {
+      return this->as_int();
+    }
+
 };
 
 class SQLiteRow {
