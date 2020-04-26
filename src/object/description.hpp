@@ -64,4 +64,5 @@ typedef struct ObjectDescriptionData {
   GravityLevel gl;
 
   ElementalAbundance apparent_composition;
+  std::string composition_summary;
 } ObjectDescriptionData;

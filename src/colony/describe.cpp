@@ -1,9 +1,12 @@
 #include <iomanip>
 #include <sstream>
 
-#include "colony.hpp"
+#include "../util/thesaurus.hpp"
+#include "../system/system.hpp"
 #include "../object/object.hpp"
 #include "../chemistry/element.hpp"
+
+#include "colony.hpp"
 
 std::string Colony::describe(const Galaxy_ptr galaxy)
 {
@@ -31,12 +34,17 @@ std::string Colony::describe(const SystemObject_ptr object)
     return "Yet to discover that object, you cannot describe it. It remains a mystery to you.";
   }
 
- std::string name = this->object_log.at(object->get_id());
+  std::string name = this->object_log.at(object->get_id());
+
+  auto system = object->get_system();
+  int i = system->get_object_index(object);
+  ss << name << " is the " << Thesaurus::getref().position(i) << " "
+    << object->get_object_name() << " of the " << this->get_name(system) << " system. ";
 
   ss << std::setprecision(3) << std::scientific
-    << name << " has a diameter of "
-    << d.diameter
-    << " AU and a density " << d.density
+    << name << " is coloured " << object->get_colour() << ". "
+    << "It has a diameter of " << d.diameter << "AU"
+    << " and a density " << d.density
     << " times Earth's. This results in a";
 
   switch (d.gl) {
@@ -140,24 +148,7 @@ std::string Colony::describe(const SystemObject_ptr object)
       break;
   }
 
-  // TODO come up with nice way of disseminating composition data
-  // ss << "\n\nSpectral emissions indicate the presence of:\n";
-  // double trace = 0.0;
-  // for (auto element_abundance_pair : d.apparent_composition) {
-  //   auto element = element_abundance_pair.first;
-  //   double abundance = element_abundance_pair.second;
-  //   double perc = abundance * 100.0;
-
-  //   if (perc < 1.0) {
-  //     trace += perc;
-  //   }
-  //   else {
-  //     ss << "  - " << element->get_name() << " (" << perc << "%)\n";
-  //   }
-  // }
-  // if (trace > 0.0) {
-  //   ss << "  - Trace elements (" << trace << "%)\n";
-  // }
+  ss << " The " << object->get_object_name() << " " << d.composition_summary;
 
   return ss.str();
 }

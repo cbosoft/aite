@@ -58,3 +58,9 @@ System_ptr SystemObject::get_system() const
 {
   return this->system;
 }
+
+
+std::string SystemObject::get_colour() const
+{
+  return this->colour;
+}

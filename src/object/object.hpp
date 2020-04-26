@@ -34,6 +34,7 @@ class SystemObject {
     std::array<double, 3> pressure;
     std::array<double, 4> density; // deep, shallow, near-surface, average
     std::array<std::list<std::pair<Element_ptr, double>>, 3> composition; // deep, shallow, near-surface
+    std::string colour;
 
     ObjectDescriptionData description_data;
 
@@ -49,6 +50,7 @@ class SystemObject {
     double get_gravity() const;
     unsigned long get_id() const;
     System_ptr get_system() const;
+    std::string get_colour() const;
 
 
     virtual SystemObjectType get_object_type() const=0;
