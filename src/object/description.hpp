@@ -39,10 +39,19 @@ enum GravityLevel {
   GL_SpineCrushing
 };
 
+enum SizeCategory {
+  SC_Small,
+  SC_EarthSized,
+  SC_Large,
+  SC_Huge,
+  SC_Giant
+};
+
 
 typedef struct ObjectDescriptionData {
   bool set;
 
+  SizeCategory sc;
   double diameter;
 
   double temperature;
