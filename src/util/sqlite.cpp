@@ -29,7 +29,12 @@ int SQLiteValue::as_int() const
 
 double SQLiteValue::as_double() const
 {
-  return std::stod(this->value);
+  try {
+    return std::stod(this->value);
+  }
+  catch (const std::exception &e) {
+    throw MathError(Formatter() << "Error converting \"" << this->value << "\" to double.");
+  }
 }
 
 bool SQLiteValue::is_null() const
