@@ -387,7 +387,7 @@ std::string Thesaurus::generate_from_syllables()
   if (not this->is_loaded())
     this->load();
 
-  int nsyllables = std::abs(std::round(normal_rand(3, 1)));
+  int nsyllables = std::abs(std::round(normal_rand(2, 0.5)));
 
   std::stringstream ss;
   for (int i = 0; i < nsyllables; i++) {
