@@ -298,6 +298,14 @@ void Thesaurus::load()
     this->syllables.push_back(row["Syllable"]);
   }
 
+  res = db.execute("SELECT * FROM Colours;");
+
+  for (unsigned int i = 0; i < res.size(); i++) {
+    const SQLiteRow &row = res[i];
+
+    this->colours.push_back(row["Colour"]);
+  }
+
   res = db.execute("SELECT DISTINCT Category FROM ThesaurusAdjectives;");
   categories = std::list<std::string>();
 
@@ -470,4 +478,9 @@ std::string Thesaurus::position(int i) const
   }
 
   return ss.str();
+}
+
+std::string Thesaurus::get_random_colour() const
+{
+  return *select_randomly(this->colours.begin(), this->colours.end());
 }
