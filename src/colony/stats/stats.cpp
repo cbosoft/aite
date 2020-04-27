@@ -126,7 +126,7 @@ double ColonyStats::get_max_habitable_gravity() const
 double ColonyStats::get_max_habitable_temperature() const
 {
   double base = this->apply_modifiers(this->technology_stats.astrogation, "max_habitable_temperature");
-  return (std::pow(base, 0.5) + 3.0)*100.0;
+  return (std::pow(base, 0.5) + 4.0)*100.0;
 }
 
 double ColonyStats::apply_modifiers(double value, std::string statname) const
