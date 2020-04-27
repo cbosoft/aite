@@ -23,6 +23,8 @@ OBJECT = \
 				 obj/object/generate.o
 
 COLONY = \
+				 obj/colony/stats/stats.o \
+				 obj/colony/stats/statistic.o \
 				 obj/colony/colony.o \
 				 obj/colony/discover.o \
 				 obj/colony/bootstrap.o \
