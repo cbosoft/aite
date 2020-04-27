@@ -7,6 +7,7 @@
 
 #include "../types.hpp"
 #include "stats/stats.hpp"
+#include "../resources/resource_pool.hpp"
 
 
 class Colony {
@@ -15,6 +16,8 @@ class Colony {
 
     ColonyStats stats;
     Universe_ptr universe;
+
+    ResourcePool resources;
 
     // std::list<Abilities> abilites; // list of abilities the colony has acquired
 

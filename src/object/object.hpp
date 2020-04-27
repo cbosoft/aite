@@ -2,7 +2,7 @@
 #include <string>
 #include <array>
 
-#include "../colony/colony.hpp"
+#include "../resources/resources.hpp"
 #include "../types.hpp"
 
 #include "description.hpp"
@@ -34,6 +34,7 @@ class SystemObject {
     std::array<double, 3> pressure;
     std::array<double, 4> density; // deep, shallow, near-surface, average
     std::array<std::list<std::pair<Element_ptr, double>>, 3> composition; // deep, shallow, near-surface
+    Resources resources;
     std::string colour;
 
     ObjectDescriptionData description_data;
