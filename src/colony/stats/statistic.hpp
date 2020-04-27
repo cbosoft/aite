@@ -9,7 +9,6 @@ class Statistic {
     double base_value;
     std::map<std::string, double> additive_modifiers;
     std::map<std::string, double> multiplicative_modifiers;
-    virtual double get_base() const;
 
   public:
 
