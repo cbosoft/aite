@@ -6,18 +6,14 @@
 #include <mutex>
 
 #include "../types.hpp"
-#include "stats.hpp"
+#include "stats/stats.hpp"
 
 
 class Colony {
 
   private:
 
-    // TODO overhaul stats; they're a bit of a mish-mash rn
-    PopulationStats population_stats;
-    TechnologyStats technology_stats;
-    CultureStats culture_stats;
-
+    ColonyStats stats;
     Universe_ptr universe;
 
     // std::list<Abilities> abilites; // list of abilities the colony has acquired
@@ -39,14 +35,14 @@ class Colony {
     std::list<System_ptr> inhabited_systems;
     std::list<Galaxy_ptr> inhabited_galaxies;
 
+    double get_inhabited_volume() const;
 
   public:
 
     Colony(std::string name, SystemObject_ptr starting_world, double time_of_inception);
     ~Colony();
 
-    // TODO add moons, stars, nebula, asteroid fields
-    void discover(const SystemObject_ptr planet);
+    void discover(const SystemObject_ptr object);
     void discover(const System_ptr system);
     void discover(const Galaxy_ptr galaxy);
 

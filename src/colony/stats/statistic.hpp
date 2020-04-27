@@ -5,9 +5,11 @@
 class Statistic {
 
   private:
+
     double base_value;
     std::map<std::string, double> additive_modifiers;
     std::map<std::string, double> multiplicative_modifiers;
+    virtual double get_base() const;
 
   public:
 
@@ -20,7 +22,12 @@ class Statistic {
     void remove_multiplicative_modifier(std::string name);
     void set_base(double value);
     void increase_base(double increment);
+    void multiply_base(double factor);
     double get_value() const;
     std::string get_repr() const;
+
+    operator double() const {
+      return this->get_value();
+    }
 
 };
