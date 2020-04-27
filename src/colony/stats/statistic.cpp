@@ -54,6 +54,11 @@ void Statistic::increase_base(double increment)
   this->set_base(this->base_value + increment);
 }
 
+void Statistic::multiply_base(double factor)
+{
+  this->set_base(this->base_value*factor);
+}
+
 double Statistic::get_value() const
 {
   double tot = this->base_value;
