@@ -208,6 +208,9 @@ const ObjectDescriptionData &SystemObject::describe()
   this->description_data.composition_summary = ss.str();
 
 
+  // TODO resource abundance
+
+
   this->description_data.set = true;
 
   return this->description_data;
