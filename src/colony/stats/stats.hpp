@@ -1,6 +1,5 @@
 #pragma once
 
-#include "derived_statistic.hpp"
 #include "statistic.hpp"
 
 enum ResearchFocus {
@@ -19,6 +18,10 @@ class ColonyStats {
   private:
 
     unsigned int number_adv_techniques;
+    std::map<std::string, double> derived_additive_modifiers;
+    std::map<std::string, double> derived_multiplicative_modifiers;
+
+    double apply_modifiers(double value, std::string statname) const;
 
   public:
 
@@ -54,6 +57,9 @@ class ColonyStats {
     ~ColonyStats();
     void update(double dt);
 
+    void add_additive_modifier(double value, std::string name);
+    void add_multiplicative_modifier(double value, std::string name);
+
     double get_living_volume_requirement() const;
     void set_research_focus(ResearchFocus focus);
     ResearchFocus get_research_Focus() const;
@@ -69,11 +75,11 @@ class ColonyStats {
     double nuclear_power_minimum_activity() const;
     double get_detection_distance() const;
     double get_travel_speed() const;
+    double get_max_habitable_temperature() const;
+    double get_max_habitable_gravity() const;
 
     bool check_temperature_is_habitable(double temperature) const;
     bool check_gravity_is_habitable(double gravity) const;
-
-    double get_max_habitable_temperature() const;
-    double get_max_habitable_gravity() const;
+    bool check_habitable(double temperature, double gravity) const;
 
 };

@@ -110,16 +110,61 @@ bool ColonyStats::check_gravity_is_habitable(double gravity) const
   return gravity < this->get_max_habitable_gravity();
 }
 
+bool ColonyStats::check_habitable(double temperature, double gravity) const
+{
+  return this->check_temperature_is_habitable(temperature) && this->check_gravity_is_habitable(gravity);
+}
+
 
 double ColonyStats::get_max_habitable_gravity() const
 {
-  double base = this->technology_stats.astrogation;
+  double base = this->apply_modifiers(this->technology_stats.astrogation, "max_habitable_gravity");
   return std::pow(base, 0.33)*1.1 + 5.0;
 }
 
 
 double ColonyStats::get_max_habitable_temperature() const
 {
-  double base = this->technology_stats.astrogation;
+  double base = this->apply_modifiers(this->technology_stats.astrogation, "max_habitable_temperature");
   return (std::pow(base, 0.5) + 3.0)*100.0;
+}
+
+double ColonyStats::apply_modifiers(double value, std::string statname) const
+{
+  double rv = value;
+  {
+    auto it = this->derived_additive_modifiers.find(statname);
+    if (it != this->derived_additive_modifiers.end()) {
+      rv += it->second;
+    }
+  }
+
+  {
+    auto it = this->derived_multiplicative_modifiers.find(statname);
+    if (it != this->derived_multiplicative_modifiers.end()) {
+      rv *= it->second;
+    }
+  }
+
+  return rv;
+}
+
+void ColonyStats::add_multiplicative_modifier(double value, std::string statname)
+{
+  if (this->derived_multiplicative_modifiers.find(statname) == this->derived_multiplicative_modifiers.end()) {
+    this->derived_multiplicative_modifiers[statname] = value;
+  }
+  else {
+    this->derived_multiplicative_modifiers[statname] = this->derived_multiplicative_modifiers[statname] + value;
+  }
+}
+
+void ColonyStats::add_additive_modifier(double value, std::string statname)
+{
+  if (this->derived_additive_modifiers.find(statname) == this->derived_additive_modifiers.end()) {
+    this->derived_additive_modifiers[statname] = value;
+  }
+  else {
+    this->derived_additive_modifiers[statname] = this->derived_additive_modifiers[statname] + value;
+  }
 }
