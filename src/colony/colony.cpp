@@ -59,23 +59,5 @@ void Colony::startoff(SystemObject_ptr planet)
 
 bool Colony::can_inhabit(const SystemObject &obj)
 {
-  const double p = obj.get_pressure();
-  const double t = obj.get_temperature();
-  const double g = obj.get_gravity();
-
-  bool pressure_ok = this->stats.check_pressure_is_habitable(obj.get_pressure());
-  bool temp_ok = this->stats.check_temperature_is_habitable(obj.get_temperature());
-  bool gravity_ok = this->stats.check_gravity_is_habitable(obj.get_gravity());
-
-  if (!pressure_ok) {
-    std::cerr << "pressure " << p << std::endl;
-  }
-  if (!temp_ok) {
-    std::cerr << "temperature " << t << std::endl;
-  }
-  if (!gravity_ok) {
-    std::cerr << "gravity " << g << std::endl;
-  }
-
-  return pressure_ok and temp_ok and gravity_ok;
+  return this->stats.check_habitable(obj.get_temperature(), obj.get_gravity());
 }
