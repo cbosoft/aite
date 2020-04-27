@@ -1,3 +1,4 @@
+#include "path.hpp"
 #include "sqlite.hpp"
 
 
@@ -150,4 +151,9 @@ SQLiteResults SQLiteInterface::execute(std::string command)
   }
 
   return res;
+}
+
+SQLiteInterface SQLiteInterface::get_resource_db()
+{
+  return SQLiteInterface(get_resource_path());
 }

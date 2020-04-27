@@ -99,4 +99,6 @@ class SQLiteInterface {
     ~SQLiteInterface();
 
     SQLiteResults execute(std::string command);
+
+    static SQLiteInterface get_resource_db();
 };

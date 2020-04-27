@@ -1,7 +1,6 @@
 #include "history.hpp"
 #include "../util/sqlite.hpp"
 #include "../util/random.hpp"
-#include "../resources/resources.hpp"
 
 
 std::list<HistoryPrototype> &HistoryElement::get_prototypes_list() {
@@ -10,7 +9,7 @@ std::list<HistoryPrototype> &HistoryElement::get_prototypes_list() {
 
   if (not loaded) {
 
-    SQLiteInterface db(get_resource_path());
+    SQLiteInterface db = SQLiteInterface::get_resource_db();
 
     SQLiteResults res = db.execute("SELECT * FROM HistoryElements;");
 

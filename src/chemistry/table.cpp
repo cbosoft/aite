@@ -1,7 +1,6 @@
 #include <vector>
 
 #include "../util/sqlite.hpp"
-#include "../resources/resources.hpp"
 #include "../types.hpp"
 
 #include "element.hpp"
@@ -12,7 +11,7 @@ const std::vector<Element_ptr> &get_elements()
   static bool loaded = false;
 
   if (not loaded) {
-    SQLiteInterface db(get_resource_path());
+    SQLiteInterface db = SQLiteInterface::get_resource_db();
 
     SQLiteResults res = db.execute("SELECT * FROM Elements;");
 

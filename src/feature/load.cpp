@@ -1,6 +1,5 @@
 #include "feature.hpp"
 #include "../util/sqlite.hpp"
-#include "../resources/resources.hpp"
 
 
 std::list<FeaturePrototype> &Feature::get_prototypes_list()
@@ -9,7 +8,7 @@ std::list<FeaturePrototype> &Feature::get_prototypes_list()
   static bool loaded = false;
 
   if (not loaded) {
-    SQLiteInterface db(get_resource_path());
+    SQLiteInterface db = SQLiteInterface::get_resource_db();
 
     SQLiteResults res = db.execute("SELECT * FROM Features;");
 
