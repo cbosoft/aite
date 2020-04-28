@@ -58,18 +58,25 @@ ServerReply ServerConnection::send(std::string message)
 
 void ServerConnection::join(std::string colony_name)
 {
-  auto reply = this->send(Formatter() << "join|" <<colony_name);
+  auto reply = this->send(Formatter() << "join|" << colony_name);
 
   if (reply.category().compare("welcome") == 0) {
     this->welcome();
+    sleep(1);
   }
 
   std::cout << "Syncing with server... " << std::flush;
   this->sync();
   std::cout << "done!" << std::endl;
+  sleep(1);
+
+  std::cout << "\nStatus:\n";
+  for (auto kv : this->state.status) {
+    std::cout << "  " << kv.first << ": " << kv.second << "\n";
+  }
 
   if (this->state.messages.size()) {
-    std::cout << "You have messages:" << std::endl;
+    std::cout << "\nYou have messages:\n";
     for (auto m : this->state.messages) {
       std::cout << "  " << m << std::endl;
     }
@@ -80,7 +87,20 @@ void ServerConnection::join(std::string colony_name)
 
 void ServerConnection::sync()
 {
-  auto reply = this->send("getmessages");
+
+  this->state.status = std::map<std::string, std::string>();
+  auto reply = this->send("query|status");
+  for (auto line : reply.contents()) {
+
+    std::string key, value;
+    std::stringstream ss(line);
+    getline(ss, key, ',');
+    getline(ss, value, ',');
+
+    this->state.status[key] = value;
+  }
+
+  reply = this->send("getmessages");
   if (reply.contents().front().compare("No messages.") != 0) {
     for (auto message : reply.contents()) {
       this->state.messages.push_back(message);

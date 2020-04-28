@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <list>
+#include <map>
 
 #include "reply.hpp"
 
@@ -8,6 +9,7 @@
 typedef struct ColonyState {
   std::list<std::string> messages;
   std::list<std::string> activities;
+  std::map<std::string, std::string> status;
 } ColonyState;
 
 
