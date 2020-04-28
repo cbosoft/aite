@@ -46,3 +46,12 @@ void PooledResource::add_equally(double amount)
     resource->increase(amount_each);
   }
 }
+
+double PooledResource::get_amount_available() const
+{
+  double tot = 0.0;
+  for (auto resource : this->pool) {
+    tot += resource->get_amount_available();
+  }
+  return tot;
+}
