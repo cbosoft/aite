@@ -1,17 +1,20 @@
 #pragma once
 
+#include "resources.hpp"
 #include "pooled_resource.hpp"
 
 class ResourcePool {
 
-  private:
+  public:
 
-    PooledResource foodstock;
-    PooledResource metals;
-    PooledResource ceramics;
-    PooledResource heavy_metals;
-    PooledResource radiosource;
+    PooledResource OCHNPS;
+    PooledResource metallic_ore;
+    PooledResource nonmetallic_ore;
+    PooledResource high_density_ore;
+    PooledResource high_activity_ore;
     PooledResource luminance;
     PooledResource volume;
+
+    void add_source(Resources *resources);
 
 };

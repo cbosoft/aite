@@ -6,11 +6,11 @@ class Resources {
 
   public:
 
-    Resource foodstock;
-    Resource metals;
-    Resource ceramics;
-    Resource heavy_metals;
-    Resource radiosources;
+    Resource OCHNPS;
+    Resource metallic_ore;
+    Resource nonmetallic_ore;
+    Resource high_density_ore;
+    Resource high_activity_ore;
     Resource luminance;
     Resource volume;
 
