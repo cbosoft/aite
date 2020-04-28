@@ -29,6 +29,8 @@ class Element {
     double get_melting_point(double pressure) const;
     Phase get_phase(double pressure, double temperature) const;
     const std::string& get_name() const;
+    bool is_radioactive() const;
+    double get_molecular_weight() const;
 
     static std::list<std::pair<std::shared_ptr<Element>, double>> get_distribution(double density);
     static std::shared_ptr<Element> get_element_by_n(int n);

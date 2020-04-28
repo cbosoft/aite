@@ -1,3 +1,5 @@
+#include <limits>
+
 #include "element.hpp"
 
 
@@ -66,4 +68,15 @@ Phase Element::get_phase(double pressure, double temperature) const
     return PhaseGas;
 
   return PhasePlasma;
+}
+
+
+bool Element::is_radioactive() const
+{
+  return this->halflife < std::numeric_limits<double>::infinity();
+}
+
+double Element::get_molecular_weight() const
+{
+  return this->molecular_weight;
 }
