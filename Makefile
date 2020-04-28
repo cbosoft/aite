@@ -66,6 +66,7 @@ UTIL = \
 			 obj/util/time.o \
 			 obj/util/sqlite.o \
 			 obj/util/alphabet.o \
+			 obj/util/format.o \
 			 obj/util/thesaurus.o \
 			 obj/util/path.o \
 			 obj/util/file.o \

@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "../util/thesaurus.hpp"
+#include "../util/format.hpp"
 #include "../system/system.hpp"
 #include "../object/object.hpp"
 #include "../chemistry/element.hpp"
@@ -41,10 +42,10 @@ std::string Colony::describe(const SystemObject_ptr object)
   ss << name << " is the " << Thesaurus::getref().position(i) << " "
     << object->get_object_name() << " of the " << this->get_name(system) << " system. ";
 
-  ss << std::setprecision(3) << std::scientific
+  ss
     << name << " is coloured " << object->get_colour() << ". "
-    << "It has a diameter of " << d.diameter << "AU"
-    << " and a density " << d.density
+    << "It has a diameter of " << format_number(d.diameter) << " AU"
+    << " and a density " << format_number(d.density)
     << " times Earth's. This results in a";
 
   switch (d.gl) {
@@ -74,7 +75,7 @@ std::string Colony::describe(const SystemObject_ptr object)
       break;
   }
 
-  ss << " gravitational field (g = " << d.gravitational_constant << "). ";
+  ss << " gravitational field (g = " << format_number(d.gravitational_constant) << "). ";
 
   if (d.al != AL_None) {
     ss << "The " << object->get_object_name() << " has a";
@@ -104,7 +105,7 @@ std::string Colony::describe(const SystemObject_ptr object)
   }
 
 
-  ss << "Average surface temperature is " << std::setprecision(1) << std::fixed << d.temperature << "K; ";
+  ss << "Average surface temperature is " << format_number(d.temperature) << "K; ";
   switch(d.tl) {
 
     case TL_NearAbsoluteZero:
