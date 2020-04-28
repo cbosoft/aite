@@ -25,11 +25,20 @@ OBJECT = \
 COLONY = \
 				 obj/colony/stats/stats.o \
 				 obj/colony/stats/statistic.o \
+				 obj/colony/stats/derived_statistic.o \
+				 obj/colony/stats/power_derived_statistic.o \
+				 obj/colony/stats/linear_derived_statistic.o \
 				 obj/colony/colony.o \
 				 obj/colony/discover.o \
 				 obj/colony/bootstrap.o \
+				 obj/colony/status.o \
 				 obj/colony/update.o \
 				 obj/colony/describe.o
+
+RESOURCES = \
+						obj/resources/resource.o \
+						obj/resources/resource_pool.o \
+						obj/resources/pooled_resource.o
 
 CHEMISTRY = \
 					obj/chemistry/element.o \
@@ -58,12 +67,10 @@ UTIL = \
 			 obj/util/sqlite.o \
 			 obj/util/alphabet.o \
 			 obj/util/thesaurus.o \
+			 obj/util/path.o \
 			 obj/util/file.o \
 			 obj/util/socket.o \
 			 obj/util/vec.o
-
-RESOURCES = \
-					 obj/resources/path.o
 
 CLIENT = \
 				 obj/client/main.o \
@@ -84,7 +91,7 @@ RESOURCE_EDITOR = \
 									obj/util/sqlite.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(OBJECT) $(COLONY) $(CHEMISTRY) $(EVENT) $(FEATURE) $(HISTORY) $(UTIL) $(RESOURCES)
+OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(OBJECT) $(COLONY) $(RESOURCES) $(CHEMISTRY) $(EVENT) $(FEATURE) $(HISTORY) $(UTIL)
 LINK = -lpthread -lsqlite3
 DEFS =
 
