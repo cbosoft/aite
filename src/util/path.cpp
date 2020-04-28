@@ -3,7 +3,7 @@
 #include "../util/exception.hpp"
 #include "../util/file.hpp"
 
-#include "resources.hpp"
+#include "path.hpp"
 
 
 static std::list<std::string> paths = {
