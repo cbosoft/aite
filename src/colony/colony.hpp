@@ -21,7 +21,8 @@ class Colony {
     ResourcePool resources;
     ProcessedResources processed_resources;
 
-    // std::list<Abilities> abilites; // list of abilities the colony has acquired
+    // std::list<Abilities> abilities; // list of abilities the colony has acquired
+    // std::list<Activities> aactivities; // list of activities the colony is doing
 
     std::mutex messages_mutex;
     std::list<std::string> messages;
