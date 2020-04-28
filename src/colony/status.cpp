@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <sstream>
 
+#include "../util/format.hpp"
 #include "colony.hpp"
 
 std::string Colony::get_status() const
@@ -23,6 +24,9 @@ std::string Colony::get_status() const
     //<< "activities," << this->activities.size() << "|"
     << "Travel speed (LY/I)," << this->stats.derived_stats.travel_speed->get_value() << "|"
     << "Research effort," << this->stats.get_research_effort() << "|"
+    << "Volume," << format_number(this->resources.volume) << "|"
+    << "Proto organic matter," << format_number(this->resources.OCHNPS) << "|"
+    << "Metallic ore," << format_number(this->resources.metallic_ore) << "|"
     ;
 
   return ss.str();
