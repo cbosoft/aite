@@ -36,19 +36,19 @@ double SystemObject::get_position() const
 
 double SystemObject::get_pressure() const
 {
-  return this->pressure[2];
+  return this->pressure;
 }
 
 
 double SystemObject::get_temperature() const
 {
-  return this->temperature[2];
+  return this->temperature;
 }
 
 
 double SystemObject::get_gravity() const
 {
-  return this->density[3] * this->object_diameter * M_PI * CONST_G * CONST_AUm * (1./6.);
+  return this->density * this->object_diameter * M_PI * CONST_G * CONST_AUm * (1./6.);
 }
 
 unsigned long SystemObject::get_id() const

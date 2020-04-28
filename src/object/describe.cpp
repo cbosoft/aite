@@ -63,8 +63,8 @@ const ObjectDescriptionData &SystemObject::describe()
     this->description_data.sc = SC_Giant;
   }
 
-  this->description_data.density = this->density[3];
-  this->description_data.gravitational_constant = CONST_G * this->density[3] * (1./6.) * M_PI * this->object_diameter * CONST_AUm;
+  this->description_data.density = this->density;
+  this->description_data.gravitational_constant = CONST_G * this->density * (1./6.) * M_PI * this->object_diameter * CONST_AUm;
 
   if (this->description_data.gravitational_constant < 0.001) {
     this->description_data.gl = GL_NonExistant;
@@ -86,7 +86,7 @@ const ObjectDescriptionData &SystemObject::describe()
   }
 
 
-  double avp = this->pressure[2];
+  double avp = this->pressure;
   if (this->get_object_type() == SO_Planet)
   {
     if (avp < 0.01) {
@@ -129,8 +129,8 @@ const ObjectDescriptionData &SystemObject::describe()
     }
   }
 
-  this->description_data.temperature = this->temperature[2];
-  double t = this->temperature[2];
+  this->description_data.temperature = this->temperature;
+  double t = this->temperature;
   if (t < 10) {
     this->description_data.tl = TL_NearAbsoluteZero;
   }
@@ -160,7 +160,7 @@ const ObjectDescriptionData &SystemObject::describe()
   }
 
 
-  this->description_data.apparent_composition = this->composition[2];
+  this->description_data.apparent_composition = this->composition;
   std::vector<std::pair<double, Phase>> phase_abundance;
   for (int i = 0; i < 4; i++)
     phase_abundance.push_back(std::make_pair(double(0.0), Phase(i)));
@@ -169,11 +169,11 @@ const ObjectDescriptionData &SystemObject::describe()
   std::string most_abundant [N_MOST_ABUNDANT];
   {
     int i = 0;
-    for (auto kv : this->composition[2]) {
+    for (auto kv : this->composition) {
 
       auto elem = kv.first;
       auto amount = kv.second;
-      Phase phase = elem->get_phase(this->pressure[2], this->temperature[2]);
+      Phase phase = elem->get_phase(this->pressure, this->temperature);
 
       phase_abundance[int(phase)].first += amount;
 

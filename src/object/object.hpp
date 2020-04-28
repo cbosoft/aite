@@ -30,10 +30,10 @@ class SystemObject {
     double population;
 
     double gravitational_constant;
-    std::array<double, 3> temperature; // low, high, average
-    std::array<double, 3> pressure;
-    std::array<double, 4> density; // deep, shallow, near-surface, average
-    std::array<std::list<std::pair<Element_ptr, double>>, 3> composition; // deep, shallow, near-surface
+    double temperature;
+    double pressure;
+    double density;
+    std::list<std::pair<Element_ptr, double>> composition;
     Resources resources;
     std::string colour;
 
