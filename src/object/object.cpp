@@ -67,3 +67,8 @@ std::string SystemObject::get_colour() const
 {
   return this->colour;
 }
+
+Resources *SystemObject::get_resources_rawptr()
+{
+  return &this->resources;
+}

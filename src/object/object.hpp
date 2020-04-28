@@ -52,6 +52,7 @@ class SystemObject {
     unsigned long get_id() const;
     System_ptr get_system() const;
     std::string get_colour() const;
+    Resources *get_resources_rawptr();
 
 
     virtual SystemObjectType get_object_type() const=0;

@@ -49,6 +49,9 @@ void Colony::startoff(SystemObject_ptr planet)
   if (not planet->try_inhabit(this->stats.population_stats.number, *this)) {
     throw AuthorError(Formatter() << "Starting planet not inhabitable!");
   }
+  else {
+    this->resources.add_source(planet->get_resources_rawptr());
+  }
   this->inhabited_objects.push_back(planet);
 
   auto system = planet->get_system();
