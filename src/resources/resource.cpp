@@ -1,7 +1,7 @@
 #include "resource.hpp"
 
 Resource::Resource()
-  : Resource(0.0)
+  : Resource(1.0)
 {
   // do nothing
 }
