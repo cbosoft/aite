@@ -32,3 +32,17 @@ void PooledResource::use(double amount)
   if (amount > 0.0)
     throw ResourceError("Insufficient resource!");
 }
+
+void PooledResource::add_resource(Resource *resource)
+{
+  this->pool.push_back(resource);
+}
+
+void PooledResource::add_equally(double amount)
+{
+  double amount_each = amount / double(this->pool.size());
+
+  for (auto resource : this->pool) {
+    resource->increase(amount_each);
+  }
+}
