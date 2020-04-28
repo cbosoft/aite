@@ -1,6 +1,9 @@
-#include "object.hpp"
 #include <cmath>
+
 #include "../constants.hpp"
+#include "../colony/colony.hpp"
+
+#include "object.hpp"
 
 static unsigned long id_counter = 0;
 
