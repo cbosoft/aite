@@ -64,6 +64,7 @@ class Colony {
 
     void add_message(std::string message);
     std::list<std::string> get_messages();
+    std::string get_status() const;
 
     Event_ptr get_bootstrap_event();
     double get_number();
