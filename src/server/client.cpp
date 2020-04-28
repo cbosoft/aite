@@ -88,6 +88,9 @@ void GameServer::process_input(int client_fd, std::string s)
     if (rest.compare("number") == 0) {
       reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_number();
     }
+    else if (rest.compare("status") == 0) {
+      reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_status();
+    }
     else {
       reply = Formatter() << "error|query not understood: \"" << rest << "\"";
     }
