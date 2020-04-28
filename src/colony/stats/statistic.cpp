@@ -4,6 +4,11 @@
 
 #include "statistic.hpp"
 
+Statistic::Statistic()
+{
+  // do nothing
+}
+
 Statistic::Statistic(double base_value)
   : base_value(base_value)
 {
@@ -61,7 +66,7 @@ void Statistic::multiply_base(double factor)
 
 double Statistic::get_value() const
 {
-  double tot = this->base_value;
+  double tot = this->get_base();
 
   for (auto kv : this->additive_modifiers) {
     tot += kv.second;
@@ -109,4 +114,9 @@ std::string Statistic::get_repr() const
 
 
   return ss.str();
+}
+
+double Statistic::get_base() const
+{
+  return this->base_value;
 }

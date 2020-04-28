@@ -1,6 +1,7 @@
 #pragma once
 
 #include "statistic.hpp"
+#include "derived_statistic.hpp"
 
 enum ResearchFocus {
   // split equally
@@ -30,9 +31,6 @@ class ColonyStats {
       Statistic medecine;
       Statistic mood;
       Statistic longevity;
-
-      double get_growth() const;
-
     } population_stats;
 
     double research_effort;
@@ -52,6 +50,20 @@ class ColonyStats {
       Statistic politics;
     } culture_stats;
 
+    struct {
+      DerivedStatistic_ptr growth_rate;
+      DerivedStatistic_ptr food_production_power_efficiency;
+      DerivedStatistic_ptr food_production_efficiency;
+      DerivedStatistic_ptr material_haervesting_power_efficiency;
+      DerivedStatistic_ptr advanced_material_technique_progress;
+      DerivedStatistic_ptr solar_generation_efficiency;
+      DerivedStatistic_ptr nulear_power_minimum_activity;
+      DerivedStatistic_ptr detection_distance;
+      DerivedStatistic_ptr travel_speed;
+      DerivedStatistic_ptr max_habitable_temperature;
+      DerivedStatistic_ptr max_habitable_gravity;
+    } derived_stats;
+
 
     ColonyStats();
     ~ColonyStats();
@@ -62,21 +74,9 @@ class ColonyStats {
 
     double get_living_volume_requirement() const;
     void set_research_focus(ResearchFocus focus);
-    ResearchFocus get_research_Focus() const;
+    ResearchFocus get_research_focus() const;
     void set_research_effort(double value);
-
-    // derived stats
-    double get_food_production_power_efficiency() const;
-    double get_food_production_efficiency() const;
-    double get_material_harvesting_power_efficiency() const;
-    double get_material_recovery_rate() const;
-    double get_advance_material_technique_progress() const;
-    double solar_generation_efficiency() const;
-    double nuclear_power_minimum_activity() const;
-    double get_detection_distance() const;
-    double get_travel_speed() const;
-    double get_max_habitable_temperature() const;
-    double get_max_habitable_gravity() const;
+    double get_research_effort() const;
 
     bool check_temperature_is_habitable(double temperature) const;
     bool check_gravity_is_habitable(double gravity) const;

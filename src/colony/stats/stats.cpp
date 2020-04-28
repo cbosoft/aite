@@ -1,11 +1,12 @@
 #include <cmath>
+#include <iostream>
 
 #include "stats.hpp"
 
 ColonyStats::ColonyStats()
   :
     population_stats({
-        .number    = Statistic(0),
+        .number    = Statistic(100),
         .medecine  = Statistic(0),
         .mood      = Statistic(0),
         .longevity = Statistic(75)
@@ -26,6 +27,15 @@ ColonyStats::ColonyStats()
         })
 {
   // do nothing
+
+  this->derived_stats.growth_rate =
+    std::make_shared<LinearDerivedStatistic>(&this->population_stats.number, 0.0, 0.2);
+  this->derived_stats.travel_speed =
+    std::make_shared<PowerDerivedStatistic>(&this->technology_stats.astrogation, 3.0, 1.0, 1.0);
+  this->derived_stats.max_habitable_temperature =
+    std::make_shared<PowerDerivedStatistic>(&this->technology_stats.astrogation, 0.5, 100.0, 373.0);
+  this->derived_stats.max_habitable_gravity =
+    std::make_shared<PowerDerivedStatistic>(&this->technology_stats.astrogation, 0.33, 1.1, 5.0);
 }
 
 ColonyStats::~ColonyStats()
@@ -33,24 +43,21 @@ ColonyStats::~ColonyStats()
   // do nothing
 }
 
-double ColonyStats::PopulationStats::get_growth() const
-{
-
-  // TODO
-
-  return 0.2;
-}
-
 void ColonyStats::set_research_effort(double value)
 {
   this->research_effort = value;
+}
+
+double ColonyStats::get_research_effort() const
+{
+  return this->research_effort;
 }
 
 void ColonyStats::update(double dt)
 {
 
   this->population_stats.number
-    .multiply_base(1.0 + this->population_stats.get_growth()*dt);
+    .multiply_base(1.0 + this->derived_stats.growth_rate->get_value()*dt);
 
   if (this->research_effort == 0.0)
     return;
@@ -101,32 +108,20 @@ void ColonyStats::update(double dt)
 
 bool ColonyStats::check_temperature_is_habitable(double temperature) const
 {
-  return temperature < this->get_max_habitable_temperature();
+  std::cerr << temperature << std::endl;
+  return temperature < this->derived_stats.max_habitable_temperature->get_value();
 }
 
 
 bool ColonyStats::check_gravity_is_habitable(double gravity) const
 {
-  return gravity < this->get_max_habitable_gravity();
+  std::cerr << gravity << std::endl;
+  return gravity < this->derived_stats.max_habitable_gravity->get_value();
 }
 
 bool ColonyStats::check_habitable(double temperature, double gravity) const
 {
   return this->check_temperature_is_habitable(temperature) && this->check_gravity_is_habitable(gravity);
-}
-
-
-double ColonyStats::get_max_habitable_gravity() const
-{
-  double base = this->apply_modifiers(this->technology_stats.astrogation, "max_habitable_gravity");
-  return std::pow(base, 0.33)*1.1 + 5.0;
-}
-
-
-double ColonyStats::get_max_habitable_temperature() const
-{
-  double base = this->apply_modifiers(this->technology_stats.astrogation, "max_habitable_temperature");
-  return (std::pow(base, 0.5) + 4.0)*100.0;
 }
 
 double ColonyStats::apply_modifiers(double value, std::string statname) const
