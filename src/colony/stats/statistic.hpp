@@ -6,6 +6,7 @@ class Statistic {
 
   private:
 
+    double inital_value;
     double base_value;
     std::map<std::string, double> additive_modifiers;
     std::map<std::string, double> multiplicative_modifiers;
@@ -25,6 +26,7 @@ class Statistic {
     void increase_base(double increment);
     void multiply_base(double factor);
     double get_value() const;
+    double get_delta() const;
     std::string get_repr() const;
 
     operator double() const {

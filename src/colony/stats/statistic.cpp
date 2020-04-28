@@ -12,7 +12,7 @@ Statistic::Statistic()
 Statistic::Statistic(double base_value)
   : base_value(base_value)
 {
-  // do nothing
+  this->inital_value = this->get_base();
 }
 
 Statistic::~Statistic()
@@ -119,4 +119,9 @@ std::string Statistic::get_repr() const
 double Statistic::get_base() const
 {
   return this->base_value;
+}
+
+double Statistic::get_delta() const
+{
+  return this->get_base() - this->inital_value;
 }
