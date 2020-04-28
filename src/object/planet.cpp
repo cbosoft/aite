@@ -62,6 +62,9 @@ SystemObject_ptr Planet::generate(System_ptr system, double position)
     planet->composition[i].sort(CompositionSortByAbundanceDescending());
   }
 
+  // TODO
+  // generate resources
+
   std::stringstream ss;
   ss << Thesaurus::getref().get_random_colour()
     << " and "
