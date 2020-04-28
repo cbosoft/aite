@@ -19,6 +19,7 @@ SystemObject::SystemObject(System_ptr system, double position)
 
 
 bool SystemObject::try_inhabit(double population, Colony &colony) {
+  // TODO this should be in the colony class
   if (not colony.can_inhabit(*this)) {
     return false;
   }
