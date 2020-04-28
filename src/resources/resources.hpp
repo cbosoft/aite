@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../types.hpp"
 #include "resource.hpp"
 
 class Resources {
@@ -13,5 +14,8 @@ class Resources {
     Resource high_activity_ore;
     Resource luminance;
     Resource volume;
+
+    Resources();
+    Resources(ElementalAbundance elements, double mass);
 
 };
