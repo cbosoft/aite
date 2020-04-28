@@ -26,10 +26,12 @@ ColonyStats::ColonyStats()
         .politics = Statistic(50),
         })
 {
-  // do nothing
-
+  // set up derived stats
   this->derived_stats.growth_rate =
     std::make_shared<LinearDerivedStatistic>(&this->population_stats.number, 0.0, 0.2);
+  this->derived_stats.required_habitable_volume =
+    std::make_shared<LinearDerivedStatistic>(&this->population_stats.number, 80.0, 0.0); // roughly 80m3 per person
+
   this->derived_stats.travel_speed =
     std::make_shared<PowerDerivedStatistic>(&this->technology_stats.astrogation, 3.0, 1.0, 1.0);
   this->derived_stats.max_habitable_temperature =
@@ -108,14 +110,12 @@ void ColonyStats::update(double dt)
 
 bool ColonyStats::check_temperature_is_habitable(double temperature) const
 {
-  std::cerr << temperature << std::endl;
   return temperature < this->derived_stats.max_habitable_temperature->get_value();
 }
 
 
 bool ColonyStats::check_gravity_is_habitable(double gravity) const
 {
-  std::cerr << gravity << std::endl;
   return gravity < this->derived_stats.max_habitable_gravity->get_value();
 }
 

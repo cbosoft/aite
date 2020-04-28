@@ -40,8 +40,6 @@ class Colony {
     std::list<System_ptr> inhabited_systems;
     std::list<Galaxy_ptr> inhabited_galaxies;
 
-    double get_inhabited_volume() const;
-
   public:
 
     Colony(std::string name, SystemObject_ptr starting_world, double time_of_inception);

@@ -52,6 +52,7 @@ class ColonyStats {
 
     struct {
       DerivedStatistic_ptr growth_rate;
+      DerivedStatistic_ptr required_habitable_volume;
       DerivedStatistic_ptr food_production_power_efficiency;
       DerivedStatistic_ptr food_production_efficiency;
       DerivedStatistic_ptr material_haervesting_power_efficiency;
