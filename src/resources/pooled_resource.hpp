@@ -22,7 +22,7 @@ class PooledResource {
       return *this;
     }
 
-    operator double()
+    operator double() const
     {
       return this->get_amount_available();
     }
