@@ -20,5 +20,5 @@ class Recon : public virtual Activity {
       return std::make_shared<Recon>(colony);
     }
 
-    void update();
+    bool check() override;
 };

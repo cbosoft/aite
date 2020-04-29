@@ -5,16 +5,16 @@
 
 class Activity {
 
-  private:
+  protected:
 
     Colony &colony;
 
   public:
 
-    Activity(Colony &colony) : colony(colony) {}
-    virtual ~Activity() {}
+    Activity(Colony &colony) : colony(colony) { }
+    virtual ~Activity() { }
 
-    virtual void update() =0;
+    virtual bool check() { return true; }
 
-    static Activity_ptr from_string(std::string s);
+    static Activity_ptr from_string(std::string s, Colony &colony);
 };

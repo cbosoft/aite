@@ -15,14 +15,13 @@ class Colony {
 
   private:
 
-    ColonyStats stats;
     Universe_ptr universe;
 
     ResourcePool resources;
     ProcessedResources processed_resources;
 
-    // std::list<Abilities> abilities; // list of abilities the colony has acquired
-    // std::list<Activities> aactivities; // list of activities the colony is doing
+    // std::list<Ability> abilities; // list of abilities the colony has acquired
+    std::list<Activity_ptr> activities; // list of activities the colony is doing
 
     std::mutex messages_mutex;
     std::list<std::string> messages;
@@ -43,6 +42,8 @@ class Colony {
 
   public:
 
+    ColonyStats stats;
+
     Colony(std::string name, SystemObject_ptr starting_world, double time_of_inception);
     ~Colony();
 
@@ -61,6 +62,7 @@ class Colony {
     void startoff(SystemObject_ptr planet);
     void update(double dt);
 
+    void add_activity(Activity_ptr activity);
     void add_message(std::string message);
     std::list<std::string> get_messages();
     std::string get_status() const;
@@ -70,5 +72,6 @@ class Colony {
     double get_inception_time();
 
     bool can_inhabit(const SystemObject &object);
+
 
 };

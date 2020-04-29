@@ -4,6 +4,7 @@
 #include "../universe/universe.hpp"
 #include "../object/object.hpp"
 #include "../system/system.hpp"
+#include "../activity/activity.hpp"
 
 
 Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_inception)
@@ -58,9 +59,16 @@ void Colony::startoff(SystemObject_ptr planet)
   this->inhabited_systems.push_back(system);
   auto galaxy = system->get_galaxy();
   this->inhabited_galaxies.push_back(galaxy);
+
+  this->add_activity(Activity::from_string("babyboom", *this));
 }
 
 bool Colony::can_inhabit(const SystemObject &obj)
 {
   return this->stats.check_habitable(obj.get_temperature(), obj.get_gravity());
+}
+
+void Colony::add_activity(Activity_ptr activity)
+{
+  this->activities.push_back(activity);
 }

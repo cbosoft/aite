@@ -1,11 +1,13 @@
+#include "../universe/universe.hpp"
 #include "recon.hpp"
 
-void Recon::update()
+bool Recon::check()
 {
-  Universe_ptr universe = this->colony.universe;
+  // Universe_ptr universe = Universe::get_universe();
 
-  for (auto galaxy : this->universe->galaxies)
-  {
-  }
+  // for (auto galaxy : universe->get_galaxies())
+  // {
+  // }
 
+  return false;
 }
