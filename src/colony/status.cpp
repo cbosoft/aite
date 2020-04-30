@@ -25,6 +25,7 @@ std::string Colony::get_status() const
     << "Travel speed (LY/I)," << this->stats.derived_stats.travel_speed->get_value() << "|"
     << "Research effort," << this->stats.get_research_effort() << "|"
     << "Volume," << format_number(this->resources.volume) << "|"
+    << "Habitable Volume," << format_number(this->processed_resources.habitable_volume) << "|"
     << "Proto organic matter," << format_number(this->resources.OCHNPS) << "|"
     << "Metallic ore," << format_number(this->resources.metallic_ore) << "|"
     ;
