@@ -17,9 +17,6 @@ class Colony {
 
     Universe_ptr universe;
 
-    ResourcePool resources;
-    ProcessedResources processed_resources;
-
     // std::list<Ability> abilities; // list of abilities the colony has acquired
     std::list<Activity_ptr> activities; // list of activities the colony is doing
 
@@ -43,6 +40,8 @@ class Colony {
   public:
 
     ColonyStats stats;
+    ResourcePool resources;
+    ProcessedResources processed_resources;
 
     Colony(std::string name, SystemObject_ptr starting_world, double time_of_inception);
     ~Colony();
