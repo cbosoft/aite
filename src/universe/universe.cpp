@@ -13,11 +13,6 @@ Universe::~Universe()
   // do nothing
 }
 
-double Universe::get_time() const
-{
-  return this->time;
-}
-
 void Universe::set_time(double new_time)
 {
   this->time = new_time;
@@ -37,4 +32,9 @@ Universe_ptr Universe::get_universe()
     the_universe = std::make_shared<Universe>();
 
   return the_universe;
+}
+
+double Universe::get_time()
+{
+  return the_universe->time;
 }

@@ -39,9 +39,8 @@ class Universe {
     Universe();
     ~Universe();
 
-    double get_time() const;
-
     static Universe_ptr get_universe();
+    static double get_time();
 
     bool has_colony(std::string name);
     Colony_ptr add_colony(std::string name);
