@@ -59,7 +59,8 @@ FEATURE = \
 
 ACTIVITY = \
 					 obj/activity/from_string.o \
-					 obj/activity/recon.o
+					 obj/activity/recon.o \
+					 obj/activity/construct_habitat.o
 
 HISTORY = \
 					obj/history/history.o \

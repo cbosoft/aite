@@ -60,7 +60,7 @@ void Colony::startoff(SystemObject_ptr planet)
   auto galaxy = system->get_galaxy();
   this->inhabited_galaxies.push_back(galaxy);
 
-  this->add_activity(Activity::from_string("babyboom", *this));
+  this->add_activity(Activity::from_string("constructhabitat", *this));
 }
 
 bool Colony::can_inhabit(const SystemObject &obj)
