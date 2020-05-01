@@ -58,6 +58,7 @@ FEATURE = \
 					obj/feature/generate.o
 
 ACTIVITY = \
+					 obj/activity/activity.o \
 					 obj/activity/from_string.o \
 					 obj/activity/recon.o \
 					 obj/activity/construct_habitat.o
