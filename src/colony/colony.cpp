@@ -10,8 +10,13 @@
 Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_inception)
   : time_of_inception(time_of_inception), name(name)
 {
-  this->startoff(planet);
   this->universe = Universe::get_universe();
+
+  this->startoff(planet);
+
+  double starting_vol = this->stats.population_stats.number.get_value() * 10;
+  this->resources.volume -= starting_vol;
+  this->processed_resources.habitable_volume += starting_vol;
 }
 
 
