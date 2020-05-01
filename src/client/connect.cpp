@@ -8,7 +8,7 @@
 #include "../util/socket.hpp"
 
 
-ServerConnection::ServerConnection(const char *ip_address, int port)
+ServerConnection::ServerConnection(const char *ip_address, int port, std::string colony_name)
 {
   this->fd = socket(AF_INET, SOCK_STREAM, 0);
   if (this->fd < 0) {
@@ -26,6 +26,8 @@ ServerConnection::ServerConnection(const char *ip_address, int port)
   if (connect(this->fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0 ) {
     throw SocketError("Connection failed.", true);
   }
+
+  this->join(colony_name);
 }
 
 
@@ -62,25 +64,13 @@ void ServerConnection::join(std::string colony_name)
 
   if (reply.category().compare("welcome") == 0) {
     this->welcome();
-    sleep(1);
+    usleep(500000);
   }
 
-  std::cout << "Syncing with server... " << std::flush;
+  //std::cout << "Syncing with server... " << std::flush;
   this->sync();
-  std::cout << "done!" << std::endl;
-  sleep(1);
-
-  std::cout << "\nStatus:\n";
-  for (auto kv : this->state.status) {
-    std::cout << "  " << kv.first << ": " << kv.second << "\n";
-  }
-
-  if (this->state.messages.size()) {
-    std::cout << "\nYou have messages:\n";
-    for (auto m : this->state.messages) {
-      std::cout << "  " << m << std::endl;
-    }
-  }
+  //std::cout << "done!" << std::endl;
+  usleep(200000);
 
 }
 
@@ -108,4 +98,29 @@ void ServerConnection::sync()
   }
 
   // TODO sync activities
+}
+
+
+void ServerConnection::show_messages()
+{
+  if (this->state.messages.size()) {
+    std::cout << "\nYou have messages:\n";
+    for (auto m : this->state.messages) {
+      std::cout << "  " << m << std::endl;
+    }
+  }
+}
+
+void ServerConnection::show_status()
+{
+  std::cout << "\nStatus:\n";
+  for (auto kv : this->state.status) {
+    std::cout << "  " << kv.first << ": " << kv.second << "\n";
+  }
+}
+
+
+void ServerConnection::request_activity(std::string activity_name)
+{
+  this->send(Formatter() << "activity|" << activity_name);
 }

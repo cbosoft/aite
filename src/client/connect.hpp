@@ -22,11 +22,14 @@ class ServerConnection {
 
     ServerReply send(std::string message);
     void welcome();
+    void join(std::string colony_name);
 
   public:
-    ServerConnection(const char *address, int port);
+    ServerConnection(const char *address, int port, std::string colony_name);
     ~ServerConnection();
 
-    void join(std::string colony_name);
     void sync();
+    void request_activity(std::string activity_name);
+    void show_messages();
+    void show_status();
 };

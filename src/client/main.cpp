@@ -7,8 +7,11 @@
 
 void batchmain(ClientArgs args)
 {
-  ServerConnection conn = ServerConnection(args.server_address, args.server_port);
-  conn.join(args.colony_name);
+  ServerConnection conn = ServerConnection(args.server_address, args.server_port, args.colony_name);
+  conn.sync();
+  conn.show_status();
+  conn.show_messages();
+  conn.request_activity("constructhabitat");
 }
 
 
