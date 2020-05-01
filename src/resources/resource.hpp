@@ -5,17 +5,16 @@ class Resource {
   private:
 
     double total;
-    double fraction_visible;
     double amount_used;
 
   public:
 
     Resource();
-    Resource(double fraction_visible);
+    Resource(double amount);
     ~Resource();
 
+    double get_total() const;
     double get_amount_available() const;
-    void set_fraction_visible(double fraction);
     void use(double amount);
     void increase(double amount);
 

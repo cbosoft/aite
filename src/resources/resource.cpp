@@ -1,13 +1,13 @@
 #include "resource.hpp"
 
 Resource::Resource()
-  : Resource(1.0)
+  : Resource(0.0)
 {
   // do nothing
 }
 
-Resource::Resource(double fraction)
-  : fraction_visible(fraction)
+Resource::Resource(double amount)
+  : total(amount), amount_used(0.0)
 {
   // do nothing
 }
@@ -19,12 +19,7 @@ Resource::~Resource()
 
 double Resource::get_amount_available() const
 {
-  return this->total*this->fraction_visible - this->amount_used;
-}
-
-void Resource::set_fraction_visible(double value)
-{
-  this->fraction_visible = value;
+  return this->total - this->amount_used;
 }
 
 void Resource::use(double amount)
