@@ -70,5 +70,6 @@ bool Colony::can_inhabit(const SystemObject &obj)
 
 void Colony::add_activity(Activity_ptr activity)
 {
-  this->activities.push_back(activity);
+  if (activity != nullptr)
+    this->activities[activity->get_name()] = activity;
 }

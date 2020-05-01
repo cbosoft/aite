@@ -18,7 +18,7 @@ class Colony {
     Universe_ptr universe;
 
     // std::list<Ability> abilities; // list of abilities the colony has acquired
-    std::list<Activity_ptr> activities; // list of activities the colony is doing
+    std::map<std::string, Activity_ptr> activities; // list of activities the colony is doing
 
     std::mutex messages_mutex;
     std::list<std::string> messages;
