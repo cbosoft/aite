@@ -9,6 +9,7 @@
 #include "../util/socket.hpp"
 #include "../universe/universe.hpp"
 #include "../colony/colony.hpp"
+#include "../activity/activity.hpp"
 #include "../event/event.hpp"
 #include "../limits.hpp"
 
@@ -81,6 +82,15 @@ void GameServer::process_input(int client_fd, std::string s)
 
     Colony_ptr colony = this->universe->get_colony(rest);
     this->client_to_colony[client_fd] = colony;
+
+  }
+  else if (type.compare("activity") == 0) {
+
+    // TODO: parse rest for acd
+    ActivityConstructorData acd(10);
+    auto colony = this->client_to_colony[client_fd];
+    colony->add_activity(Activity::from_string(rest, *colony, acd));
+    reply = "success|done";
 
   }
   else if (type.compare("query") == 0) {
