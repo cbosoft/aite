@@ -13,8 +13,8 @@ class BabyBoom : public virtual Activity {
 
   public:
 
-    BabyBoom(Colony &colony)
-      : Activity(colony)
+    BabyBoom(Colony &colony, const ActivityConstructorData &acd)
+      : Activity(colony, acd, "baby boom")
     {
       double time = Universe::get_universe()->get_time();
       this->end_time = time + 2;

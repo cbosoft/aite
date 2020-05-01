@@ -7,9 +7,8 @@ class ConstructHabitat : public virtual Activity {
   private:
 
   public:
-    ConstructHabitat(Colony &colony);
+    ConstructHabitat(Colony &colony, const ActivityConstructorData &acd);
     ~ConstructHabitat();
 
-    bool can_start() override;
     bool check() override;
 };

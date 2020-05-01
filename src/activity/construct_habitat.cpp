@@ -1,17 +1,14 @@
+#include "../util/format.hpp"
+
 #include "construct_habitat.hpp"
 
-ConstructHabitat::ConstructHabitat(Colony &colony)
-  : Activity(colony)
+ConstructHabitat::ConstructHabitat(Colony &colony, const ActivityConstructorData &acd)
+  : Activity(colony, acd, "construct habitat")
 {
 }
 
 ConstructHabitat::~ConstructHabitat()
 {
-}
-
-bool ConstructHabitat::can_start()
-{
-  return this->colony.stats.population_stats.number.get_value() >= 10;
 }
 
 bool ConstructHabitat::check()
