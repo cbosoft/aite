@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
+#include <mutex>
 
 class Statistic {
 
@@ -11,6 +12,7 @@ class Statistic {
     std::map<std::string, double> additive_modifiers;
     std::map<std::string, double> multiplicative_modifiers;
     virtual double get_base() const;
+    mutable std::mutex m;
 
   public:
 

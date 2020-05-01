@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iostream>
 
 #include "../../util/colour.hpp"
 
@@ -22,15 +23,18 @@ Statistic::~Statistic()
 
 void Statistic::set_additive_modifier(std::string name, double value)
 {
+  std::lock_guard<std::mutex> l(this->m);
   this->additive_modifiers[name] = value;
 }
 void Statistic::set_multiplicative_modifier(std::string name, double value)
 {
+  std::lock_guard<std::mutex> l(this->m);
   this->multiplicative_modifiers[name] = value;
 }
 
 void Statistic::remove_additive_modifier(std::string name)
 {
+  std::lock_guard<std::mutex> l(this->m);
   auto it = this->additive_modifiers.find(name);
 
   if (it == this->additive_modifiers.end())
@@ -41,6 +45,7 @@ void Statistic::remove_additive_modifier(std::string name)
 
 void Statistic::remove_multiplicative_modifier(std::string name)
 {
+  std::lock_guard<std::mutex> l(this->m);
   auto it = this->multiplicative_modifiers.find(name);
 
   if (it == this->multiplicative_modifiers.end())
@@ -51,23 +56,25 @@ void Statistic::remove_multiplicative_modifier(std::string name)
 
 void Statistic::set_base(double value)
 {
+  std::lock_guard<std::mutex> l(this->m);
   this->base_value = value;
 }
 
 void Statistic::increase_base(double increment)
 {
-  this->set_base(this->base_value + increment);
+  this->set_base(this->get_base() + increment);
 }
 
 void Statistic::multiply_base(double factor)
 {
-  this->set_base(this->base_value*factor);
+  this->set_base(this->get_base()*factor);
 }
 
 double Statistic::get_value() const
 {
   double tot = this->get_base();
 
+  std::lock_guard<std::mutex> l(this->m);
   for (auto kv : this->additive_modifiers) {
     tot += kv.second;
   }
@@ -118,10 +125,14 @@ std::string Statistic::get_repr() const
 
 double Statistic::get_base() const
 {
+  std::lock_guard<std::mutex> l(this->m);
   return this->base_value;
 }
 
 double Statistic::get_delta() const
 {
-  return this->get_base() - this->inital_value;
+  double base = this->get_base();
+
+  std::lock_guard<std::mutex> l(this->m);
+  return base - this->inital_value;
 }
