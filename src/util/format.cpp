@@ -18,7 +18,7 @@ std::string format_number(double number)
 {
   std::stringstream ss;
 
-  if ((number > 1000) or (std::log10(number) < -1.0))
+  if ((number != 0.0) and ((number > 1000) or (std::log10(number) < -1.0)))
     ss << format_number_as_scientific(number);
   else
     ss << number;
