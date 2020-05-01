@@ -10,15 +10,12 @@
 
 class Recon : public virtual Activity {
 
+  private:
+
   public:
 
-    Recon(Colony &colony) : Activity(colony) {}
-    ~Recon(){}
-
-    static Activity_ptr create(Colony &colony)
-    {
-      return std::make_shared<Recon>(colony);
-    }
+    Recon(Colony &colony, const ActivityConstructorData &acd);
+    ~Recon();
 
     bool check() override;
 };
