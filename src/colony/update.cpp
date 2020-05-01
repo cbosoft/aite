@@ -18,7 +18,7 @@ void Colony::update(double dt)
   }
 
   for (auto it = this->activities.begin(); it != this->activities.end(); it++) {
-    auto activity = *it;
+    auto activity = it->second;
     if (not activity->check()) {
       this->activities.erase(it++);
     }
