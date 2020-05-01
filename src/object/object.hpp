@@ -60,6 +60,4 @@ class SystemObject {
 
     const ObjectDescriptionData &describe();
 
-    bool try_inhabit(double population, Colony &colony);
-
 };

@@ -18,16 +18,16 @@ SystemObject::SystemObject(System_ptr system, double position)
 }
 
 
-bool SystemObject::try_inhabit(double population, Colony &colony) {
-  // TODO this should be in the colony class
-  if (not colony.can_inhabit(*this)) {
-    return false;
-  }
-  else {
-    this->population = population;
-    return true;
-  }
-}
+// TODO: method to set population
+// void SystemObject::set_population(double population, Colony &colony) {
+//   if (not colony.can_inhabit(*this)) {
+//     return false;
+//   }
+//   else {
+//     this->population = population;
+//     return true;
+//   }
+// }
 
 double SystemObject::get_position() const
 {

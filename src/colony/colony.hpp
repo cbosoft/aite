@@ -70,7 +70,8 @@ class Colony {
     double get_number();
     double get_inception_time();
 
-    bool can_inhabit(const SystemObject &object);
+    bool try_inhabit(SystemObject_ptr object, double number);
+    bool can_inhabit(SystemObject_ptr object);
 
 
 };

@@ -52,7 +52,7 @@ std::list<std::string> Colony::get_messages()
 void Colony::startoff(SystemObject_ptr planet)
 {
   this->discover(planet);
-  if (not planet->try_inhabit(this->stats.population_stats.number, *this)) {
+  if (not this->try_inhabit(planet, this->stats.population_stats.number)) {
     throw AuthorError(Formatter() << "Starting planet not inhabitable!");
   }
   else {
@@ -64,13 +64,25 @@ void Colony::startoff(SystemObject_ptr planet)
   this->inhabited_systems.push_back(system);
   auto galaxy = system->get_galaxy();
   this->inhabited_galaxies.push_back(galaxy);
-
-  this->add_activity(Activity::from_string("constructhabitat", *this));
 }
 
-bool Colony::can_inhabit(const SystemObject &obj)
+bool Colony::can_inhabit(SystemObject_ptr object)
 {
-  return this->stats.check_habitable(obj.get_temperature(), obj.get_gravity());
+  return this->stats.check_habitable(object->get_temperature(), object->get_gravity());
+}
+
+bool Colony::try_inhabit(SystemObject_ptr object, double number)
+{
+  if (not this->can_inhabit(object))
+    return false;
+
+  // TODO: set population on planet
+  (void) number;
+
+  this->add_message(Formatter()
+      << BOLD << "Inhabited " << object->get_object_name() << " "
+      << this->get_name(object) << "." << RESET);
+  return true;
 }
 
 void Colony::add_activity(Activity_ptr activity)
