@@ -64,6 +64,7 @@ void GameServer::listen()
     }
     else {
       std::cerr << "CLIENT CONNECTED ON " << client_fd << std::endl;
+      usleep(100*1000);
       this->process_client_requests_in_bg(client_fd);
     }
 
