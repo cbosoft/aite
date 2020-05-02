@@ -11,5 +11,6 @@ class ProcessedResources {
     Resource ceramics;
     Resource nuclear_fuel;
     Resource habitable_volume;
+    Resource power;
 
 };
