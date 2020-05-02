@@ -22,6 +22,28 @@ class DerivedStatistic : public virtual Statistic {
 };
 typedef std::shared_ptr<DerivedStatistic> DerivedStatistic_ptr;
 
+template<typename R>
+class DerivedResource : public virtual DerivedStatistic {
+
+  protected:
+
+    R *base_resource;
+    virtual double get_base() const override
+    {
+      return this->base_resource->get_amount_available();
+    }
+
+  public:
+
+    DerivedResource(R *base_resource)
+      : base_resource(base_resource)
+    {
+    }
+    ~DerivedResource() {}
+
+};
+
+
 class LinearDerivedStatistic : public virtual DerivedStatistic {
 
   private:
