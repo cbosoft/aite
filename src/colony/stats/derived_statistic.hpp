@@ -17,6 +17,7 @@ class DerivedStatistic : public virtual Statistic {
     ~DerivedStatistic();
 
 };
+typedef std::shared_ptr<DerivedStatistic> DerivedStatistic_ptr;
 
 class LinearDerivedStatistic : public virtual DerivedStatistic {
 
@@ -47,4 +48,16 @@ class PowerDerivedStatistic : public virtual DerivedStatistic {
 
 };
 
-typedef std::shared_ptr<DerivedStatistic> DerivedStatistic_ptr;
+
+class SumDerivedStatistic : public virtual DerivedStatistic {
+
+  private:
+
+    virtual double get_base() const override;
+
+  public:
+
+    SumDerivedStatistic(std::list<Statistic *> base_stats);
+    ~SumDerivedStatistic();
+
+};
