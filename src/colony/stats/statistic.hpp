@@ -11,6 +11,7 @@ class Statistic {
     double base_value;
     std::map<std::string, double> additive_modifiers;
     std::map<std::string, double> multiplicative_modifiers;
+
     virtual double get_base() const;
     mutable std::mutex m;
 
@@ -33,6 +34,15 @@ class Statistic {
 
     operator double() const {
       return this->get_value();
+    }
+
+    Statistic &operator =(const Statistic &other)
+    {
+      this->inital_value = other.inital_value;
+      this->base_value = other.base_value;
+      this->additive_modifiers = other.additive_modifiers;
+      this->multiplicative_modifiers = other.multiplicative_modifiers;
+      return *this;
     }
 
 };
