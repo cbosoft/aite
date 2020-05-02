@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include <memory>
 
 #include "statistic.hpp"
@@ -8,12 +9,14 @@ class DerivedStatistic : public virtual Statistic {
 
   protected:
 
-    Statistic *base_stat;
+    std::list<Statistic *> base_stats;
     virtual double get_base() const override;
 
   public:
 
+    DerivedStatistic();
     DerivedStatistic(Statistic *base_stat);
+    DerivedStatistic(std::list<Statistic *> base_stats);
     ~DerivedStatistic();
 
 };
