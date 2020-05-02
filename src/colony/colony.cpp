@@ -10,11 +10,55 @@
 Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_inception)
   : time_of_inception(time_of_inception), name(name)
 {
+
+  // set up stats
+  this->stats.population = {
+      .number    = Statistic(100),
+      .medecine  = Statistic(0),
+      .mood      = Statistic(0),
+      .longevity = Statistic(75)
+  };
+
+  // research_effort(0.0),
+  this->stats.technology = {
+    .agriculture          = Statistic(0),
+    .materials_gathering  = Statistic(0),
+    .materials_processing = Statistic(0),
+    .power_generation     = Statistic(0),
+    .astrogation          = Statistic(0)
+  };
+
+  this->stats.culture = {
+    .religion = Statistic(0),
+    .art      = Statistic(0),
+    .social   = Statistic(0),
+    .politics = Statistic(50),
+  };
+
+
+  // set up derived stats
+  this->stats.derived.growth_rate =
+    std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 0.0, 0.2);
+  this->stats.derived.required_habitable_volume =
+    std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 80.0, 0.0); // roughly 80m3 per person
+
+  this->stats.derived.travel_speed =
+    std::make_shared<DerivedResource<PooledResource>>(&this->resources.nonmetallic_ore);
+
+  // this->stats.derived.travel_speed =
+  //   std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 3.0, 1.0, 1.0);
+  this->stats.derived.max_habitable_temperature =
+    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 0.5, 100.0, 373.0);
+  this->stats.derived.max_habitable_gravity =
+    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 0.33, 1.1, 5.0);
+
+
+  // add reference to universe
   this->universe = Universe::get_universe();
 
   this->startoff(planet);
 
-  double starting_vol = this->stats.population_stats.number.get_value() * 10;
+  double starting_vol = this->stats.population.number.get_value() * 10;
   this->resources.volume -= starting_vol;
   this->processed_resources.habitable_volume += starting_vol;
 }
@@ -27,7 +71,7 @@ Colony::~Colony()
 
 double Colony::get_number()
 {
-  return this->stats.population_stats.number;
+  return this->stats.population.number;
 }
 
 double Colony::get_inception_time()
@@ -52,7 +96,7 @@ std::list<std::string> Colony::get_messages()
 void Colony::startoff(SystemObject_ptr planet)
 {
   this->discover(planet);
-  if (not this->try_inhabit(planet, this->stats.population_stats.number)) {
+  if (not this->try_inhabit(planet, this->stats.population.number)) {
     throw AuthorError(Formatter() << "Starting planet not inhabitable!");
   }
   else {
@@ -68,7 +112,11 @@ void Colony::startoff(SystemObject_ptr planet)
 
 bool Colony::can_inhabit(SystemObject_ptr object)
 {
-  return this->stats.check_habitable(object->get_temperature(), object->get_gravity());
+  double temperature = object->get_temperature();
+  double gravity = object->get_gravity();
+  bool temp_ok = temperature < this->stats.derived.max_habitable_temperature->get_value();
+  bool gravity_ok = gravity < this->stats.derived.max_habitable_gravity->get_value();
+  return temp_ok && gravity_ok;
 }
 
 bool Colony::try_inhabit(SystemObject_ptr object, double number)

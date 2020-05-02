@@ -5,8 +5,9 @@
 #include <list>
 #include <mutex>
 
+#include "stats/statistic.hpp"
+#include "stats/derived_statistic.hpp"
 #include "../types.hpp"
-#include "stats/stats.hpp"
 #include "../resources/resource_pool.hpp"
 #include "../resources/processed_resources.hpp"
 
@@ -39,7 +40,47 @@ class Colony {
 
   public:
 
-    ColonyStats stats;
+    struct {
+      struct {
+        Statistic number;
+        Statistic medecine;
+        Statistic mood;
+        Statistic longevity;
+      } population;
+
+      double research_effort;
+      //ResearchFocus research_focus;
+      struct {
+        Statistic agriculture;
+        Statistic materials_gathering;
+        Statistic materials_processing;
+        Statistic power_generation;
+        Statistic astrogation;
+      } technology;
+
+      struct {
+        Statistic religion;
+        Statistic art;
+        Statistic social;
+        Statistic politics;
+      } culture;
+
+      struct {
+        DerivedStatistic_ptr growth_rate;
+        DerivedStatistic_ptr required_habitable_volume;
+        DerivedStatistic_ptr food_production_power_efficiency;
+        DerivedStatistic_ptr food_production_efficiency;
+        DerivedStatistic_ptr material_harvesting_power_efficiency;
+        DerivedStatistic_ptr advanced_material_technique_progress;
+        DerivedStatistic_ptr solar_generation_efficiency;
+        DerivedStatistic_ptr nulear_power_minimum_activity;
+        DerivedStatistic_ptr detection_distance;
+        DerivedStatistic_ptr travel_speed;
+        DerivedStatistic_ptr max_habitable_temperature;
+        DerivedStatistic_ptr max_habitable_gravity;
+      } derived;
+    } stats;
+
     ResourcePool resources;
     ProcessedResources processed_resources;
 

@@ -11,7 +11,7 @@ std::string Colony::get_status() const
   ss << std::setprecision(3)
     << "Name," << this->name << "|"
     << "Total population,"; 
-  double n = this->stats.population_stats.number.get_value();
+  double n = this->stats.population.number.get_value();
   
   if (n < 1000)
     ss << int(n);
@@ -19,11 +19,11 @@ std::string Colony::get_status() const
     ss << std::scientific << n << std::fixed;
   
   ss << "|"
-    << "Growth rate," << this->stats.derived_stats.growth_rate->get_value() << "|"
+    << "Growth rate," << this->stats.derived.growth_rate->get_value() << "|"
     << "Occupied stellar objects," << this->inhabited_objects.size() << "|"
-    //<< "activities," << this->activities.size() << "|"
-    << "Travel speed (LY/I)," << this->stats.derived_stats.travel_speed->get_value() << "|"
-    << "Research effort," << this->stats.get_research_effort() << "|"
+    << "activities," << this->activities.size() << "|"
+    << "Travel speed (LY/I)," << this->stats.derived.travel_speed->get_value() << "|"
+    //<< "Research effort," << this->stats.get_research_effort() << "|"
     << "Volume," << format_number(this->resources.volume) << "|"
     << "Habitable Volume," << format_number(this->processed_resources.habitable_volume) << "|"
     << "Proto organic matter," << format_number(this->resources.OCHNPS) << "|"

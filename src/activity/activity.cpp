@@ -13,7 +13,7 @@ Activity::~Activity()
 {
   if (this->started) {
     if (number > 0.0) {
-      this->colony.stats.population_stats.number
+      this->colony.stats.population.number
         .remove_additive_modifier(name);
     }
   }
@@ -22,7 +22,7 @@ Activity::~Activity()
 
 bool Activity::try_start()
 {
-  double available = this->colony.stats.population_stats.number.get_value();
+  double available = this->colony.stats.population.number.get_value();
   this->started = available >= this->number;
 
   if (!this->started) {
@@ -33,7 +33,7 @@ bool Activity::try_start()
         << format_number(available) << ")");
   }
   else {
-    this->colony.stats.population_stats.number
+    this->colony.stats.population.number
       .set_additive_modifier(name, -this->number);
   }
 

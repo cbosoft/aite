@@ -23,7 +23,6 @@ OBJECT = \
 				 obj/object/generate.o
 
 COLONY = \
-				 obj/colony/stats/stats.o \
 				 obj/colony/stats/statistic.o \
 				 obj/colony/stats/derived_statistic.o \
 				 obj/colony/stats/power_derived_statistic.o \
