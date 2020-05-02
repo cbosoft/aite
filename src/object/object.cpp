@@ -29,6 +29,11 @@ SystemObject::SystemObject(System_ptr system, double position)
 //   }
 // }
 
+double SystemObject::get_luminosity() const
+{
+  return this->resources.luminosity;
+}
+
 double SystemObject::get_position() const
 {
   return this->position;
@@ -72,4 +77,9 @@ std::string SystemObject::get_colour() const
 Resources *SystemObject::get_resources_rawptr()
 {
   return &this->resources;
+}
+
+void SystemObject::set_luminosity(double luminosity)
+{
+  this->resources.luminosity = luminosity;
 }

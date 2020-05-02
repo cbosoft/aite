@@ -2,7 +2,7 @@
 #include <string>
 
 #include "../types.hpp"
-#include "../object/object.hpp"
+#include "object.hpp"
 
 
 class Planet : public SystemObject {

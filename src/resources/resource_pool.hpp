@@ -12,7 +12,7 @@ class ResourcePool {
     PooledResource nonmetallic_ore;
     PooledResource high_density_ore;
     PooledResource high_activity_ore;
-    PooledResource luminance;
+    PooledResource luminosity;
     PooledResource volume;
 
     void add_source(Resources *resources);

@@ -8,6 +8,6 @@ void ResourcePool::add_source(Resources *resources)
   this->nonmetallic_ore.add_resource(&resources->nonmetallic_ore);
   this->high_density_ore.add_resource(&resources->high_density_ore);
   this->high_activity_ore.add_resource(&resources->high_activity_ore);
-  this->luminance.add_resource(&resources->luminance);
+  this->luminosity.add_resource(&resources->luminosity);
   this->volume.add_resource(&resources->volume);
 }

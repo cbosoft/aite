@@ -12,7 +12,7 @@ class Resources {
     Resource nonmetallic_ore;
     Resource high_density_ore;
     Resource high_activity_ore;
-    Resource luminance;
+    Resource luminosity;
     Resource volume;
 
     Resources();

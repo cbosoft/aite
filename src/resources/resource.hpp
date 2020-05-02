@@ -35,4 +35,10 @@ class Resource {
       return this->get_amount_available();
     }
 
+    Resource &operator=(double v)
+    {
+      this->total = v;
+      return *this;
+    }
+
 };

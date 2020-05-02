@@ -9,7 +9,7 @@
 
 enum SystemObjectType {
   SO_Planet, SO_EarthlikePlanet, SO_Moon, SO_Planetoid,
-  SO_Star, SO_MainSequenceStar, SO_MassiveStar, SO_SupergiantStar, SO_Supernova, SO_NeutronStar, SO_BlackHole,
+  SO_Star, SO_MainSequenceStar, SO_MassiveStar, SO_SupergiantStar, SO_Supernova, SO_NeutronStar, SO_BlackHole, SO_PairedStars,
   SO_Nebula, SO_StellarNebula, SO_PlanetaryNebula,
   SO_AsteroidField
 };
@@ -45,6 +45,7 @@ class SystemObject {
 
     static SystemObject_ptr generate(System_ptr system, double position, SystemObjectType type);
 
+    double get_luminosity() const;
     double get_position() const;
     double get_temperature() const;
     double get_pressure() const;
@@ -54,6 +55,7 @@ class SystemObject {
     std::string get_colour() const;
     Resources *get_resources_rawptr();
 
+    void set_luminosity(double luminosity);
 
     virtual SystemObjectType get_object_type() const=0;
     virtual std::string get_object_name() const=0;

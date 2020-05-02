@@ -19,6 +19,7 @@ OBJECT = \
 				 obj/object/object.o \
 				 obj/object/describe.o \
 				 obj/object/planet.o \
+				 obj/object/star.o \
 				 obj/object/earthlike_planet.o \
 				 obj/object/generate.o
 
