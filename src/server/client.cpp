@@ -9,7 +9,7 @@
 #include "../util/socket.hpp"
 #include "../universe/universe.hpp"
 #include "../colony/colony.hpp"
-#include "../activity/activity.hpp"
+#include "../project/project.hpp"
 #include "../event/event.hpp"
 #include "../limits.hpp"
 
@@ -84,12 +84,12 @@ void GameServer::process_input(int client_fd, std::string s)
     this->client_to_colony[client_fd] = colony;
 
   }
-  else if (type.compare("activity") == 0) {
+  else if (type.compare("project") == 0) {
 
     // TODO: parse rest for acd
-    ActivityConstructorData acd(10);
+    ProjectData data(10);
     auto colony = this->client_to_colony[client_fd];
-    colony->add_activity(Activity::from_string(rest, *colony, acd));
+    colony->add_project(Project::from_string(rest, *colony, data));
     reply = "success|done";
 
   }

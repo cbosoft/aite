@@ -3,9 +3,9 @@
 #include <iostream>
 
 #include "../universe/universe.hpp"
-#include "activity.hpp"
+#include "project.hpp"
 
-class BabyBoom : public virtual Activity {
+class BabyBoom : public virtual Project {
 
   private:
 
@@ -13,8 +13,8 @@ class BabyBoom : public virtual Activity {
 
   public:
 
-    BabyBoom(Colony &colony, const ActivityConstructorData &acd)
-      : Activity(colony, acd, "baby boom")
+    BabyBoom(Colony &colony, const ProjectData &data)
+      : Project(colony, data, "baby boom")
     {
       double time = Universe::get_universe()->get_time();
       this->end_time = time + 2;

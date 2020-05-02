@@ -57,11 +57,11 @@ FEATURE = \
 					obj/feature/load.o \
 					obj/feature/generate.o
 
-ACTIVITY = \
-					 obj/activity/activity.o \
-					 obj/activity/from_string.o \
-					 obj/activity/recon.o \
-					 obj/activity/construct_habitat.o
+PROJECT = \
+					 obj/project/project.o \
+					 obj/project/from_string.o \
+					 obj/project/recon.o \
+					 obj/project/construct_habitat.o
 
 HISTORY = \
 					obj/history/history.o \
@@ -99,7 +99,7 @@ RESOURCE_EDITOR = \
 									obj/util/sqlite.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(OBJECT) $(COLONY) $(RESOURCES) $(CHEMISTRY) $(EVENT) $(FEATURE) $(ACTIVITY) $(HISTORY) $(UTIL)
+OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(OBJECT) $(COLONY) $(RESOURCES) $(CHEMISTRY) $(EVENT) $(FEATURE) $(PROJECT) $(HISTORY) $(UTIL)
 LINK = -lpthread -lsqlite3
 DEFS =
 

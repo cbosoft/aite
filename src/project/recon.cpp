@@ -1,8 +1,8 @@
 #include "../universe/universe.hpp"
 #include "recon.hpp"
 
-Recon::Recon(Colony &colony, const ActivityConstructorData &acd)
-  : Activity(colony, acd, "recon")
+Recon::Recon(Colony &colony, const ProjectData &acd)
+  : Project(colony, acd, "recon")
 {
   // TODO
   // maybe get recon focus from acd.vars

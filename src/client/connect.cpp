@@ -97,7 +97,7 @@ void ServerConnection::sync()
     }
   }
 
-  // TODO sync activities
+  // TODO sync projects
 }
 
 
@@ -120,7 +120,7 @@ void ServerConnection::show_status()
 }
 
 
-void ServerConnection::request_activity(std::string activity_name)
+void ServerConnection::request_project(std::string activity_name)
 {
-  this->send(Formatter() << "activity|" << activity_name);
+  this->send(Formatter() << "project|" << activity_name);
 }

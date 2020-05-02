@@ -29,7 +29,7 @@ class ServerConnection {
     ~ServerConnection();
 
     void sync();
-    void request_activity(std::string activity_name);
+    void request_project(std::string activity_name);
     void show_messages();
     void show_status();
 };

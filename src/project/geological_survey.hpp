@@ -1,12 +1,12 @@
 #pragma once
-#include "activity.hpp"
+#include "project.hpp"
 
 /*
  * A geological survey is as it sounds: an in depth survey of a location
  *
  * */
 
-class GeologicalSurvey : public virtual Activity {
+class GeologicalSurvey : public virtual Project {
 
   private:
 
@@ -14,10 +14,10 @@ class GeologicalSurvey : public virtual Activity {
 
   public:
 
-    GeologicalSurvey(Colony &colony) : Activity(colony) {}
+    GeologicalSurvey(Colony &colony, const ProjectData &data) : Project(colony, data, "geological survey") {}
     ~GeologicalSurvey(){}
 
-    static Activity_ptr create(Colony &colony)
+    static Project_ptr create(Colony &colony)
     {
       return std::make_shared<GeologicalSurvey>(colony);
     }

@@ -11,7 +11,7 @@ void batchmain(ClientArgs args)
   conn.sync();
   conn.show_status();
   conn.show_messages();
-  conn.request_activity("constructhabitat");
+  conn.request_project("constructhabitat");
 }
 
 

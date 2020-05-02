@@ -19,7 +19,7 @@ class Colony {
     Universe_ptr universe;
 
     // std::list<Ability> abilities; // list of abilities the colony has acquired
-    std::map<std::string, Activity_ptr> activities; // list of activities the colony is doing
+    std::map<std::string, Project_ptr> projects; // list of projects the colony is doing
 
     std::mutex messages_mutex;
     std::list<std::string> messages;
@@ -102,7 +102,7 @@ class Colony {
     void startoff(SystemObject_ptr planet);
     void update(double dt);
 
-    void add_activity(Activity_ptr activity);
+    void add_project(Project_ptr project);
     void add_message(std::string message);
     std::list<std::string> get_messages();
     std::string get_status() const;

@@ -10,7 +10,7 @@
 
 
 
-class ActivityConstructorData {
+class ProjectData {
 
   private:
 
@@ -19,12 +19,12 @@ class ActivityConstructorData {
 
   public:
 
-    ActivityConstructorData(double number)
+    ProjectData(double number)
       : number(number)
     {
     }
 
-    ~ActivityConstructorData()
+    ~ProjectData()
     {
     }
 
@@ -61,7 +61,7 @@ class ActivityConstructorData {
 
 
 
-class Activity {
+class Project {
 
   private:
 
@@ -76,8 +76,8 @@ class Activity {
 
   public:
 
-    Activity(Colony &colony, double number, std::string name);
-    virtual ~Activity();
+    Project(Colony &colony, double number, std::string name);
+    virtual ~Project();
 
     bool try_start();
 
@@ -101,6 +101,5 @@ class Activity {
       return Universe::get_universe()->get_time() - this->start_time;
     }
 
-    static Activity_ptr from_string(std::string s, Colony &colony, const ActivityConstructorData &acd);
-    static ActivityConstructorData default_constructor_data();
+    static Project_ptr from_string(std::string s, Colony &colony, const ProjectData &cd);
 };

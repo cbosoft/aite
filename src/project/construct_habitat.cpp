@@ -2,8 +2,8 @@
 
 #include "construct_habitat.hpp"
 
-ConstructHabitat::ConstructHabitat(Colony &colony, const ActivityConstructorData &acd)
-  : Activity(colony, acd, "construct habitat")
+ConstructHabitat::ConstructHabitat(Colony &colony, const ProjectData &data)
+  : Project(colony, data, "construct habitat")
 {
 }
 

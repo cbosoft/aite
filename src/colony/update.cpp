@@ -1,6 +1,6 @@
 #include "../util/formatter.hpp"
 #include "../util/colour.hpp"
-#include "../activity/activity.hpp"
+#include "../project/project.hpp"
 
 #include "colony.hpp"
 
@@ -65,10 +65,10 @@ void Colony::update(double dt)
   //     break;
   // }
 
-  for (auto it = this->activities.begin(); it != this->activities.end(); it++) {
-    auto activity = it->second;
-    if (not activity->check()) {
-      this->activities.erase(it++);
+  for (auto it = this->projects.begin(); it != this->projects.end(); it++) {
+    auto project = it->second;
+    if (not project->check()) {
+      this->projects.erase(it++);
     }
   }
 

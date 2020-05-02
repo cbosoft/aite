@@ -1,6 +1,6 @@
 #pragma once
 
-#include "activity.hpp"
+#include "project.hpp"
 
 /*
  * Reconnaissance is about looking far afield for new worlds/stars/systems and
@@ -8,13 +8,13 @@
  *
  * */
 
-class Recon : public virtual Activity {
+class Recon : public virtual Project {
 
   private:
 
   public:
 
-    Recon(Colony &colony, const ActivityConstructorData &acd);
+    Recon(Colony &colony, const ProjectData &data);
     ~Recon();
 
     bool check() override;

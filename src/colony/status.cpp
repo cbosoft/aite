@@ -21,7 +21,7 @@ std::string Colony::get_status() const
   ss << "|"
     << "Growth rate," << this->stats.derived.growth_rate->get_value() << "|"
     << "Occupied stellar objects," << this->inhabited_objects.size() << "|"
-    << "activities," << this->activities.size() << "|"
+    << "Projects," << this->projects.size() << "|"
     << "Travel speed (LY/I)," << this->stats.derived.travel_speed->get_value() << "|"
     //<< "Research effort," << this->stats.get_research_effort() << "|"
     << "Volume," << format_number(this->resources.volume) << "|"

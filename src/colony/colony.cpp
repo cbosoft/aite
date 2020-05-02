@@ -4,7 +4,7 @@
 #include "../universe/universe.hpp"
 #include "../object/object.hpp"
 #include "../system/system.hpp"
-#include "../activity/activity.hpp"
+#include "../project/project.hpp"
 
 
 Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_inception)
@@ -133,8 +133,10 @@ bool Colony::try_inhabit(SystemObject_ptr object, double number)
   return true;
 }
 
-void Colony::add_activity(Activity_ptr activity)
+void Colony::add_project(Project_ptr project)
 {
-  if (activity != nullptr)
-    this->activities[activity->get_name()] = activity;
+  // TODO fix "unique" activity guarantee
+  // assignment operator of activity?
+  if (project != nullptr)
+    this->projects[project->get_name()] = project;
 }

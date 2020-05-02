@@ -9,8 +9,8 @@ typedef std::shared_ptr<Feature> Feature_ptr;
 class HistoryElement;
 typedef std::shared_ptr<HistoryElement> HistoryElement_ptr;
 
-class Activity;
-typedef std::shared_ptr<Activity> Activity_ptr;
+class Project;
+typedef std::shared_ptr<Project> Project_ptr;
 
 class Message;
 typedef std::shared_ptr<Message> Message_ptr;

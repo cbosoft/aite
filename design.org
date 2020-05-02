@@ -100,7 +100,7 @@
     the planets, satellites, the universe
   - combinations are important as this describes the chemistry and makeup of
     the planet (water+carbon-chains? life!) Other forms of life?
-* Resource
+* Resources
 
   Despite the detail of the previous section, I don't want to have to deal too
   much in specifics like chemical make up; it gets very complicated very
@@ -190,7 +190,7 @@
     not inherent to a colony, but may arise naturally as time goes on, or
     perhaps events will lead to belief...
 
-    Artistic and religiious output will, generally, positively affect a colony,
+    Artistic and religious output will, generally, positively affect a colony,
     but only a small percentage of the population can work towards either of
     these goals.
 
@@ -205,20 +205,20 @@
     will have been colonised.
   - These xeno-colonies will perhaps linger on, or perhaps they will be
     gone. Either way there will be evidence of their existence.
-* Activities
+* Projects
 
-  - A colony may engage in activity to pursue a goal. Activity might be
+  - A colony may engage in a project to pursue a goal. Project might be
     research of a technology, investigation of surroundings, exploration etc
   - These are updated with time. e.g. having a portion of the population on
     research duty will result in a continuous advance of tech xp and rewards
     like tech-related abilities.
-  - Some activities are on going (like "do this job", others are limited (more
+  - Some projects are on going (like "do this job", others are limited (more
     like temporary push; "concentrate on this now")
   - In-game, these are seen as like governing policy; the people are told that
     /this/ is the best route for success.
   - There may be dissenters, and people may ignore policy. This will scale with
     mood/domestic peace.
-  - People are required to complete an activity, size of population will limit
+  - People are required to complete a project, size of population will limit
     number of simultaneous tasks that can be undertaken
 
 ** Recon

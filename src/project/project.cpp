@@ -1,6 +1,6 @@
-#include "activity.hpp"
+#include "project.hpp"
 
-Activity::Activity(Colony &colony, double number, std::string name)
+Project::Project(Colony &colony, double number, std::string name)
   :
     start_time(Universe::get_universe()->get_time()),
     name(name),
@@ -9,7 +9,7 @@ Activity::Activity(Colony &colony, double number, std::string name)
 {
 }
 
-Activity::~Activity()
+Project::~Project()
 {
   if (this->started) {
     if (number > 0.0) {
@@ -20,7 +20,7 @@ Activity::~Activity()
 }
 
 
-bool Activity::try_start()
+bool Project::try_start()
 {
   double available = this->colony.stats.population.number.get_value();
   this->started = available >= this->number;
