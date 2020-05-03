@@ -8,19 +8,10 @@
 
 class GeologicalSurvey : public virtual Project {
 
-  private:
-
-    double ptime;
-
   public:
 
-    GeologicalSurvey(Colony &colony, const ProjectData &data) : Project(colony, data, "geological survey") {}
-    ~GeologicalSurvey(){}
+    GeologicalSurvey(Colony &colony, const ProjectData &data);
+    ~GeologicalSurvey();
 
-    static Project_ptr create(Colony &colony)
-    {
-      return std::make_shared<GeologicalSurvey>(colony);
-    }
-
-    void update();
+    ProjectStatus update() override;
 };
