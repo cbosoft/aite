@@ -107,6 +107,7 @@ EXCEPTION(SocketError, "SocketError");
 EXCEPTION(WordNotFoundError, "WordNotFoundError");
 EXCEPTION(ResourceError, "ResourceError");
 EXCEPTION(CommandError, "CommandError");
+EXCEPTION(ItemInUseError, "ItemInUseError");
 
 
 
