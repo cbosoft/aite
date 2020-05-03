@@ -101,6 +101,9 @@ void GameServer::process_input(int client_fd, std::string s)
     else if (rest.compare("status") == 0) {
       reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_status();
     }
+    else if (rest.compare("statusprojects") == 0) {
+      reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_project_status();
+    }
     else {
       reply = Formatter() << "error|query not understood: \"" << rest << "\"";
     }
