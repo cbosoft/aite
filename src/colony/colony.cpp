@@ -1,10 +1,12 @@
 #include <iostream>
 
-#include "colony.hpp"
 #include "../universe/universe.hpp"
 #include "../object/object.hpp"
 #include "../system/system.hpp"
 #include "../project/project.hpp"
+#include "../item/item.hpp"
+
+#include "colony.hpp"
 
 
 Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_inception)
@@ -183,5 +185,33 @@ void Colony::add_project(Project_ptr project)
     }
 
   }
+
+}
+
+
+void Colony::add_item(Item_ptr item)
+{
+  this->inventory.push_back(item);
+
+  auto it = this->items_not_in_use.find(item->get_name());
+  if (it == this->items_not_in_use.end()) {
+    this->items_not_in_use[item->get_name()] = 1;
+  }
+  else {
+    this->items_not_in_use[item->get_name()] ++;
+  }
+
+}
+
+void Colony::use_item(Item_ptr item)
+{
+
+  if (!this->items_not_in_use[item->get_name()]) {
+    throw ItemInUseError("Item not available!");
+  }
+  
+  item->use();
+
+  this->items_not_in_use[item->get_name()] --;
 
 }

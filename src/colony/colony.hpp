@@ -39,6 +39,8 @@ class Colony {
     std::string name;
     std::string strategy;
 
+    std::list<Item_ptr> inventory;
+    std::map<std::string, int> items_not_in_use;
     std::map<int, std::string> object_log;
     std::map<int, std::string> system_log;
     std::map<int, std::string> galaxy_log;
@@ -115,6 +117,8 @@ class Colony {
     void startoff(SystemObject_ptr planet);
     void update(double dt);
 
+    void use_item(Item_ptr item);
+    void add_item(Item_ptr item);
     void add_project(Project_ptr project);
     void add_message(std::string message);
     std::list<std::string> get_messages();
