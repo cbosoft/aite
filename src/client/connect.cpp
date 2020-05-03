@@ -124,7 +124,7 @@ void ServerConnection::show_messages()
 
 void ServerConnection::show_status()
 {
-  std::cout << "\nStatus:\n";
+  std::cout << "\n" BOLD "Status:" RESET "\n";
   for (auto kv : this->state.status) {
     std::cout << "  " << kv.first << ": " << kv.second << "\n";
   }
