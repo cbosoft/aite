@@ -135,8 +135,44 @@ bool Colony::try_inhabit(SystemObject_ptr object, double number)
 
 void Colony::add_project(Project_ptr project)
 {
-  // TODO fix "unique" activity guarantee
-  // assignment operator of activity?
-  if (project != nullptr)
-    this->projects[project->get_name()] = project;
+  std::string name = project->get_name();
+
+  ProjectData orig = {0};
+  bool updating = false;
+  {
+    auto it = this->projects.find(name);
+
+    if (it != this->projects.end()) {
+      orig = it->second->get_data();
+      updating = true;
+      this->projects.erase(it);
+    }
+  }
+
+  if (project->check_can_start()) {
+
+    this->projects[name] = project;
+    project->start();
+
+    if (updating) {
+      this->add_message(Formatter() << BOLD << "Updated project \"" << name << "\" parameters." << RESET);
+    }
+    else {
+      this->add_message(Formatter() << BOLD << "Started project \"" << name << "\"." << RESET);
+    }
+
+  }
+  else {
+
+    if (updating) {
+      this->add_message(Formatter() << BOLD << "Cannot change project \"" << name << "\" parameters: " << RESET << project->get_reason_cannot_start());
+      this->projects[name] = project;
+      this->projects[name]->set_data(orig);
+    }
+    else {
+      this->add_message(Formatter() << BOLD << "Cannot start project \"" << name << "\": " << RESET << project->get_reason_cannot_start());
+    }
+
+  }
+
 }

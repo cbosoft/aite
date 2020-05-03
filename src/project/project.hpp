@@ -15,12 +15,13 @@ class ProjectData {
   private:
 
     double number;
+    double start_time;
     std::map<std::string, double> vars;
 
   public:
 
     ProjectData(double number)
-      : number(number)
+      : number(number), start_time(Universe::get_universe()->get_time())
     {
     }
 
@@ -41,6 +42,11 @@ class ProjectData {
     double get_number() const
     {
       return this->number;
+    }
+
+    double get_start_time() const
+    {
+      return this->start_time;
     }
 
     double get_var(std::string key) const
@@ -65,21 +71,22 @@ class Project {
 
   private:
 
-    double start_time;
-    std::string name;
+    std::string name, reason;
     bool started;
 
   protected:
 
-    double number;
+    ProjectData data;
     Colony &colony;
 
   public:
 
-    Project(Colony &colony, double number, std::string name);
+    Project(Colony &colony, ProjectData data, std::string name);
     virtual ~Project();
 
-    bool try_start();
+    bool check_can_start();
+    std::string get_reason_cannot_start() const;
+    void start();
 
     virtual bool check()
     {
@@ -91,15 +98,36 @@ class Project {
       return this->name;
     }
 
+    ProjectData get_data() const
+    {
+      return this->data;
+    }
+
+    void set_data(ProjectData data)
+    {
+      this->data = data;
+    }
+
     double get_start_time() const
     {
-      return this->start_time;
+      return this->data.get_start_time();
     }
 
     double get_elapsed_time() const
     {
-      return Universe::get_universe()->get_time() - this->start_time;
+      return Universe::get_universe()->get_time() - this->get_start_time();
     }
 
-    static Project_ptr from_string(std::string s, Colony &colony, const ProjectData &cd);
+    static Project_ptr from_string(std::string s, Colony &colony, const ProjectData &data);
+
+    Project &operator=(const Project &proj)
+    {
+      if (this->name.compare(proj.name) != 0) {
+        throw AuthorError("projects of different type cannot be set equal to one another");
+      }
+
+      this->data = proj.data;
+
+      return *this;
+    }
 };
