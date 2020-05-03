@@ -104,10 +104,12 @@ void ServerConnection::sync()
 void ServerConnection::show_messages()
 {
   if (this->state.messages.size()) {
-    std::cout << "\nYou have messages:\n";
+    //std::cout << "\nYou have messages:\n";
     for (auto m : this->state.messages) {
       std::cout << "  " << m << std::endl;
     }
+
+    this->state.messages = std::list<std::string>();
   }
 }
 
@@ -123,4 +125,6 @@ void ServerConnection::show_status()
 void ServerConnection::request_project(std::string activity_name)
 {
   this->send(Formatter() << "project|" << activity_name);
+  this->sync();
+  this->show_messages();
 }
