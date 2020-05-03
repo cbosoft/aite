@@ -59,8 +59,8 @@ class Colony {
         Statistic longevity;
       } population;
 
-      double research_effort;
       struct {
+        Statistic research_effort;
         Statistic agriculture;
         Statistic materials_gathering;
         Statistic materials_processing;
