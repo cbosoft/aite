@@ -53,6 +53,8 @@ class Colony {
 
     ResearchFocus research_focus;
     struct {
+
+      // TODO: move derived stats into their own section
       struct {
         Statistic number;
         Statistic medecine;
