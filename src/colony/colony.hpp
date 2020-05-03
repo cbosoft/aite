@@ -12,6 +12,16 @@
 #include "../resources/processed_resources.hpp"
 #include "../project/project.hpp"
 
+enum ResearchFocus {
+  // split equally
+  RF_Equal,
+
+  // split between relevant stats
+  RF_Food, RF_Resource, RF_Exploration,
+
+  // specific stat
+  RF_Agriculture, RF_MaterialsGathering, RF_MaterialsProcessing, RF_Power, RF_Astrogation
+};
 
 class Colony {
 
@@ -41,6 +51,7 @@ class Colony {
 
   public:
 
+    ResearchFocus research_focus;
     struct {
       struct {
         Statistic number;
@@ -50,7 +61,6 @@ class Colony {
       } population;
 
       double research_effort;
-      //ResearchFocus research_focus;
       struct {
         Statistic agriculture;
         Statistic materials_gathering;
