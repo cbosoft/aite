@@ -172,12 +172,12 @@ void Colony::add_project(Project_ptr project)
   else {
 
     if (updating) {
-      this->add_message(Formatter() << BOLD << "Cannot change project \"" << name << "\" parameters: " << RESET << project->get_reason_cannot_start());
+      this->add_message(Formatter() << BOLD << "Cannot change project \"" << name << "\" parameters: " << RESET << project->get_error());
       this->projects[name] = project;
       this->projects[name]->set_data(orig);
     }
     else {
-      this->add_message(Formatter() << BOLD << "Cannot start project \"" << name << "\": " << RESET << project->get_reason_cannot_start());
+      this->add_message(Formatter() << BOLD << "Cannot start project \"" << name << "\": " << RESET << project->get_error());
     }
 
   }
