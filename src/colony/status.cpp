@@ -21,6 +21,7 @@ std::string Colony::get_status() const
     << "Habitable Volume," << format_number(this->processed_resources.habitable_volume) << "|"
     << "Proto organic matter," << format_number(this->resources.OCHNPS) << "|"
     << "Metallic ore," << format_number(this->resources.metallic_ore) << "|"
+    << "Luminosity," << format_number(this->resources.luminosity) << "|"
     ;
 
   return ss.str();
