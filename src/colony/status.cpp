@@ -10,15 +10,8 @@ std::string Colony::get_status() const
 
   ss << std::setprecision(3)
     << "Name," << this->name << "|"
-    << "Total population,"; 
-  double n = this->stats.population.number.get_value();
-  
-  if (n < 1000)
-    ss << int(n);
-  else
-    ss << std::scientific << n << std::fixed;
-  
-  ss << "|"
+    << "population," << format_number(std::round(this->stats.population.number.get_base()))
+    << " (" << format_number(std::round(this->stats.population.number.get_value())) << ")|"
     << "Growth rate," << this->stats.derived.growth_rate->get_value() << "|"
     << "Occupied stellar objects," << this->inhabited_objects.size() << "|"
     << "Projects," << this->projects.size() << "|"
