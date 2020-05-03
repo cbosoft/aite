@@ -12,7 +12,6 @@ class Statistic {
     std::map<std::string, double> additive_modifiers;
     std::map<std::string, double> multiplicative_modifiers;
 
-    virtual double get_base() const;
     mutable std::mutex m;
 
   public:
@@ -20,6 +19,8 @@ class Statistic {
     Statistic();
     Statistic(double base_value);
     ~Statistic();
+
+    virtual double get_base() const;
 
     void set_additive_modifier(std::string name, double value);
     void set_multiplicative_modifier(std::string name, double value);
