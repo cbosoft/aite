@@ -97,7 +97,16 @@ void ServerConnection::sync()
     }
   }
 
-  // TODO sync projects
+  reply = this->send("query|statusprojects");
+  for (auto line : reply.contents()) {
+
+    std::string name, status;
+    std::stringstream ss(line);
+    getline(ss, name, ':');
+    getline(ss, status, ':');
+
+    this->state.projects_status[name] = status;
+  }
 }
 
 
