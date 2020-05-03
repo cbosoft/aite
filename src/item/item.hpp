@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "../resources/processed_resources.hpp"
 #include "../resources/resources.hpp"
 #include "../resources/resource_pool.hpp"
 
@@ -11,27 +12,31 @@
  * required.
  * */
 
-class ConstructedItem {
+class Item {
 
   private:
 
     std::string name;
     bool in_use;
-    double time_started;
-    double time_required;
-    Resources requirements;
-    Resources status;
+    double effort_required; // effort as in "number of people * time"
+    Resources requirements, status;
+    ProcessedResources processed_requirements, status_processed;
+    double effort;
+
 
   public:
 
-    ConstructedItem(std::string name, Resources requirements);
+    Item(std::string name, Resources requirements, ProcessedResources processed_requirements);
+
+    std::string get_name() const;
 
     void use();
     void release();
     bool is_in_use() const;
-    double get_progress() const;
+    //double get_progress() const;
 
-    bool build(PooledResource &pool);
+    bool get_supplies(Colony&);
+    bool construct(double effort);
 
 
 };

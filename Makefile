@@ -65,6 +65,9 @@ PROJECT = \
 					 obj/project/recon.o \
 					 obj/project/construct_habitat.o
 
+ITEM = \
+			 obj/item/item.o
+
 HISTORY = \
 					obj/history/history.o \
 					obj/history/load.o \
@@ -101,7 +104,7 @@ RESOURCE_EDITOR = \
 									obj/util/sqlite.o
 
 HDR = $(shell ls src/**/*.hpp)
-OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(OBJECT) $(COLONY) $(RESOURCES) $(CHEMISTRY) $(EVENT) $(FEATURE) $(PROJECT) $(HISTORY) $(UTIL)
+OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(OBJECT) $(COLONY) $(RESOURCES) $(CHEMISTRY) $(EVENT) $(FEATURE) $(PROJECT) $(HISTORY) $(UTIL) $(ITEM)
 LINK = -lpthread -lsqlite3
 DEFS =
 
