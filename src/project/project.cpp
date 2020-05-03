@@ -1,8 +1,10 @@
+#include "../colony/colony.hpp"
 #include "project.hpp"
 
 Project::Project(Colony &colony, ProjectData data, std::string name)
   :
     name(name),
+    status(PS_Inactive),
     data(data),
     colony(colony)
 {
@@ -10,7 +12,7 @@ Project::Project(Colony &colony, ProjectData data, std::string name)
 
 Project::~Project()
 {
-  if (this->started) {
+  if (this->status != PS_Inactive) {
     if (data.get_number() > 0.0) {
       this->colony.stats.population.number
         .remove_additive_modifier(name);
@@ -29,7 +31,7 @@ bool Project::check_can_start()
   // "<b>Cannot start project: </b> $REASON"
 
   if (not enough_population) {
-    this->reason = Formatter() << "not enough people unoccupied (" << available << "/" << this->data.get_number() << ").";
+    this->error = Formatter() << "not enough people unoccupied (" << available << "/" << this->data.get_number() << ").";
     return false;
   }
 
@@ -38,17 +40,93 @@ bool Project::check_can_start()
   return true;
 }
 
-std::string Project::get_reason_cannot_start() const
+std::string Project::get_error() const
 {
-  return this->reason;
+  return this->error;
+}
+
+std::string Project::get_name() const
+{
+  return this->name;
+}
+
+ProjectData Project::get_data() const
+{
+  return this->data;
+}
+
+void Project::set_data(ProjectData data)
+{
+  this->data = data;
+}
+
+double Project::get_start_time() const
+{
+  return this->data.get_start_time();
+}
+
+double Project::get_elapsed_time() const
+{
+  return Universe::get_universe()->get_time() - this->get_start_time();
+}
+
+ProjectStatus Project::update()
+{
+  return this->status;
 }
 
 void Project::start()
 {
+  this->take_resources();
+  this->status = PS_Active;
+}
+
+void Project::take_resources()
+{
   this->colony.stats.population.number
     .set_additive_modifier(name, -this->data.get_number());
+}
 
-  // TODO initial resource costs
+void Project::release_resources()
+{
+  this->colony.stats.population.number
+    .set_additive_modifier(name, 0.0);
+}
 
-  this->started = true;
+void Project::pause(std::string err)
+{
+  if (err.size())
+    this->error = err;
+
+  this->release_resources();
+  this->status = PS_Paused;
+}
+
+void Project::unpause()
+{
+  this->take_resources();
+  this->status = PS_Active;
+}
+
+std::string Project::get_status_string() const
+{
+  std::stringstream ss;
+  switch (this->status) {
+    case PS_Active:
+      ss << "active";
+      break;
+    case PS_Inactive:
+      ss << "inactive";
+      break;
+    case PS_Paused:
+      ss << "paused because " << this->error;
+      break;
+    case PS_Error:
+      ss << "cancelled because " << this->error;
+      break;
+    case PS_Finished:
+      ss << "finished";
+      break;
+  }
+  return ss.str();
 }

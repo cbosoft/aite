@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "../universe/universe.hpp"
+#include "../colony/colony.hpp"
 #include "project.hpp"
 
 class BabyBoom : public virtual Project {
@@ -16,8 +17,6 @@ class BabyBoom : public virtual Project {
     BabyBoom(Colony &colony, const ProjectData &data)
       : Project(colony, data, "baby boom")
     {
-      double time = Universe::get_universe()->get_time();
-      this->end_time = time + 2;
       this->colony.stats.derived.growth_rate->set_additive_modifier("baby boom", 2.0);
     }
 
@@ -26,10 +25,9 @@ class BabyBoom : public virtual Project {
       this->colony.stats.derived.growth_rate->remove_additive_modifier("baby boom");
     }
 
-    bool check() override
+    ProjectStatus update() override
     {
-      double time = Universe::get_universe()->get_time();
-      return time < this->end_time;
+      return PS_Active;
     }
 
 };

@@ -10,5 +10,5 @@ class ConstructHabitat : public virtual Project {
     ConstructHabitat(Colony &colony, const ProjectData &data);
     ~ConstructHabitat();
 
-    bool check() override;
+    ProjectStatus update() override;
 };

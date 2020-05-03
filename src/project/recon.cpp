@@ -13,7 +13,7 @@ Recon::~Recon()
 {
 }
 
-bool Recon::check()
+ProjectStatus Recon::update()
 {
   // Universe_ptr universe = Universe::get_universe();
 
@@ -21,5 +21,5 @@ bool Recon::check()
   // {
   // }
 
-  return false;
+  return PS_Finished;
 }

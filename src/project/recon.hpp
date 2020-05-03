@@ -17,5 +17,5 @@ class Recon : public virtual Project {
     Recon(Colony &colony, const ProjectData &data);
     ~Recon();
 
-    bool check() override;
+    ProjectStatus update() override;
 };
