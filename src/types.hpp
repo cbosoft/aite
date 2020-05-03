@@ -3,6 +3,9 @@
 #include <map>
 #include <memory>
 
+class Item;
+typedef std::shared_ptr<Item> Item_ptr;
+
 class Feature;
 typedef std::shared_ptr<Feature> Feature_ptr;
 
