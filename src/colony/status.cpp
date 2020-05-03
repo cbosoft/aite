@@ -22,6 +22,7 @@ std::string Colony::get_status() const
     << "Proto organic matter," << format_number(this->resources.OCHNPS) << "|"
     << "Metallic ore," << format_number(this->resources.metallic_ore) << "|"
     << "Luminosity," << format_number(this->resources.luminosity) << "|"
+    << "Mood," << format_number(this->stats.derived.mood->get_value()) << "|"
     ;
 
   return ss.str();
