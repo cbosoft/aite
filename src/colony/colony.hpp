@@ -56,7 +56,6 @@ class Colony {
       struct {
         Statistic number;
         Statistic medecine;
-        Statistic mood;
         Statistic longevity;
       } population;
 
@@ -89,6 +88,7 @@ class Colony {
         DerivedStatistic_ptr travel_speed;
         DerivedStatistic_ptr max_habitable_temperature;
         DerivedStatistic_ptr max_habitable_gravity;
+        DerivedStatistic_ptr mood;
       } derived;
     } stats;
 
