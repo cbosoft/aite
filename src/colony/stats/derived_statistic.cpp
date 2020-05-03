@@ -1,7 +1,6 @@
 #include "derived_statistic.hpp"
 
 DerivedStatistic::DerivedStatistic()
-  : DerivedStatistic(nullptr)
 {
   // do nothing
 }
@@ -13,9 +12,23 @@ DerivedStatistic::DerivedStatistic(Statistic * base_stat)
 }
 
 DerivedStatistic::DerivedStatistic(std::list<Statistic *> base_stats)
-  : base_stats(base_stats)
+  :
+    rawptr(true),
+    base_stats_rawptr(base_stats)
+{
+}
+
+DerivedStatistic::DerivedStatistic(DerivedStatistic_ptr base_stat)
+  : DerivedStatistic(std::list<DerivedStatistic_ptr>({base_stat}))
 {
   // do nothing
+}
+
+DerivedStatistic::DerivedStatistic(std::list<DerivedStatistic_ptr> base_stats)
+  :
+    rawptr(false),
+    base_stats_shrd(base_stats)
+{
 }
 
 DerivedStatistic::~DerivedStatistic()
@@ -25,5 +38,10 @@ DerivedStatistic::~DerivedStatistic()
 
 double DerivedStatistic::get_base() const
 {
-  return this->base_stats.front()->get_value();
+  if (this->rawptr) {
+    return this->base_stats_rawptr.front()->get_value();
+  }
+  else {
+    return this->base_stats_shrd.front()->get_value();
+  }
 }

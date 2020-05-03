@@ -5,11 +5,15 @@
 
 #include "statistic.hpp"
 
+class DerivedStatistic;
+typedef std::shared_ptr<DerivedStatistic> DerivedStatistic_ptr;
 class DerivedStatistic : public virtual Statistic {
 
   protected:
 
-    std::list<Statistic *> base_stats;
+    bool rawptr;
+    std::list<Statistic *> base_stats_rawptr;
+    std::list<DerivedStatistic_ptr> base_stats_shrd;
     virtual double get_base() const override;
 
   public:
@@ -17,10 +21,11 @@ class DerivedStatistic : public virtual Statistic {
     DerivedStatistic();
     DerivedStatistic(Statistic *base_stat);
     DerivedStatistic(std::list<Statistic *> base_stats);
+    DerivedStatistic(DerivedStatistic_ptr base_stat);
+    DerivedStatistic(std::list<DerivedStatistic_ptr> base_stats);
     ~DerivedStatistic();
 
 };
-typedef std::shared_ptr<DerivedStatistic> DerivedStatistic_ptr;
 
 template<typename R>
 class DerivedResource : public virtual DerivedStatistic {
@@ -82,7 +87,22 @@ class SumDerivedStatistic : public virtual DerivedStatistic {
 
   public:
 
-    SumDerivedStatistic(std::list<Statistic *> base_stats);
+    SumDerivedStatistic(std::list<DerivedStatistic_ptr> parts);
     ~SumDerivedStatistic();
+
+};
+
+
+class LessThanDerivedStatistic : public virtual DerivedStatistic {
+
+  private:
+    DerivedStatistic_ptr left, right;
+    double value_true, value_false;
+    virtual double get_base() const override;
+
+  public:
+
+    LessThanDerivedStatistic(DerivedStatistic_ptr base_stat, DerivedStatistic_ptr compared_to, double if_true, double if_false);
+    ~LessThanDerivedStatistic();
 
 };
