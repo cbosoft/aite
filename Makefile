@@ -28,6 +28,8 @@ COLONY = \
 				 obj/colony/stats/derived_statistic.o \
 				 obj/colony/stats/power_derived_statistic.o \
 				 obj/colony/stats/linear_derived_statistic.o \
+				 obj/colony/stats/sum_derived_statistic.o \
+				 obj/colony/stats/lessthan_derived_statistic.o \
 				 obj/colony/colony.o \
 				 obj/colony/discover.o \
 				 obj/colony/bootstrap.o \
