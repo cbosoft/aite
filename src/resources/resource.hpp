@@ -41,4 +41,9 @@ class Resource {
       return *this;
     }
 
+    bool operator>(const Resource &other) const
+    {
+      return this->get_amount_available() > other.get_amount_available();
+    }
+
 };
