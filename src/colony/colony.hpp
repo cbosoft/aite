@@ -10,6 +10,7 @@
 #include "../types.hpp"
 #include "../resources/resource_pool.hpp"
 #include "../resources/processed_resources.hpp"
+#include "../project/project.hpp"
 
 
 class Colony {
@@ -105,7 +106,9 @@ class Colony {
     void add_project(Project_ptr project);
     void add_message(std::string message);
     std::list<std::string> get_messages();
+
     std::string get_status() const;
+    std::string get_project_status() const;
 
     Event_ptr get_bootstrap_event();
     double get_number();

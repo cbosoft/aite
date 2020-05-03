@@ -32,3 +32,19 @@ std::string Colony::get_status() const
 
   return ss.str();
 }
+
+
+std::string Colony::get_project_status() const
+{
+  std::stringstream ss;
+
+  int n = 0;
+  for (auto kv : this->projects) {
+    auto project = kv.second;
+
+    if (n++) ss << "|";
+    ss << project->get_name() << ":" << project->get_status_string();
+  }
+
+  return ss.str();
+}
