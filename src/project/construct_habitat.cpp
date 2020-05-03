@@ -52,6 +52,7 @@ ProjectStatus ConstructHabitat::update()
     double time = Universe::get_time();
     double dt = time - previous_time;
     double volume_constructed = dt*200.0; // TODO get construction rate from derived stats
+    previous_time = time;
 
     if (volume_left < volume_constructed) {
       volume_constructed = volume_left;
