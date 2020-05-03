@@ -203,6 +203,24 @@ void Colony::add_item(Item_ptr item)
 
 }
 
+void Colony::use_item(std::string name)
+{
+
+  if (!this->items_not_in_use[name]) {
+    throw ItemInUseError("Item not available!");
+  }
+
+  for (auto item : this->inventory) {
+    if ((item->get_name().compare(name) == 0) and not item->is_in_use()) {
+      item->use();
+      this->items_not_in_use[name] --;
+    }
+  }
+
+  // shouldnt get here
+  throw AuthorError("item not available but notinuse check did not catch it");
+}
+
 void Colony::use_item(Item_ptr item)
 {
 
@@ -214,4 +232,10 @@ void Colony::use_item(Item_ptr item)
 
   this->items_not_in_use[item->get_name()] --;
 
+}
+
+bool Colony::has_free_item(std::string name) const
+{
+  auto it = this->items_not_in_use.find(name);
+  return (it != this->items_not_in_use.end());
 }

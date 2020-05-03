@@ -117,6 +117,8 @@ class Colony {
     void startoff(SystemObject_ptr planet);
     void update(double dt);
 
+    bool has_free_item(std::string name) const;
+    void use_item(std::string name);
     void use_item(Item_ptr item);
     void add_item(Item_ptr item);
     void add_project(Project_ptr project);
