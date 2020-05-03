@@ -31,10 +31,10 @@ class Project {
     Project(Colony &colony, ProjectData data, std::string name);
     virtual ~Project();
 
-    virtual bool check_can_start();
-    virtual void start();
     virtual void pause(std::string err="");
     virtual void unpause();
+    virtual bool check_can_start();
+    virtual void start();
     virtual void take_resources();
     virtual void release_resources();
 
