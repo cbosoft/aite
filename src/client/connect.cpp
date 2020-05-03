@@ -130,6 +130,16 @@ void ServerConnection::show_status()
   }
 }
 
+void ServerConnection::show_status_projects()
+{
+  if (this->state.projects_status.size()) {
+    std::cout << "\n" BOLD "Projects:" RESET "\n";
+    for (auto kv : this->state.projects_status) {
+      std::cout << "  " << kv.first << ": " << kv.second << "\n";
+    }
+  }
+}
+
 
 void ServerConnection::request_project(std::string activity_name)
 {
