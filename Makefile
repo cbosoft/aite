@@ -62,6 +62,7 @@ FEATURE = \
 PROJECT = \
 					 obj/project/project.o \
 					 obj/project/from_string.o \
+					 obj/project/produce_item.o \
 					 obj/project/recon.o \
 					 obj/project/construct_habitat.o
 
