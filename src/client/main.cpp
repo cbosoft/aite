@@ -10,6 +10,7 @@ void batchmain(ClientArgs args)
   ServerConnection conn = ServerConnection(args.server_address, args.server_port, args.colony_name);
   conn.sync();
   conn.show_status();
+  conn.show_status_projects();
   conn.show_messages();
   conn.request_project("constructhabitat");
 }
