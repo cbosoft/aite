@@ -84,3 +84,8 @@ bool Item::construct(double effort) {
   this->effort += effort;
   return this->effort >= this->effort_required;
 }
+
+bool Item::is_in_use() const
+{
+  return this->in_use;
+}
