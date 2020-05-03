@@ -63,6 +63,11 @@ class ProjectData {
     {
       return this->get_var(s);
     }
+
+    bool operator==(const ProjectData &other)
+    {
+      return (this->number == other.number) && (this->vars == other.vars);
+    }
 };
 
 

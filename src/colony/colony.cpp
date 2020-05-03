@@ -144,10 +144,17 @@ void Colony::add_project(Project_ptr project)
 
     if (it != this->projects.end()) {
       orig = it->second->get_data();
+
+      if (project->get_data() == orig) {
+        this->add_message(Formatter() << BOLD << "Project \"" << name << "\" parameters unchanged." << RESET);
+        return;
+      }
+
       updating = true;
       this->projects.erase(it);
     }
   }
+
 
   if (project->check_can_start()) {
 
