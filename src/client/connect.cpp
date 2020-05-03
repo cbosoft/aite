@@ -113,7 +113,7 @@ void ServerConnection::sync()
 void ServerConnection::show_messages()
 {
   if (this->state.messages.size()) {
-    //std::cout << "\nYou have messages:\n";
+    std::cout << "\n" BOLD "Notifications:" RESET "\n";
     for (auto m : this->state.messages) {
       std::cout << "  " << m << std::endl;
     }
