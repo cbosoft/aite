@@ -67,9 +67,20 @@ void Colony::update(double dt)
 
   for (auto it = this->projects.begin(); it != this->projects.end(); it++) {
     auto project = it->second;
-    if (not project->check()) {
+    auto status = project->update();
+  
+    if ((status == PS_Finished) or (status == PS_Error)) {
       this->projects.erase(it++);
+
+      if (status == PS_Finished) {
+        this->add_message(Formatter() << BOLD "Project \"" << project->get_name() << "\" complete." << RESET);
+      }
+      else {
+        this->add_message(Formatter() << BOLD << FG_RED << "Project \"" << project->get_name() << "\" cancelled: " << RESET << project->get_error());
+      }
+
     }
+
   }
 
 }
