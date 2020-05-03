@@ -16,6 +16,10 @@ PowerDerivedStatistic::~PowerDerivedStatistic()
 
 double PowerDerivedStatistic::get_base() const
 {
-  double rv = std::pow(this->base_stats.front()->get_value(), this->p)*this->m + this->c;
+  double v =
+    this->rawptr?
+    this->base_stats_rawptr.front()->get_value() :
+    this->base_stats_shrd.front()->get_value();
+  double rv = std::pow(v, this->p)*this->m + this->c;
   return rv;
 }
