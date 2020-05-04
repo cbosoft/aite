@@ -1,7 +1,9 @@
 #include <iostream>
 
 #include "../util/formatter.hpp"
+#include "../util/exception.hpp"
 #include "args.hpp"
+
 #include "connect.hpp"
 
 
@@ -30,6 +32,7 @@ int main(int argc, const char **argv)
 {
   ClientArgs args = parse_args(argc, argv);
 
+  try {
   switch (args.mode) {
 
     case CM_Batch:
@@ -44,5 +47,21 @@ int main(int argc, const char **argv)
       guimain(args);
       break;
 
+  }
+  }
+  catch (const SocketError &e) {
+    std::cerr
+     << "Error connecting: are the server address and port correct?\n"
+     << "    IP: " << args.server_address << "\n"
+     << "  Port: " << args.server_port << "\n" 
+     ;
+  }
+  catch (const Exception &e) {
+    std::cerr
+      << e.what() << "\n"
+      << "\"aite_client --help\" for help.\n"
+      ;
+
+    exit(1);
   }
 }
