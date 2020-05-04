@@ -3,43 +3,63 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "connect.hpp"
 #include "../util/exception.hpp"
 #include "../util/socket.hpp"
+#include "args.hpp"
+#include "connect.hpp"
+
+int (*oconnect)(int, const struct sockaddr *, unsigned int) = &connect;
 
 
 ServerConnection::ServerConnection(const char *ip_address, int port, std::string colony_name)
+  : name(colony_name), connected(false)
 {
+  this->server_address.sin_family = AF_INET;
+  this->server_address.sin_port = htons(port);
+  if (inet_pton(AF_INET, ip_address, &this->server_address.sin_addr) <= 0) {
+    throw SocketError(Formatter() << "IP address given (" << ip_address << ") not understood.", true);
+  }
+}
+
+void ServerConnection::connect()
+{
+  if (this->connected)
+    return;
+
   this->fd = socket(AF_INET, SOCK_STREAM, 0);
   if (this->fd < 0) {
     throw SocketError("Socket creation error", true);
   }
 
-  struct sockaddr_in server_addr;
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(port);
-
-  if (inet_pton(AF_INET, ip_address, &server_addr.sin_addr) <= 0) {
-    throw SocketError(Formatter() << "IP address given (" << ip_address << ") not understood.", true);
-  }
-
-  if (connect(this->fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0 ) {
+  if (oconnect(this->fd, (struct sockaddr *)&this->server_address, sizeof(this->server_address)) < 0 ) {
     throw SocketError("Connection failed.", true);
   }
+  this->connected = true;
 
-  this->join(colony_name);
+  this->join(this->name);
+}
+
+void ServerConnection::disconnect()
+{
+  if (not this->connected)
+    return;
+
+  this->send("leaving");
+  close(this->fd);
+  this->connected = false;
 }
 
 
 ServerConnection::~ServerConnection()
 {
-  this->send("leaving");
-  close(this->fd);
+  this->disconnect();
 }
 
 
 ServerReply ServerConnection::send(std::string message)
 {
+  this->connect();
+
   buffered_send(this->fd, message);
 
   // get reply
@@ -51,6 +71,36 @@ ServerReply ServerConnection::send(std::string message)
   }
 
   return ServerReply(buffer);
+}
+
+void ServerConnection::execute(std::string command, std::list<std::string> args)
+{
+
+  if (not command.size()) {
+    throw ArgumentError("Command required.");
+  }
+
+
+  if (command.compare("status") == 0) {
+
+    this->sync();
+    this->show_status();
+
+  }
+  else if (command.compare("startproject") == 0) {
+
+    if (args.size() != 1)
+      throw ArgumentError("Command startproject needs an argument: project name");
+
+    this->request_project(args.front());
+    this->sync();
+    this->show_messages();
+
+  }
+  else {
+    throw ArgumentError(Formatter() << "Unknown command " << command << ".");
+  }
+
 }
 
 
@@ -67,9 +117,7 @@ void ServerConnection::join(std::string colony_name)
     usleep(500000);
   }
 
-  //std::cout << "Syncing with server... " << std::flush;
   this->sync();
-  //std::cout << "done!" << std::endl;
   usleep(200000);
 
 }
@@ -113,7 +161,7 @@ void ServerConnection::sync()
 void ServerConnection::show_messages()
 {
   if (this->state.messages.size()) {
-    std::cout << "\n" BOLD "Notifications:" RESET "\n";
+    std::cout << BOLD "Notifications:" RESET "\n";
     for (auto m : this->state.messages) {
       std::cout << "  " << m << std::endl;
     }
@@ -124,7 +172,7 @@ void ServerConnection::show_messages()
 
 void ServerConnection::show_status()
 {
-  std::cout << "\n" BOLD "Status:" RESET "\n";
+  std::cout << BOLD "Status:" RESET "\n";
   for (auto kv : this->state.status) {
     std::cout << "  " << kv.first << ": " << kv.second << "\n";
   }
@@ -141,9 +189,7 @@ void ServerConnection::show_status_projects()
 }
 
 
-void ServerConnection::request_project(std::string activity_name)
+void ServerConnection::request_project(std::string project_name)
 {
-  this->send(Formatter() << "project|" << activity_name);
-  this->sync();
-  this->show_messages();
+  this->send(Formatter() << "project|" << project_name);
 }

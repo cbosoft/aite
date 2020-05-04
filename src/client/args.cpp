@@ -75,8 +75,13 @@ ClientArgs parse_args(int argc, const char **argv)
   ClientArgs args = default_args();
 
   argc--; argv++;
+  bool reading_args = false;
   for (int i = 0; i < argc; i++) {
-    if (ARG_EITHER("-i", "--server-ip-address")) {
+
+    if (reading_args) {
+      args.args.push_back(std::string(argv[i]));
+    }
+    else if (ARG_EITHER("-i", "--server-ip-address")) {
       args.try_load_config_from_file = false;
       args.server_address = argv[++i];
     }
@@ -104,7 +109,8 @@ ClientArgs parse_args(int argc, const char **argv)
       }
     }
     else {
-      throw ArgumentError(Formatter() << "Argument " << argv[i] << " not recognised.");
+      reading_args = true;
+      args.command = std::string(argv[i]);
     }
   }
 
