@@ -16,3 +16,4 @@ typedef struct ClientArgs {
 } ClientArgs;
 
 ClientArgs parse_args(int argc, const char **argv);
+void show_help(bool extended=false);

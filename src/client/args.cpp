@@ -81,6 +81,10 @@ ClientArgs parse_args(int argc, const char **argv)
     if (reading_args) {
       args.args.push_back(std::string(argv[i]));
     }
+    else if (ARG_EQ("--help")) {
+      show_help(true);
+      exit(0);
+    }
     else if (ARG_EITHER("-i", "--server-ip-address")) {
       args.try_load_config_from_file = false;
       args.server_address = argv[++i];
