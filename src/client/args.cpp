@@ -15,7 +15,7 @@ ClientArgs default_args()
     .server_address = "127.0.0.1",
     .server_port = DEFAULT_PORT,
     .colony_name = "guest",
-    .mode = CM_TUI,
+    .mode = CM_Batch,
     .command = "status",
     .args = {}
   };
