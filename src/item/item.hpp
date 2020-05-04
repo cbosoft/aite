@@ -5,6 +5,7 @@
 #include "../resources/processed_resources.hpp"
 #include "../resources/resources.hpp"
 #include "../resources/resource_pool.hpp"
+#include "../types.hpp"
 
 /*
  * An item is something that is made by a colony, and is perhaps a requirement
@@ -26,7 +27,7 @@ class Item {
 
   public:
 
-    Item(std::string name, Resources requirements, ProcessedResources processed_requirements);
+    Item(std::string name, double effort_required, Resources requirements, ProcessedResources processed_requirements);
 
     std::string get_name() const;
 
@@ -37,6 +38,8 @@ class Item {
 
     bool get_supplies(Colony&);
     bool construct(double effort);
+
+    static Item_ptr generate(std::string name);
 
 
 };

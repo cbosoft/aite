@@ -4,10 +4,11 @@
 #include "item.hpp"
 
 
-Item::Item(std::string name, Resources requirements, ProcessedResources processed_requirements)
+Item::Item(std::string name, double effort_required, Resources requirements, ProcessedResources processed_requirements)
   :
     name(name),
     in_use(false),
+    effort_required(effort_required),
     requirements(requirements),
     processed_requirements(processed_requirements)
 {
