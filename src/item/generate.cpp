@@ -23,8 +23,25 @@ std::map<std::string, ItemPrototype> &get_prototypes()
 
     for (unsigned int i = 0; i < res.size(); i++) {
       auto row = res[i];
-      Resources r; // TODO:
-      ProcessedResources pr; // TODO
+      Resources r(
+            row["RequiredOCHNPS"],
+            row["RequiredMetallicOre"],
+            row["RequiredNonmetallicOre"],
+            row["RequiredHighDensityOre"],
+            row["RequiredHighActivityOre"],
+            row["RequiredLuminosity"],
+            row["RequiredVolume"]
+          );
+      ProcessedResources pr(
+            row["RequiredFood"],
+            row["RequiredMetal"],
+            row["RequiredHeavyMetal"],
+            row["RequiredCeramics"],
+            row["RequiredNuclearFuel"],
+            row["RequiredHabitableVolume"],
+            row["RequiredFoodPower"],
+            row["RequiredFoodSolarCollectionArea"]
+          );
       ItemPrototype p = {
         .name = row["Name"],
         .effort_required = row["RequiredEffort"],
