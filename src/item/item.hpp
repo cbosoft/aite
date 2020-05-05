@@ -18,6 +18,7 @@ class Item {
   private:
 
     std::string name;
+    std::string description;
     bool in_use;
     double effort_required; // effort as in "number of people * time"
     Resources requirements, status;
@@ -27,7 +28,7 @@ class Item {
 
   public:
 
-    Item(std::string name, double effort_required, Resources requirements, ProcessedResources processed_requirements);
+    Item(std::string name, std::string description, double effort_required, Resources requirements, ProcessedResources processed_requirements);
 
     std::string get_name() const;
 

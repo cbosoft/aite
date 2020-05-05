@@ -5,6 +5,7 @@
 
 typedef struct ItemPrototype {
   std::string name;
+  std::string description;
   double effort_required;
   Resources requirements;
   ProcessedResources processed_requirements;
@@ -44,6 +45,7 @@ std::map<std::string, ItemPrototype> &get_prototypes()
           );
       ItemPrototype p = {
         .name = row["Name"],
+        .description = row["Description"],
         .effort_required = row["RequiredEffort"],
         .requirements = r,
         .processed_requirements = pr
@@ -64,5 +66,11 @@ Item_ptr Item::generate(std::string name)
     throw AuthorError(Formatter() << "Unknown item requested: " << name << ".");
 
   auto prototype = it->second;
-  return std::make_shared<Item>(prototype.name, prototype.effort_required, prototype.requirements, prototype.processed_requirements);
+  return std::make_shared<Item>(
+      prototype.name,
+      prototype.description,
+      prototype.effort_required,
+      prototype.requirements,
+      prototype.processed_requirements
+  );
 }
