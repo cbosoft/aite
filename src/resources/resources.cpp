@@ -10,6 +10,19 @@ Resources::Resources()
   // do nothing
 }
 
+Resources::Resources(double OCHNPS, double metallic_ore, double nonmetallic_ore,
+    double high_density_ore, double high_activity_ore, double luminosity,
+    double volume)
+{
+  this->OCHNPS = OCHNPS;
+  this->metallic_ore = metallic_ore;
+  this->nonmetallic_ore = nonmetallic_ore;
+  this->high_density_ore = high_density_ore;
+  this->high_activity_ore = high_activity_ore;
+  this->luminosity = luminosity;
+  this->volume = volume;
+}
+
 Resources::Resources(ElementalAbundance elements, double mass)
 {
 

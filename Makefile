@@ -41,6 +41,7 @@ RESOURCES = \
 						obj/resources/resource.o \
 						obj/resources/resources.o \
 						obj/resources/resource_pool.o \
+						obj/resources/processed_resources.o \
 						obj/resources/pooled_resource.o
 
 CHEMISTRY = \

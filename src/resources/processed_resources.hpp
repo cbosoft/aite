@@ -15,4 +15,9 @@ class ProcessedResources {
     Resource power;
     Resource solar_collection_area;
 
+    ProcessedResources();
+    ProcessedResources(double food, double metal, double heavy_metal,
+        double ceramics, double nuclear_fuel, double habitable_volume,
+        double power, double solar_collection_area);
+
 };
