@@ -3,6 +3,8 @@
 #include <string>
 #include <map>
 
+#include "../resources/resources.hpp"
+#include "../resources/processed_resources.hpp"
 #include "../universe/universe.hpp"
 
 class ProjectData {
@@ -11,7 +13,10 @@ class ProjectData {
 
     double number;
     double start_time;
-    std::map<std::string, double> vars;
+    Resources resources;
+    ProcessedResources processed_resources;
+    std::map<std::string, double> float_vars;
+    std::map<std::string, std::string> str_vars;
 
   public:
 
@@ -29,9 +34,14 @@ class ProjectData {
       this->number = number;
     }
 
-    void set_var(std::string key, double value)
+    void set_float(std::string key, double value)
     {
-      this->vars[key] = value;
+      this->float_vars[key] = value;
+    }
+
+    void set_str(std::string key, std::string value)
+    {
+      this->str_vars[key] = value;
     }
 
     double get_number() const
@@ -44,9 +54,32 @@ class ProjectData {
       return this->start_time;
     }
 
-    double get_var(std::string key) const
+    double get_float(std::string key) const
     {
-      return this->vars.at(key);
+      return this->float_vars.at(key);
+    }
+
+    std::string get_str(std::string key) const
+    {
+      return this->str_vars.at(key);
+    }
+
+    double get_float_or_default(std::string key, double default_value) const
+    {
+      auto it = this->float_vars.find(key);
+      if (it == this->float_vars.end())
+        return default_value;
+      else
+        return it->second;
+    }
+
+    std::string get_str_or_default(std::string key, std::string default_value) const
+    {
+      auto it = this->str_vars.find(key);
+      if (it == this->str_vars.end())
+        return default_value;
+      else
+        return it->second;
     }
 
     operator double() const
@@ -54,14 +87,11 @@ class ProjectData {
       return this->get_number();
     }
 
-    double operator[](std::string s) const
-    {
-      return this->get_var(s);
-    }
-
     bool operator==(const ProjectData &other)
     {
-      return (this->number == other.number) && (this->vars == other.vars);
+      return (this->number == other.number)
+        && (this->str_vars == other.str_vars)
+        && (this->float_vars == other.float_vars);
     }
 };
 

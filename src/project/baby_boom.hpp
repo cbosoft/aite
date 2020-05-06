@@ -25,9 +25,4 @@ class BabyBoom : public virtual Project {
       this->colony.stats.derived.growth_rate->remove_additive_modifier("baby boom");
     }
 
-    ProjectStatus update() override
-    {
-      return PS_Active;
-    }
-
 };

@@ -12,12 +12,7 @@ Project::Project(Colony &colony, ProjectData data, std::string name)
 
 Project::~Project()
 {
-  if (this->status != PS_Inactive) {
-    if (data.get_number() > 0.0) {
-      this->colony.stats.population.number
-        .remove_additive_modifier(name);
-    }
-  }
+  this->release_resources();
 }
 
 
@@ -72,7 +67,22 @@ double Project::get_elapsed_time() const
 
 ProjectStatus Project::update()
 {
+  this->status = this->get_status();
+
+  if (this->status == PS_Active)
+    this->do_work();
+
   return this->status;
+}
+
+ProjectStatus Project::get_status()
+{
+  return this->status;
+}
+
+void Project::do_work()
+{
+  // do nothing
 }
 
 void Project::start()

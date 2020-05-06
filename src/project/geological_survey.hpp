@@ -13,5 +13,6 @@ class GeologicalSurvey : public virtual Project {
     GeologicalSurvey(Colony &colony, const ProjectData &data);
     ~GeologicalSurvey();
 
-    ProjectStatus update() override;
+    ProjectStatus get_status() override;
+    void do_work() override;
 };

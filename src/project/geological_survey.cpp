@@ -2,7 +2,7 @@
 
 #include "geological_survey.hpp"
 
-ProjectStatus GeologicalSurvey::update()
+ProjectStatus GeologicalSurvey::get_status()
 {
   switch (this->status) {
 
@@ -25,4 +25,8 @@ ProjectStatus GeologicalSurvey::update()
   }
 
   return this->status;
+}
+
+void GeologicalSurvey::do_work()
+{
 }

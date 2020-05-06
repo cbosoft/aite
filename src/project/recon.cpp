@@ -13,13 +13,19 @@ Recon::~Recon()
 {
 }
 
-ProjectStatus Recon::update()
+ProjectStatus Recon::get_status()
 {
+  // TODO: what is the exit condition? player requests project halt? Find
+  // specific object?
+  return PS_Finished;
+}
+
+void Recon::do_work()
+{
+  // TODO: explore!
   // Universe_ptr universe = Universe::get_universe();
 
   // for (auto galaxy : universe->get_galaxies())
   // {
   // }
-
-  return PS_Finished;
 }
