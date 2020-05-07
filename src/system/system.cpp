@@ -70,7 +70,6 @@ System_ptr System::generate(Vec3 position, Galaxy_ptr galaxy)
 
   double zero_luminance = star->get_luminosity();
 
-
   int nplanets = std::round(normal_rand(10, 2));
   double object_distance = 0.0;
   for (int i = 0; i < nplanets; i++) {
@@ -79,14 +78,6 @@ System_ptr System::generate(Vec3 position, Galaxy_ptr galaxy)
     object->set_luminosity(zero_luminance/std::pow(object_distance , 2.0));
     system->objects.push_back(object);
   }
-
-  // int nstars = 1;
-  // for (int i = 1; i < System::max_number_stars; i++) {
-  //   if (uniform_rand(0, 1) < 0.05) {
-  //     nstars ++;
-  //   }
-  // }
-  // TODO generate star(s)
 
   return system;
 }
