@@ -46,6 +46,7 @@ class SystemObject {
     SystemObject(System_ptr system, double position);
 
     static SystemObject_ptr generate(System_ptr system, double position, SystemObjectType type);
+    static SystemObject_ptr generate_object_or_subtype(System_ptr system, double position, SystemObjectType type);
 
     double get_luminosity() const;
     double get_position() const;
