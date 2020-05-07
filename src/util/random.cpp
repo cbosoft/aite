@@ -1,4 +1,5 @@
 #include <random>
+
 #include "random.hpp"
 #include "exception.hpp"
 
@@ -77,12 +78,12 @@ int uniform_rand_i(int min, int max)
 
 
 
-double likelihood_to_chance(RandomLikelihood likelihood)
+double likelihood_to_numerical_probability(RandomLikelihood likelihood)
 {
   switch (likelihood) {
 
     case Likelihood_Impossible:
-      return 1e-4;
+      return -1.0;
 
     case Likelihood_VeryRare:
       return 0.01;
@@ -100,18 +101,18 @@ double likelihood_to_chance(RandomLikelihood likelihood)
       return 0.85;
 
     case Likelihood_Certain:
-      return 99.9;
+      return 2.0;
   }
 
   // switch above means control will never reach here. throw exception *just in
   // case* I break something and control *does* reach here.
-  throw AuthorError("control reaches end of likelihood_to_chance in src/util/random.cpp.");
+  throw AuthorError("control reaches end of likelihood_to_numerical_probability in src/util/random.cpp.");
 }
 
 
 bool check_likelihood(RandomLikelihood likelihood)
 {
-  return uniform_rand(0.0, 1.0) < likelihood_to_chance(likelihood);
+  return uniform_rand(0.0, 1.0) < likelihood_to_numerical_probability(likelihood);
 }
 
 

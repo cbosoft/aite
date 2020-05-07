@@ -23,6 +23,7 @@ double bilognormal_rand(double mn1, double std1, double mn2, double std2, double
 
 int uniform_rand_i(int min, int max);
 
+double likelihood_to_numerical_probability(RandomLikelihood likelihood);
 bool check_likelihood(RandomLikelihood likelihood);
 RandomLikelihood str2likelihood(std::string s);
 
