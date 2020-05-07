@@ -1,6 +1,9 @@
 #pragma once
 #include <random>
+#include <list>
 #include <iterator>
+
+#include "exception.hpp"
 
 enum RandomLikelihood {
   Likelihood_Impossible,   // nothing is truly impossible!
@@ -33,4 +36,30 @@ template<typename Iter>
 Iter select_randomly(Iter start, Iter end) {
     std::advance(start, uniform_rand_i(0, std::distance(start, end)-1));
     return start;
+}
+
+template<typename T>
+T probability_weighted_choice(std::list<RandomLikelihood> likelihoods, std::list<T> values)
+{
+  int rv_index = -1;
+  double random_number = uniform_rand_i(0.0, 1.0);
+  double rv_chance = 10.0;
+
+  int i = 0;
+  for (auto likelihood : likelihoods) {
+    double numerical_chance = likelihood_to_numerical_probability(likelihood);
+    if ((numerical_chance > random_number) and (rv_chance > random_number)) {
+      rv_index = i;
+      rv_chance = numerical_chance;
+    }
+    i ++;
+  }
+
+  if (rv_index < 0)
+    throw NonOccurrenceError("No event occurred");
+
+  auto it = values.begin();
+  for (int i = 0; i < rv_index; i++, it++);
+  return *it;
+
 }
