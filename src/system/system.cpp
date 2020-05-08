@@ -3,12 +3,14 @@
 #include "../util/random.hpp"
 
 
-System::System(Vec3 position, double size, unsigned long id, Galaxy_ptr galaxy)
+System::System(Vec3 position, double size, Galaxy_ptr galaxy)
+  :
+    id(System::next_id()),
+    size(size),
+    position(position),
+    galaxy(galaxy)
 {
-  this->position = position;
-  this->size = size;
-  this->id = id;
-  this->galaxy = galaxy;
+  // do nothing
 }
 
 

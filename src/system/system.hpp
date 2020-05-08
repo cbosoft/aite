@@ -20,9 +20,11 @@ class System {
 
     Galaxy_ptr galaxy;
 
+    static unsigned long next_id();
+
   public:
 
-    System(Vec3 position, double size, unsigned long id, Galaxy_ptr galaxy);
+    System(Vec3 position, double size, Galaxy_ptr galaxy);
     ~System();
 
     static System_ptr generate(Vec3 position, Galaxy_ptr galaxy);

@@ -13,7 +13,8 @@ GALAXY = \
 				 obj/galaxy/system.o
 
 SYSTEM = \
-				 obj/system/system.o
+				 obj/system/system.o \
+				 obj/system/id.o \
 
 OBJECT = \
 				 obj/object/object.o \
