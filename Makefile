@@ -15,6 +15,7 @@ GALAXY = \
 SYSTEM = \
 				 obj/system/system.o \
 				 obj/system/id.o \
+				 obj/system/generate.o
 
 OBJECT = \
 				 obj/object/object.o \
