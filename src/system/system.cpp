@@ -31,7 +31,7 @@ unsigned long System::get_id() const
 
 SystemObject_ptr System::get_random_object()
 {
-  return this->objects[uniform_rand_i(0, this->objects.size()-1)];
+  return *select_randomly(this->objects.begin(), this->objects.end());
 }
 
 const std::vector<SystemObject_ptr> &System::get_objects() const
