@@ -185,9 +185,9 @@ const ObjectDescriptionData &SystemObject::describe()
 
   std::sort(phase_abundance.begin(), phase_abundance.end(), phase_comp_functor);
 
-  for (auto kv : phase_abundance) {
-    std::cerr << "  " << phase2str(kv.second) << ": " << kv.first << std::endl;
-  }
+  // for (auto kv : phase_abundance) {
+  //   std::cerr << "  " << phase2str(kv.second) << ": " << kv.first << std::endl;
+  // }
 
   std::stringstream ss;
   // if ((phase_abundance[0].first > phase_abundance[1].first + 0.5) and (phase_abundance[1].first > 0.0)) {
