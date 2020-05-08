@@ -64,7 +64,9 @@ std::string Colony::get_name(System_ptr system)
   }
 
   auto thesaurus = Thesaurus::getref();
-  return thesaurus.capitalise(thesaurus.generate_from_syllables());
+  std::string system_name = thesaurus.capitalise(thesaurus.generate_from_syllables());
+  this->system_log[id] = system_name;
+  return system_name;
 }
 
 bool Colony::have_discovered(const System_ptr system) const
