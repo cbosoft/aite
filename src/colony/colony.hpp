@@ -99,6 +99,7 @@ class Colony {
     ResourcePool resources;
     ProcessedResources processed_resources;
 
+    Colony();
     Colony(std::string name, SystemObject_ptr starting_world, double time_of_inception);
     ~Colony();
 

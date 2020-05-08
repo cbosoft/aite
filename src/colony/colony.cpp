@@ -8,6 +8,10 @@
 
 #include "colony.hpp"
 
+Colony::Colony()
+  : time_of_inception(0.0), name("a colony")
+{
+}
 
 Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_inception)
   : time_of_inception(time_of_inception), name(name)
@@ -65,6 +69,7 @@ Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_incepti
   double starting_vol = this->stats.population.number.get_value() * 10;
   this->resources.volume -= starting_vol;
   this->processed_resources.habitable_volume += starting_vol;
+
 }
 
 
