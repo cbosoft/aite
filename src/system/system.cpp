@@ -34,6 +34,11 @@ SystemObject_ptr System::get_random_object()
   return this->objects[uniform_rand_i(0, this->objects.size()-1)];
 }
 
+const std::vector<SystemObject_ptr> &System::get_objects() const
+{
+  return this->objects;
+}
+
 
 unsigned int System::get_object_index(SystemObject_ptr object) const
 {

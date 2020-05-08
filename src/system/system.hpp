@@ -30,6 +30,7 @@ class System {
 
     SystemObject_ptr get_random_object();
 
+    const std::vector<SystemObject_ptr> &get_objects() const;
     Vec3 get_position() const;
     unsigned long get_id() const;
     unsigned int get_object_index(SystemObject_ptr object) const;
