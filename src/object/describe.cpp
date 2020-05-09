@@ -165,7 +165,11 @@ const ObjectDescriptionData &SystemObject::describe()
   for (int i = 0; i < 4; i++)
     phase_abundance.push_back(std::make_pair(double(0.0), Phase(i)));
 
-  constexpr int N_MOST_ABUNDANT = 3;
+  int N_MOST_ABUNDANT = 3;
+  if (this->composition.size() < 3) {
+    N_MOST_ABUNDANT = this->composition.size();
+  }
+
   std::string most_abundant [N_MOST_ABUNDANT];
   {
     int i = 0;
@@ -200,10 +204,15 @@ const ObjectDescriptionData &SystemObject::describe()
     ss << "consists primarily of ";
   //}
 
-  for (int i = 0; i < N_MOST_ABUNDANT-1; i++) {
-    ss << most_abundant[i] << ", ";
+  if (N_MOST_ABUNDANT > 1) {
+    for (int i = 0; i < N_MOST_ABUNDANT-1; i++) {
+      ss << most_abundant[i] << ", ";
+    }
+    ss << "and " << most_abundant[N_MOST_ABUNDANT-1] << ".";
   }
-  ss << "and " << most_abundant[N_MOST_ABUNDANT-1] << ".";
+  else {
+    ss << most_abundant[0] << ".";
+  }
 
   this->description_data.composition_summary = ss.str();
 
