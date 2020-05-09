@@ -15,7 +15,7 @@ class Planet : public SystemObject {
     SystemObjectType get_object_type() const override { return SO_Planet; }
     std::string get_object_name() const override { return "planet"; }
 
-    static SystemObject_ptr generate(System_ptr system, double position);
+    static SystemObject_ptr generate(System_ptr system, double position, double luminosity);
 
 };
 
@@ -30,6 +30,6 @@ class EarthlikePlanet : public SystemObject {
     SystemObjectType get_object_type() const override { return SO_Planet; }
     std::string get_object_name() const override { return "planet"; }
 
-    static SystemObject_ptr generate(System_ptr system, double position);
+    static SystemObject_ptr generate(System_ptr system, double position, double luminosity);
 
 };

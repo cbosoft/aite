@@ -9,7 +9,7 @@
 #include "planet.hpp"
 
 
-SystemObject_ptr EarthlikePlanet::generate(System_ptr system, double position)
+SystemObject_ptr EarthlikePlanet::generate(System_ptr system, double position, double luminosity)
 {
   auto planet = std::make_shared<EarthlikePlanet>(system, position);
 
@@ -19,6 +19,9 @@ SystemObject_ptr EarthlikePlanet::generate(System_ptr system, double position)
 
   planet->density = normal_rand(1.0, 0.05);
   planet->pressure = normal_rand(1.0, 0.1);
+
+  // TODO generate temperature from luminosity and reflectivity
+  (void) luminosity;
   planet->temperature = normal_rand(310, 10.0);
 
   // elements

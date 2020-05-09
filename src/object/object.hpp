@@ -35,6 +35,7 @@ class SystemObject {
     double temperature;
     double pressure;
     double density;
+    double reflectivity;
     std::list<std::pair<Element_ptr, double>> composition;
     Resources resources;
     std::string colour;
@@ -45,8 +46,8 @@ class SystemObject {
 
     SystemObject(System_ptr system, double position);
 
-    static SystemObject_ptr generate(System_ptr system, double position, SystemObjectType type);
-    static SystemObject_ptr generate_object_or_subtype(System_ptr system, double position, SystemObjectType type);
+    static SystemObject_ptr generate(System_ptr system, double position, double luminosity, SystemObjectType type);
+    static SystemObject_ptr generate_object_or_subtype(System_ptr system, double position, double luminosity, SystemObjectType type);
 
     double get_luminosity() const;
     double get_position() const;

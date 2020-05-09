@@ -9,7 +9,7 @@
 #include "planet.hpp"
 
 
-SystemObject_ptr Planet::generate(System_ptr system, double position)
+SystemObject_ptr Planet::generate(System_ptr system, double position, double luminosity)
 {
   auto planet = std::make_shared<Planet>(system, position);
 
@@ -24,6 +24,8 @@ SystemObject_ptr Planet::generate(System_ptr system, double position)
   planet->pressure = lognormal_rand(-2, 1.0);
 
   // temperatures
+  // TODO generate temperature from luminosity and reflectivity
+  (void) luminosity;
   planet->temperature = std::abs(normal_rand(1100, 600));
 
   // elements

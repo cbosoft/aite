@@ -1,5 +1,6 @@
 #include "../util/random.hpp"
 
+#include "star.hpp"
 #include "planet.hpp"
 
 #include "object.hpp"
@@ -37,7 +38,7 @@ static std::map<SystemObjectType, std::list<SystemObjectType>> object_subtypes =
 };
 
 
-SystemObject_ptr SystemObject::generate_object_or_subtype(System_ptr system, double position, SystemObjectType type)
+SystemObject_ptr SystemObject::generate_object_or_subtype(System_ptr system, double position, double luminosity, SystemObjectType type)
 {
   std::list<SystemObjectType> types = object_subtypes[type];
   std::list<RandomLikelihood> likelihoods;
@@ -46,23 +47,27 @@ SystemObject_ptr SystemObject::generate_object_or_subtype(System_ptr system, dou
   }
 
   type = probability_weighted_choice(likelihoods, types);
-  return SystemObject::generate(system, position, type);
+  return SystemObject::generate(system, position, luminosity, type);
 }
 
 
-SystemObject_ptr SystemObject::generate(System_ptr system, double position, SystemObjectType type)
+SystemObject_ptr SystemObject::generate(System_ptr system, double position, double luminosity, SystemObjectType type)
 {
   SystemObject_ptr obj = nullptr;
 
   switch (type) {
 
+    case SO_Star:
+      obj = Star::generate(system, position);
+      break;
+
     default:
     case SO_Planet:
-      obj = Planet::generate(system, position);
+      obj = Planet::generate(system, position, luminosity);
       break;
 
     case SO_EarthlikePlanet:
-      obj = EarthlikePlanet::generate(system, position);
+      obj = EarthlikePlanet::generate(system, position, luminosity);
       break;
 
   }
