@@ -94,9 +94,18 @@ void Colony::discover(const SystemObject_ptr object)
 std::string Colony::get_name(SystemObject_ptr object)
 {
   auto id = object->get_id();
+
   auto res = this->object_log.find(id);
   if (res != this->object_log.end()) {
     return (*res).second;
+  }
+
+  auto system = object->get_system();
+  int i = system->get_object_index(object);
+  if (i == 0) {
+    std::string name = this->get_name(system);
+    this->object_log[id] = name;
+    return name;
   }
 
   auto thesaurus = Thesaurus::getref();
