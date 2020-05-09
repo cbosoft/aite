@@ -29,8 +29,12 @@ SystemObject_ptr Star::generate(System_ptr system, double position)
 
   // elements
   // TODO: special distribution for stars
-  star->composition = Element::get_distribution(star->density);
-  star->composition.sort(CompositionSortByAbundanceDescending());
+  // star->composition = Element::get_distribution(star->density);
+  // star->composition.sort(CompositionSortByAbundanceDescending());
+
+  double H = normal_rand(90, 1);
+  star->composition.push_back(std::make_pair(Element::get_element_by_n(1), H));
+  star->composition.push_back(std::make_pair(Element::get_element_by_n(2), 100-H));
 
 
   double mass = star->object_diameter*star->object_diameter*star->object_diameter*(1./6.)*M_PI*star->density;
