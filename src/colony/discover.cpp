@@ -109,7 +109,9 @@ std::string Colony::get_name(SystemObject_ptr object)
   }
 
   auto thesaurus = Thesaurus::getref();
-  return thesaurus.capitalise(thesaurus.generate_from_syllables());
+  std::string name = thesaurus.capitalise(thesaurus.generate_from_syllables());
+  this->object_log[id] = name;
+  return name;
 }
 
 bool Colony::have_discovered(const SystemObject_ptr object) const
