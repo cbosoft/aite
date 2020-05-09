@@ -14,7 +14,7 @@ SystemObject_ptr Planet::generate(System_ptr system, double position)
   auto planet = std::make_shared<Planet>(system, position);
 
   // diameter
-  planet->object_diameter = bilognormal_rand(-2.5, 0.7, 0.5, 0.6, 0.8);
+  planet->object_diameter = bilognormal_rand(-8.5, 0.7, -7, 0.1, 0.8);
   planet->territory_diameter = planet->object_diameter;
 
   // densities

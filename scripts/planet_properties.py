@@ -22,13 +22,13 @@ def plot_size_dist(size_data, size_ax):
     log_size_data = np.log(size_data)
     edges, bins = do_hist(log_size_data)
     plt.plot(edges, bins, label='real')
-    
-    mn1, std1, mn2, std2, p = -2.5, 0.7, 0.5, 0.6, 0.8
+
+    mn1, std1, mn2, std2, p = -8.5, 0.7, -7, 0.1, 0.8
     size_fit = binorm(mn1, std1, mn2, std2, p, 10000)
     log_size_fit = np.log(size_fit)
     edges, bins = do_hist(log_size_fit)
     plt.plot(edges, bins, label=f'Bi-LogNormal')
-    
+
     #plt.legend()
     plt.text(0.6, 0.9, 'Bi-LogNormal', transform=plt.gca().transAxes)
     for i, (n, v) in enumerate([('\\mu_1', mn1), ('\\sigma_1', std1), ('\\mu_2', mn2), ('\\sigma_2', std2), ('p_1', p)]):
@@ -276,7 +276,7 @@ if __name__ == '__main__':
 
     size_ax, density_ax, temp_ax, pressure_ax, element_ax, colour_ax = axes.flatten()
 
-    size_data = planet_data['fpl_smax']
+    size_data = np.multiply(planet_data['fpl_rade'], 2*4.25875046e-5)
     plot_size_dist(size_data, size_ax)
 
     density_data = planet_data['fpl_dens']
