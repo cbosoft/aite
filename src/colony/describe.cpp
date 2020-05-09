@@ -39,8 +39,14 @@ std::string Colony::describe(const SystemObject_ptr object)
 
   auto system = object->get_system();
   int i = system->get_object_index(object);
-  ss << name << " is the " << Thesaurus::getref().position(i) << " "
-    << object->get_object_name() << " of the " << this->get_name(system) << " system. ";
+
+  if (i == 0) {
+    ss << name << " is the " << object->get_object_name() << " at the centre of its system. ";
+  }
+  else {
+    ss << name << " is the " << Thesaurus::getref().position(i) << " "
+      << object->get_object_name() << " of the " << this->get_name(system) << " system. ";
+  }
 
   ss
     << name << " is coloured " << object->get_colour() << ". "
