@@ -1,27 +1,26 @@
 #include <iostream>
 #include <ctime>
 
-#include "colony/colony.hpp"
-#include "planet/planet.hpp"
-#include "universe/universe.hpp"
-#include "util/thesaurus.hpp"
 #include "util/random.hpp"
-#include "history/history.hpp"
-#include "feature/feature.hpp"
+#include "universe/universe.hpp"
+#include "galaxy/galaxy.hpp"
+#include "colony/colony.hpp"
+#include "system/system.hpp"
 
 int main(void)
 {
 
   seed(time(NULL));
 
-  // Thesaurus &thesaurus = Thesaurus::getref();
+  auto colony = std::make_shared<Colony>();
+  auto universe = Universe::get_universe();
+  auto galaxy = Galaxy::generate(Vec3({0.0, 0.0, 0.0}));
+  auto system = System::generate(Vec3({0.0, 0.0, 0.0}), galaxy);
+  auto objects = system->get_objects();
 
-  // std::cerr << thesaurus.get_random_synonym("home", "noun") << std::endl;
-
-  //auto history = HistoryElement::generate(HO_Any);
-  //std::cerr << history->describe() << std::endl;
-
-  auto feature = Feature::generate(FO_Any);
-  std::cerr << feature->describe() << std::endl;
+  for (auto &object : objects) {
+    colony->discover(object);
+    std::cerr << colony->describe(object) << std::endl;
+  }
 
 }
