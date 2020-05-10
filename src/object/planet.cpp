@@ -29,7 +29,6 @@ SystemObject_ptr Planet::generate(System_ptr system, double position, double sou
   // TODO generate temperature from luminosity and reflectivity
   // http://www.astronomynotes.com/solarsys/s3c.htm
   planet->albedo = uniform_rand(0.0, 1.0);
-  std::cerr << source_luminosity << std::endl;
   double posm = position*CONST_AUm;
   planet->temperature = std::pow(source_luminosity*(1.0 - planet->albedo)/(16.0*M_PI*CONST_STEFAN_BOLTZMANN*posm*posm), 0.25);
 
