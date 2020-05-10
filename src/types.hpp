@@ -3,6 +3,8 @@
 #include <map>
 #include <memory>
 
+enum Phase { PhaseSolid, PhaseLiquid, PhaseGas, PhasePlasma };
+
 class Item;
 typedef std::shared_ptr<Item> Item_ptr;
 
@@ -21,9 +23,12 @@ typedef std::shared_ptr<Message> Message_ptr;
 class Event;
 typedef std::shared_ptr<Event> Event_ptr;
 
+class ChemicalComponent;
+typedef std::shared_ptr<ChemicalComponent> ChemicalComponent_ptr;
+typedef std::list<std::pair<ChemicalComponent_ptr, double>> ChemicalComposition;
+
 class Element;
 typedef std::shared_ptr<Element> Element_ptr;
-typedef std::list<std::pair<std::shared_ptr<Element>, double>> ElementalAbundance;
 
 class Compound;
 typedef std::shared_ptr<Compound> Compound_ptr;

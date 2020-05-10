@@ -6,19 +6,13 @@
 Element::Element(
     std::string name, std::string symbol, int number_electrons, 
     double molecular_weight, double halflife, 
-    double boiling_point_m, double boiling_point_c,
-    double melting_point_m, double melting_point_c
+    LinearEqn boiling_point, LinearEqn melting_point
     )
-  : 
-    name(name),
+  :
+    ChemicalComponent(name, molecular_weight, boiling_point, melting_point),
     symbol(symbol),
     number_electrons(number_electrons),
-    molecular_weight(molecular_weight),
-    halflife(halflife), 
-    boiling_point_m(boiling_point_m),
-    boiling_point_c(boiling_point_c),
-    melting_point_m(melting_point_m),
-    melting_point_c(melting_point_c)
+    halflife(halflife)
 {
   // do nothing
 }
