@@ -83,3 +83,13 @@ void SystemObject::set_luminosity(double luminosity)
 {
   this->resources.luminosity = luminosity;
 }
+
+double SystemObject::get_radius() const
+{
+  return this->object_diameter*0.5;
+}
+
+double SystemObject::get_diameter() const
+{
+  return this->object_diameter;
+}

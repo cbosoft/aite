@@ -52,6 +52,8 @@ class SystemObject {
 
     double get_luminosity() const;
     double get_position() const;
+    double get_radius() const;
+    double get_diameter() const;
     double get_temperature() const;
     double get_pressure() const;
     double get_gravity() const;
