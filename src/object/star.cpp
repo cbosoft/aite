@@ -37,7 +37,6 @@ SystemObject_ptr Star::generate(System_ptr system, double position)
   double diam = star->object_diameter*CONST_AUm;
   double mass = (diam*diam*diam)*(1./6.)*M_PI*star->density;
   mass *= CONST_EARTH_DENSITY;
-  // TODO better estimation of temperature, perhaps linked to mass?
   star->temperature = 100*std::log(diam)*(1+(7*std::exp(-std::pow(1e7/diam, 0.5))));
 
 
