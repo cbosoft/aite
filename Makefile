@@ -48,8 +48,8 @@ RESOURCES = \
 
 CHEMISTRY = \
 					obj/chemistry/element.o \
-					obj/chemistry/distribute.o \
 					obj/chemistry/electrons.o \
+					obj/chemistry/chemical_component.o \
 					obj/chemistry/table.o
 
 EVENT = \
@@ -78,6 +78,7 @@ HISTORY = \
 					obj/history/generate.o
 
 UTIL = \
+			 obj/util/equation.o \
 			 obj/util/random.o \
 			 obj/util/time.o \
 			 obj/util/sqlite.o \
@@ -136,7 +137,6 @@ aite_server: $(SERVER) $(OBJ) $(HDR)
 test: obj/main.o $(OBJ) $(HDR)
 	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
 	@$(CXX) $(CFLAGS) $(DEFS) obj/main.o $(OBJ) -o $@ $(LINK)
-
 
 resed: $(RESOURCE_EDITOR) $(HDR)
 	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
