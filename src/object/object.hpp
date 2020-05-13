@@ -37,7 +37,7 @@ class SystemObject {
     double density;
     double albedo; // AKA reflectiveness
     double greenhouse_effect; // modifies albedo: fraction of relfected heat that actually leaves
-    std::list<std::pair<Element_ptr, double>> composition;
+    ChemicalComposition composition;
     Resources resources;
     std::string colour;
 

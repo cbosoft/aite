@@ -23,11 +23,13 @@ Resources::Resources(double OCHNPS, double metallic_ore, double nonmetallic_ore,
   this->volume = volume;
 }
 
-Resources::Resources(ElementalAbundance elements, double mass)
+Resources::Resources(ChemicalComposition elements, double mass)
 {
 
   for (auto kv: elements) {
-    auto elem = kv.first;
+    ChemicalComponent_ptr chem = kv.first;
+    Element_ptr elem = std::dynamic_pointer_cast<Element, ChemicalComponent>(chem);
+
     double mass_element = mass * kv.second;
 
     int Z = elem->get_number_electrons();
@@ -38,10 +40,10 @@ Resources::Resources(ElementalAbundance elements, double mass)
     if ((Z == 1) or (Z == 4) or (Z == 8) or (Z == 15) or (Z == 9) or (Z == 19)) {
       this->OCHNPS += mass_element;
     }
-    else if (BETWEEN(2,5) or BETWEEN(10,14) or 
-        BETWEEN(18,33) or BETWEEN(36,52) or 
+    else if (BETWEEN(2,5) or BETWEEN(10,14) or
+        BETWEEN(18,33) or BETWEEN(36,52) or
         BETWEEN(54,85) or BETWEEN(86,118)) {
-      if (elem->get_molecular_weight() > 200) {
+      if (elem->get_weight() > 200) {
         this->high_density_ore += mass_element;
       }
       else {

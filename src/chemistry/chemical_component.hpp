@@ -12,17 +12,22 @@ class ChemicalComponent {
     std::string name;
     double weight;
     double charge;
-    LinearEqn boiling_point;
+    double halflife;
+    int Z;
     LinearEqn melting_point;
+    LinearEqn boiling_point;
 
   public:
 
-    ChemicalComponent(std::string, double, double);
+    ChemicalComponent(std::string, double weight, double charge, double halflife, int Z, LinearEqn mp, LinearEqn bp);
     virtual ~ChemicalComponent();
 
-    std::string get_name() const;
+    const std::string &get_name() const;
     double get_weight() const;
     double get_charge() const;
+    int get_Z() const;
+    bool is_radioactive() const;
+
     virtual Phase get_phase(double pressure, double temperature) const;
 
 };

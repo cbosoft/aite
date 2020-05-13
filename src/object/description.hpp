@@ -63,6 +63,6 @@ typedef struct ObjectDescriptionData {
   double gravitational_constant;
   GravityLevel gl;
 
-  ElementalAbundance apparent_composition;
+  ChemicalComposition apparent_composition;
   std::string composition_summary;
 } ObjectDescriptionData;

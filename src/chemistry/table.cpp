@@ -24,10 +24,8 @@ const std::vector<Element_ptr> &get_elements()
               row["NumberElectrons"],
               row["MolecularWeight"],
               row["HalfLife"],
-              row["BoilingPoint_Gradient"],
-              row["BoilingPoint_Intercept"],
-              row["MeltingPoint_Gradient"],
-              row["MeltingPoint_Intercept"]
+              LinearEqn(row["BoilingPoint_Gradient"], row["BoilingPoint_Intercept"]),
+              LinearEqn(row["MeltingPoint_Gradient"], row["MeltingPoint_Intercept"])
             ));
     }
 
