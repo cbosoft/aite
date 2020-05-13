@@ -27,12 +27,11 @@ Resources::Resources(ChemicalComposition elements, double mass)
 {
 
   for (auto kv: elements) {
-    ChemicalComponent_ptr chem = kv.first;
-    Element_ptr elem = std::dynamic_pointer_cast<Element, ChemicalComponent>(chem);
+    ChemicalComponent_ptr elem = kv.first;
 
     double mass_element = mass * kv.second;
 
-    int Z = elem->get_number_electrons();
+    int Z = elem->get_Z();
     if (elem->is_radioactive() && (Z > 85)) {
       this->high_activity_ore += mass_element;
     }
