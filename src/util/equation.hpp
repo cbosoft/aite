@@ -8,5 +8,10 @@ class LinearEqn {
   public:
     LinearEqn(double m, double c);
     
-    double get_value(double x);
+    double get_value(double x) const;
+
+    double operator()(double x) const
+    {
+      return this->get_value(x);
+    }
 };

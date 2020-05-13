@@ -7,7 +7,7 @@ LinearEqn::LinearEqn(double m, double c)
 }
 
 
-double LinearEqn::get_value(double x)
+double LinearEqn::get_value(double x) const
 {
   return (this->m*x) + this->c;
 }
