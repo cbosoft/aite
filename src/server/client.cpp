@@ -50,17 +50,22 @@ void GameServer::process_client_requests_in_bg(int client_fd)
 
 void GameServer::process_input(int client_fd, std::string s)
 {
-  std::string type, rest, reply = "error|server error! (author at fault)";
+  std::string reply = "error|server error! (author at fault)";
+  std::string category;
+  std::vector<std::string> args;
   {
     std::stringstream ss(s);
-    getline(ss, type, '|');
-    getline(ss, rest, '|');
+    getline(ss, category, '|');
+
+    std::string line;
+    while (getline(ss, line, '|'))
+      args.push_back(line);
   }
 
-  if (type.compare("event") == 0) {
+  if (category.compare("event") == 0) {
 
     try {
-      Event_ptr event = Event::from_string(rest);
+      Event_ptr event = Event::from_string(args[0]);
       this->universe->add_event(event);
       reply = "success|Event created.";
     }
@@ -69,47 +74,48 @@ void GameServer::process_input(int client_fd, std::string s)
     }
 
   }
-  else if (type.compare("join") == 0) {
+  else if (category.compare("join") == 0) {
 
-    // rest is colony name
-    if (!this->universe->has_colony(rest)) {
-      this->universe->add_colony(rest);
+    std::string colony_name = args[0];
+    if (!this->universe->has_colony(colony_name)) {
+      this->universe->add_colony(colony_name);
       reply = "welcome|Joined.";
     }
     else {
+      // TODO: check password or key to verify client's ownership of colony
       reply = "success|Joined.";
     }
 
-    Colony_ptr colony = this->universe->get_colony(rest);
+    Colony_ptr colony = this->universe->get_colony(colony_name);
     this->client_to_colony[client_fd] = colony;
 
   }
-  else if (type.compare("project") == 0) {
+  else if (category.compare("project") == 0) {
 
-    // TODO: parse rest for acd
-    ProjectData data(10);
     auto colony = this->client_to_colony[client_fd];
-    colony->add_project(Project::from_string(rest, *colony, data));
+    colony->add_project(Project::from_args(args, *colony));
     reply = "success|done";
 
   }
-  else if (type.compare("query") == 0) {
+  else if (category.compare("query") == 0) {
 
-    if (rest.compare("number") == 0) {
+    const std::string &query = args[0];
+
+    if (query.compare("number") == 0) {
       reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_number();
     }
-    else if (rest.compare("status") == 0) {
+    else if (query.compare("status") == 0) {
       reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_status();
     }
-    else if (rest.compare("statusprojects") == 0) {
+    else if (query.compare("statusprojects") == 0) {
       reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_project_status();
     }
     else {
-      reply = Formatter() << "error|query not understood: \"" << rest << "\"";
+      reply = Formatter() << "error|query not understood: \"" << query << "\"";
     }
 
   }
-  else if (type.compare("getmessages") == 0) {
+  else if (category.compare("getmessages") == 0) {
 
     auto colony = this->client_to_colony[client_fd];
     auto messages = colony->get_messages();
@@ -126,11 +132,11 @@ void GameServer::process_input(int client_fd, std::string s)
     }
 
   }
-  else if (type.compare("leaving") == 0) {
+  else if (category.compare("leaving") == 0) {
     reply = "acknowledged|acknowledged";
   }
   else {
-    reply = Formatter() << "error|instruction not understood: \"" << type << "\"";
+    reply = Formatter() << "error|instruction not understood: \"" << category << "\"";
   }
 
   this->send(client_fd, reply);

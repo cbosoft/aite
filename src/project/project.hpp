@@ -78,7 +78,8 @@ class Project {
     ProjectData get_data() const;
     void set_data(ProjectData data);
 
-    static Project_ptr from_string(std::string s, Colony &colony, const ProjectData &data);
+    static Project_ptr from_name(std::string name, Colony &colony);
+    static Project_ptr from_args(std::vector<std::string> args, Colony &colony);
 
     Project &operator=(const Project &proj)
     {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include <map>
 
 #include "../resources/resources.hpp"
@@ -21,7 +22,7 @@ class ProjectData {
   public:
 
     ProjectData(double number);
-    ProjectData(std::string s);
+    ProjectData(std::vector<std::string> args);
     ~ProjectData();
 
     void set_number_population(double number);

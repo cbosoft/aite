@@ -9,23 +9,19 @@ ProjectData::ProjectData(double number)
 {
 }
 
-ProjectData::ProjectData(std::string s)
-  : start_time(Universe::get_universe()->get_time())
+ProjectData::ProjectData(std::vector<std::string> args)
+  : number(1), start_time(Universe::get_universe()->get_time())
 {
-  std::stringstream ss(s);
-  static std::regex KV_RE("([^|]+)\\s=\\s([^|]+)\\s");
+  static std::regex KV_RE("([^|]+)=([^|]+)");
   static std::regex FLOAT_RE("^[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?$");
 
-  auto beg = std::sregex_iterator(s.begin(), s.end(), KV_RE);
-  auto end = std::sregex_iterator();
-
-  this->number = 1;
-  std::cerr << s << std::endl;
-
-  for (auto it = beg; it != end; it++) {
-    const auto &match = (*it);
+  for (const auto &arg : args) {
+    std::smatch match;
+    std::regex_match(arg, match, KV_RE);
     std::string key = match[1];
     std::string value = match[2];
+
+    std::cerr << arg << " (" << key << ": " << value << ")" << std::endl;
 
     if (std::regex_match(value, FLOAT_RE)) {
 
