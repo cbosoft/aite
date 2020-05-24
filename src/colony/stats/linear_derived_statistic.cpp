@@ -13,9 +13,6 @@ LinearDerivedStatistic::~LinearDerivedStatistic()
 
 double LinearDerivedStatistic::get_base() const
 {
-  double v =
-    this->rawptr?
-    this->base_stats_rawptr.front()->get_value() :
-    this->base_stats_shrd.front()->get_value();
+  double v = DerivedStatistic::get_base();
   return v*this->m + this->c;
 }

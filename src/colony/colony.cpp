@@ -46,6 +46,8 @@ Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_incepti
     std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 0.0, 0.2);
   this->stats.derived.required_habitable_volume =
     std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 80.0, 0.0); // roughly 80m3 per person
+  this->stats.derived.required_habitable_volume->set_use_total();
+
   this->stats.derived.travel_speed =
     std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 3.0, 1.0, 1.0);
   this->stats.derived.max_habitable_temperature =

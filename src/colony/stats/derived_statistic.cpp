@@ -14,6 +14,7 @@ DerivedStatistic::DerivedStatistic(Statistic * base_stat)
 DerivedStatistic::DerivedStatistic(std::list<Statistic *> base_stats)
   :
     rawptr(true),
+    use_total(false),
     base_stats_rawptr(base_stats)
 {
 }
@@ -39,9 +40,24 @@ DerivedStatistic::~DerivedStatistic()
 double DerivedStatistic::get_base() const
 {
   if (this->rawptr) {
-    return this->base_stats_rawptr.front()->get_value();
+    if (this->use_total) {
+      return this->base_stats_rawptr.front()->get_base();
+    }
+    else {
+      return this->base_stats_rawptr.front()->get_value();
+    }
   }
   else {
-    return this->base_stats_shrd.front()->get_value();
+    if (this->use_total) {
+      return this->base_stats_shrd.front()->get_base();
+    }
+    else {
+      return this->base_stats_shrd.front()->get_value();
+    }
   }
+}
+
+void DerivedStatistic::set_use_total()
+{
+  this->use_total = true;
 }

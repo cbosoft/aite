@@ -1,5 +1,4 @@
 #include <cmath>
-#include <iostream>
 
 #include "derived_statistic.hpp"
 
@@ -16,10 +15,7 @@ PowerDerivedStatistic::~PowerDerivedStatistic()
 
 double PowerDerivedStatistic::get_base() const
 {
-  double v =
-    this->rawptr?
-    this->base_stats_rawptr.front()->get_value() :
-    this->base_stats_shrd.front()->get_value();
+  double v = DerivedStatistic::get_base();
   double rv = std::pow(v, this->p)*this->m + this->c;
   return rv;
 }

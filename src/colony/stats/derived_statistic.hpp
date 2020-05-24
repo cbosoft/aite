@@ -12,6 +12,7 @@ class DerivedStatistic : public virtual Statistic {
   protected:
 
     bool rawptr;
+    bool use_total;
     std::list<Statistic *> base_stats_rawptr;
     std::list<DerivedStatistic_ptr> base_stats_shrd;
     virtual double get_base() const override;
@@ -24,6 +25,8 @@ class DerivedStatistic : public virtual Statistic {
     DerivedStatistic(DerivedStatistic_ptr base_stat);
     DerivedStatistic(std::list<DerivedStatistic_ptr> base_stats);
     ~DerivedStatistic();
+
+    void set_use_total();
 
 };
 
