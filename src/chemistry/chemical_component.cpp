@@ -1,5 +1,6 @@
 #include "chemical_component.hpp"
 
+#include <limits>
 
 ChemicalComponent::ChemicalComponent(std::string name, double weight,
     double charge, double halflife, int Z, LinearEqn melting_point, LinearEqn boiling_point)
