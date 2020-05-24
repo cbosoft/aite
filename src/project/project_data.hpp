@@ -20,67 +20,19 @@ class ProjectData {
 
   public:
 
-    ProjectData(double number)
-      : number(number), start_time(Universe::get_universe()->get_time())
-    {
-    }
+    ProjectData(double number);
+    ProjectData(std::string s);
+    ~ProjectData();
 
-    ~ProjectData()
-    {
-    }
-
-    void set_number_population(double number)
-    {
-      this->number = number;
-    }
-
-    void set_float(std::string key, double value)
-    {
-      this->float_vars[key] = value;
-    }
-
-    void set_str(std::string key, std::string value)
-    {
-      this->str_vars[key] = value;
-    }
-
-    double get_number() const
-    {
-      return this->number;
-    }
-
-    double get_start_time() const
-    {
-      return this->start_time;
-    }
-
-    double get_float(std::string key) const
-    {
-      return this->float_vars.at(key);
-    }
-
-    std::string get_str(std::string key) const
-    {
-      return this->str_vars.at(key);
-    }
-
-    double get_float_or_default(std::string key, double default_value) const
-    {
-      auto it = this->float_vars.find(key);
-      if (it == this->float_vars.end())
-        return default_value;
-      else
-        return it->second;
-    }
-
-    std::string get_str_or_default(std::string key, std::string default_value) const
-    {
-      auto it = this->str_vars.find(key);
-      if (it == this->str_vars.end())
-        return default_value;
-      else
-        return it->second;
-    }
+    void set_number_population(double number);
+    void set_float(std::string key, double value);
+    void set_str(std::string key, std::string value);
+    double get_number() const;
+    double get_start_time() const;
+    double get_float(std::string key) const;
+    std::string get_str(std::string key) const;
+    double get_float_or_default(std::string key, double default_value) const;
+    std::string get_str_or_default(std::string key, std::string default_value) const;
 
     operator double() const
     {
