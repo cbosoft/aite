@@ -191,5 +191,6 @@ void ServerConnection::show_status_projects()
 
 void ServerConnection::request_project(std::string project_name)
 {
+  // TODO send project settings (number of people, focus, etc)
   this->send(Formatter() << "project|" << project_name);
 }
