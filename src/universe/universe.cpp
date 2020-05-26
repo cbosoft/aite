@@ -3,9 +3,12 @@
 #include "universe.hpp"
 
 Universe::Universe()
+  :
+    size(std::numeric_limits<double>::max()),
+    running(false),
+    time(0)
 {
   // in the beginning there was nothing, and then bam! there was something.
-  this->size = std::numeric_limits<double>::max();
 }
 
 Universe::~Universe()
