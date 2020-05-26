@@ -4,12 +4,12 @@
 #include "../util/exception.hpp"
 #include "args.hpp"
 
-#include "connect.hpp"
+#include "client.hpp"
 
 
 void batchmain(ClientArgs args)
 {
-  ServerConnection conn = ServerConnection(args.server_address, args.server_port, args.colony_name);
+  GameClient conn = GameClient(args.server_address, args.server_port, args.colony_name);
   conn.execute(args.command, args.args);
 }
 

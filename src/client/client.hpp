@@ -16,7 +16,7 @@ typedef struct ColonyState {
 } ColonyState;
 
 
-class ServerConnection {
+class GameClient {
 
   private:
 
@@ -33,8 +33,8 @@ class ServerConnection {
     void disconnect();
 
   public:
-    ServerConnection(const char *address, int port, std::string colony_name);
-    ~ServerConnection();
+    GameClient(const char *address, int port, std::string colony_name);
+    ~GameClient();
 
     void sync();
     void execute(std::string command, std::list<std::string> args);

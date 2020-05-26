@@ -6,12 +6,12 @@
 #include "../util/exception.hpp"
 #include "../util/socket.hpp"
 #include "args.hpp"
-#include "connect.hpp"
+#include "client.hpp"
 
 int (*oconnect)(int, const struct sockaddr *, unsigned int) = &connect;
 
 
-ServerConnection::ServerConnection(const char *ip_address, int port, std::string colony_name)
+GameClient::GameClient(const char *ip_address, int port, std::string colony_name)
   : name(colony_name), connected(false)
 {
   this->server_address.sin_family = AF_INET;
@@ -21,7 +21,7 @@ ServerConnection::ServerConnection(const char *ip_address, int port, std::string
   }
 }
 
-void ServerConnection::connect()
+void GameClient::connect()
 {
   if (this->connected)
     return;
@@ -39,7 +39,7 @@ void ServerConnection::connect()
   this->join(this->name);
 }
 
-void ServerConnection::disconnect()
+void GameClient::disconnect()
 {
   if (not this->connected)
     return;
@@ -50,13 +50,13 @@ void ServerConnection::disconnect()
 }
 
 
-ServerConnection::~ServerConnection()
+GameClient::~GameClient()
 {
   this->disconnect();
 }
 
 
-ServerReply ServerConnection::send(std::string message)
+ServerReply GameClient::send(std::string message)
 {
   this->connect();
 
@@ -73,7 +73,7 @@ ServerReply ServerConnection::send(std::string message)
   return ServerReply(buffer);
 }
 
-void ServerConnection::execute(std::string command, std::list<std::string> args)
+void GameClient::execute(std::string command, std::list<std::string> args)
 {
 
   if (not command.size()) {
@@ -108,7 +108,7 @@ void ServerConnection::execute(std::string command, std::list<std::string> args)
 
 
 
-void ServerConnection::join(std::string colony_name)
+void GameClient::join(std::string colony_name)
 {
   auto reply = this->send(Formatter() << "join|" << colony_name);
 
@@ -123,7 +123,7 @@ void ServerConnection::join(std::string colony_name)
 }
 
 
-void ServerConnection::sync()
+void GameClient::sync()
 {
 
   this->state.status = std::map<std::string, std::string>();
@@ -158,7 +158,7 @@ void ServerConnection::sync()
 }
 
 
-void ServerConnection::show_messages()
+void GameClient::show_messages()
 {
   if (this->state.messages.size()) {
     std::cout << BOLD "Notifications:" RESET "\n";
@@ -170,7 +170,7 @@ void ServerConnection::show_messages()
   }
 }
 
-void ServerConnection::show_status()
+void GameClient::show_status()
 {
   std::cout << BOLD "Status:" RESET "\n";
   for (auto kv : this->state.status) {
@@ -178,7 +178,7 @@ void ServerConnection::show_status()
   }
 }
 
-void ServerConnection::show_status_projects()
+void GameClient::show_status_projects()
 {
   if (this->state.projects_status.size()) {
     std::cout << "\n" BOLD "Projects:" RESET "\n";
@@ -189,7 +189,7 @@ void ServerConnection::show_status_projects()
 }
 
 
-void ServerConnection::request_project(std::string project_name)
+void GameClient::request_project(std::string project_name)
 {
   // TODO send project settings (number of people, focus, etc)
   this->send(Formatter() << "project|" << project_name);

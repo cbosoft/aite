@@ -2,10 +2,10 @@
 #include <unistd.h>
 
 #include "../util/colour.hpp"
-#include "connect.hpp"
+#include "client.hpp"
 
 
-void ServerConnection::welcome()
+void GameClient::welcome()
 {
   std::cout
     << "\n"

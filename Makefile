@@ -97,7 +97,7 @@ CLIENT = \
 				 obj/client/help.o \
 				 obj/client/reply.o \
 				 obj/client/welcome.o \
-				 obj/client/connect.o
+				 obj/client/client.o
 
 SERVER = \
 				 obj/server/server.o \
