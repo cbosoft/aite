@@ -5,15 +5,20 @@
 #include "../colony/colony.hpp"
 #include "../util/time.hpp"
 
+
+// Called by the game server once, taking over the main thread. This thread
+// manages the timestepping of the universe (incremental progress of the
+// colonies) and manages events (not timestepped, but predetermined).
 void Universe::run_events()
 {
-  this->running = true;
-  
   unsigned long start = get_system_time();
 
   int i = 0;
+  this->running = true;
   while (this->running) {
 
+    // Game time is calculated from real-world time: there is a 1:1 conversion
+    // between hours in the real world, and centuries in Aite.
     unsigned long now = get_system_time();
     unsigned long dt_seconds = now - start;
     double dt_hours = double(dt_seconds) / 3600.0;
@@ -22,6 +27,7 @@ void Universe::run_events()
     this->set_time(new_time);
     double dt = this->time - prev_time;
 
+    // output time to (server-side) user.
     if (i % 30 == 0) {
       std::cerr << "t:" << std::scientific << this->time << " dt:" << dt << std::endl;
     }
