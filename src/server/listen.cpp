@@ -43,6 +43,7 @@ void GameServer::listen()
 
   fcntl(this->fd, F_SETFL, O_NONBLOCK);
 
+  this->running = true;
   while(this->running) {
 
     {

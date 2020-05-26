@@ -3,9 +3,12 @@
 
 
 GameServer::GameServer(int port)
+  :
+    running(false),
+    port(port),
+    universe(Universe::get_universe())
 {
-  this->port = port;
-  this->universe = Universe::get_universe();
+  // do nothing
 }
 
 
