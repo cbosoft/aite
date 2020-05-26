@@ -31,8 +31,10 @@ class Universe {
     std::list<Galaxy_ptr> galaxies;
     std::map<unsigned long, Galaxy_ptr> galaxies_by_id;
 
+    mutable std::mutex time_mutex;
     double time; // "indiction" -> 15 earth years
     void set_time(double new_time);
+    double _get_time() const;
 
   public:
 
