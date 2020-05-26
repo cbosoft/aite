@@ -46,7 +46,11 @@ void GameServer::listen()
   this->running = true;
   while(this->running) {
 
+    // while game is running, listen for new client connections and spawn new
+    // threads to manage communication.
+
     {
+      // use scope to manage locking/unlocking of fd mutex
       std::lock_guard<std::mutex> lock(this->fds_mutex);
       if (this->invalid_fds.size()) {
         for (auto fd : this->invalid_fds) {
