@@ -5,6 +5,13 @@
 #include "../colony/colony.hpp"
 #include "../util/time.hpp"
 
+double get_hours_since_start(unsigned long start)
+{
+  unsigned long time_since_start_seconds = get_system_time() - start;
+  double time_hours = double(time_since_start_seconds) / 3600.0;
+  return time_hours;
+}
+
 
 // Called by the game server once, taking over the main thread. This thread
 // manages the timestepping of the universe (incremental progress of the
@@ -12,25 +19,20 @@
 void Universe::run_events()
 {
   unsigned long start = get_system_time();
+  double prev_time = 0.0;
 
-  int i = 0;
   this->running = true;
   while (this->running) {
 
     // Game time is calculated from real-world time: there is a 1:1 conversion
     // between hours in the real world, and centuries in Aite.
-    unsigned long now = get_system_time();
-    unsigned long dt_seconds = now - start;
-    double dt_hours = double(dt_seconds) / 3600.0;
-    double new_time = dt_hours;
-    double prev_time = this->time;
-    this->set_time(new_time);
-    double dt = this->time - prev_time;
+    double aite_new_time = get_hours_since_start(start);
+    prev_time = this->_get_time();
+    this->set_time(aite_new_time);
+    double dt = this->_get_time() - prev_time;
 
     // output time to (server-side) user.
-    if (i % 30 == 0) {
-      std::cerr << "t:" << std::scientific << this->time << " dt:" << dt << std::endl;
-    }
+    std::cerr << "t: " << this->_get_time() << "   dt: " << dt << std::endl;
 
     if (this->events.size()) {
       this->events.sort(EventCompareByTime());
@@ -53,8 +55,7 @@ void Universe::run_events()
       colony->update(dt);
     }
 
-    usleep(100*1000); i++;
-
+    sleep(1);
   }
 
 }
