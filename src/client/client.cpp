@@ -5,6 +5,7 @@
 
 #include "../util/exception.hpp"
 #include "../util/socket.hpp"
+#include "../colony/colony.hpp"
 #include "args.hpp"
 #include "client.hpp"
 
@@ -14,7 +15,7 @@ int (*oconnect)(int, const struct sockaddr *, unsigned int) = &connect;
 
 
 GameClient::GameClient(const char *ip_address, int port, std::string colony_name)
-  : name(colony_name), connected(false)
+  : name(colony_name), colony(nullptr), connected(false)
 {
   this->server_address.sin_family = AF_INET;
   this->server_address.sin_port = htons(port);
@@ -99,7 +100,7 @@ void GameClient::execute(std::string command, std::list<std::string> args)
   if (command.compare("status") == 0) {
 
     this->sync();
-    this->show_status();
+    //this->show_status();
 
   }
   else if (command.compare("startproject") == 0) {
@@ -148,67 +149,36 @@ void GameClient::join(std::string colony_name)
 
 void GameClient::sync()
 {
+  nlohmann::json payload;
+  payload["command"] = "sync";
+  payload["sync_target"] = "colony";
+  auto reply = this->send(payload);
+  this->colony = Colony::from_serial(reply["sync_data"]);
 
-  this->state.status = std::map<std::string, std::string>();
-  auto reply = this->send("query|status");
-  for (auto line : reply.contents()) {
-
-    std::string key, value;
-    std::stringstream ss(line);
-    getline(ss, key, ',');
-    getline(ss, value, ',');
-
-    this->state.status[key] = value;
-  }
-
-  reply = this->send("getmessages");
-  if (reply.contents().front().compare("No messages.") != 0) {
-    for (auto message : reply.contents()) {
-      this->state.messages.push_back(message);
-    }
-  }
-
-  reply = this->send("query|statusprojects");
-  for (auto line : reply.contents()) {
-
-    std::string name, status;
-    std::stringstream ss(line);
-    getline(ss, name, ':');
-    getline(ss, status, ':');
-
-    this->state.projects_status[name] = status;
-  }
+  // TODO:
+  // sync|universe
+  // sync|other colonies
 }
 
 
 void GameClient::show_messages()
 {
-  if (this->state.messages.size()) {
+  if (this->colony->messages.size()) {
     std::cout << BOLD "Notifications:" RESET "\n";
-    for (auto m : this->state.messages) {
+    for (auto m : this->colony->messages) {
       std::cout << "  " << m << std::endl;
     }
-
-    this->state.messages = std::list<std::string>();
-  }
-}
-
-void GameClient::show_status()
-{
-  std::cout << BOLD "Status:" RESET "\n";
-  for (auto kv : this->state.status) {
-    std::cout << "  " << kv.first << ": " << kv.second << "\n";
   }
 }
 
 void GameClient::show_status_projects()
 {
-  if (this->state.projects_status.size()) {
-    std::cout << "\n" BOLD "Projects:" RESET "\n";
-    for (auto kv : this->state.projects_status) {
-      std::cout << "  " << kv.first << ": " << kv.second << "\n";
-    }
-  }
+  // if (this->state.projects_status.size()) {
+  //   std::cout << "\n" BOLD "Projects:" RESET "\n";
+  //   for (auto kv : this->state.projects_status) {
+  //     std::cout << "  " << kv.first << ": " << kv.second << "\n";
+  //   }
+  // }
 }
 
 

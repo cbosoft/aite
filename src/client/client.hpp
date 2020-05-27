@@ -5,14 +5,8 @@
 
 #include <arpa/inet.h>
 
+#include "../types.hpp"
 
-
-typedef struct ColonyState {
-  std::list<std::string> messages;
-  std::list<std::string> activities;
-  std::map<std::string, std::string> status;
-  std::map<std::string, std::string> projects_status;
-} ColonyState;
 #include <nlohmann/json.hpp>
 
 
@@ -23,7 +17,7 @@ class GameClient {
     int fd;
     struct sockaddr_in server_address;
     std::string name;
-    ColonyState state;
+    Colony_ptr colony;
     bool connected;
 
     nlohmann::json send(const nlohmann::json& to_send);
