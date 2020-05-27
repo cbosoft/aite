@@ -54,7 +54,6 @@ CHEMISTRY = \
 					obj/chemistry/table.o
 
 EVENT = \
-				obj/event/event.o \
 				obj/event/from_string.o \
 				obj/event/new_colony_event.o
 

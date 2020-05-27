@@ -6,8 +6,8 @@ class Event {
 
   public:
 
-    Event();
-    virtual ~Event();
+    Event() {};
+    virtual ~Event() {};
 
     virtual void execute(Universe_ptr universe) =0;
     virtual double get_time() =0;
