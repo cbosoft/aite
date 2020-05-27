@@ -232,7 +232,7 @@ class VecN {
     template<int I>
     VecN<I> restrict()
     {
-      assert( I < N, "restricted size must be less than or equal to vector size." );
+      aite_assert( I < N, "restricted size must be less than or equal to vector size." );
       std::array<double, I> rv;
       for (int i = 0; i < I; i++) {
         rv[i] = this->v[i];
@@ -243,7 +243,7 @@ class VecN {
     template<int I>
     VecN<I> promote(double fill)
     {
-      assert( I > N, "restricted size must be less than or equal to vector size." );
+      aite_assert( I > N, "restricted size must be less than or equal to vector size." );
       std::array<double, I> rv;
       for (int i = 0; i < N; i++) {
         rv[i] = this->v[i];

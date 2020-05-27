@@ -113,8 +113,7 @@ EXCEPTION(NonOccurrenceError, "NonOccurrenceError");
 
 
 EXCEPTION(AssertError, "AssertError");
-
-inline void assert(bool expression, std::string detail)
+inline void aite_assert(bool expression, std::string detail)
 {
   if (!expression)
     throw AssertError(detail);
