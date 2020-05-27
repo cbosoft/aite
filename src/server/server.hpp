@@ -6,6 +6,8 @@
 #include "../util/safeq.hpp"
 #include "../types.hpp"
 
+#include <nlohmann/json.hpp>
+
 class GameServer {
 
   private:
@@ -24,7 +26,7 @@ class GameServer {
     void listen();
     void listen_in_bg();
 
-    void send(int client_fd, std::string message);
+    void send(int client_fd, nlohmann::json payload);
 
     void process_input(int client_fd, std::string s);
 

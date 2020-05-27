@@ -5,7 +5,6 @@
 
 #include <arpa/inet.h>
 
-#include "reply.hpp"
 
 
 typedef struct ColonyState {
@@ -14,6 +13,7 @@ typedef struct ColonyState {
   std::map<std::string, std::string> status;
   std::map<std::string, std::string> projects_status;
 } ColonyState;
+#include <nlohmann/json.hpp>
 
 
 class GameClient {
@@ -26,7 +26,7 @@ class GameClient {
     ColonyState state;
     bool connected;
 
-    ServerReply send(std::string message);
+    nlohmann::json send(const nlohmann::json& to_send);
     void welcome();
     void join(std::string colony_name);
     void connect();

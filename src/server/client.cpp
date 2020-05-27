@@ -50,100 +50,77 @@ void GameServer::process_client_requests_in_bg(int client_fd)
 
 void GameServer::process_input(int client_fd, std::string s)
 {
-  std::string reply = "error|server error! (author at fault)";
-  std::string category;
-  std::vector<std::string> args;
-  {
-    std::stringstream ss(s);
-    getline(ss, category, '|');
+  nlohmann::json reply;
+  reply["type"] = "error";
 
-    std::string line;
-    while (getline(ss, line, '|'))
-      args.push_back(line);
-  }
+  nlohmann::json input = nlohmann::json::parse(s);
 
-  if (category.compare("event") == 0) {
+  std::string command = input["command"];
 
-    try {
-      Event_ptr event = Event::from_string(args[0]);
-      this->universe->add_event(event);
-      reply = "success|Event created.";
-    }
-    catch (const ArgumentError& e) {
-      reply = "error|event argument error";
-    }
+  if (command.compare("join") == 0) {
 
-  }
-  else if (category.compare("join") == 0) {
-
-    std::string colony_name = args[0];
+    std::string colony_name = input["colony_name"];
     if (!this->universe->has_colony(colony_name)) {
       this->universe->add_colony(colony_name);
-      reply = "welcome|Joined.";
+      reply["type"] = "welcome";
     }
     else {
       // TODO: check password or key to verify client's ownership of colony
-      reply = "success|Joined.";
+      // if (check(input["colony_key"], input["colony_name"])) ...
+      reply["type"] = "success";
+      reply["detail"] = "Joined.";
     }
 
     Colony_ptr colony = this->universe->get_colony(colony_name);
     this->client_to_colony[client_fd] = colony;
 
   }
-  else if (category.compare("project") == 0) {
+  // else if (command.compare("add") == 0) {
+  //   const std::string &add_type = input["add_type"];
 
-    auto colony = this->client_to_colony[client_fd];
-    colony->add_project(Project::from_args(args, *colony));
-    reply = "success|done";
+  //   if (add_type.compare("project") == 0) {
+  //     // TODO
+  //   }
+  //   else {
+  //     reply["error_string"] = Formatter() << "add argument " << add_type << " not understood";
+  //   }
 
-  }
-  else if (category.compare("query") == 0) {
+  // }
+  else if (command.compare("sync") == 0) {
 
-    const std::string &query = args[0];
+    const std::string &sync_target = input["sync_target"];
 
-    if (query.compare("number") == 0) {
-      reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_number();
-    }
-    else if (query.compare("status") == 0) {
-      reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_status();
-    }
-    else if (query.compare("statusprojects") == 0) {
-      reply = Formatter() << "reply|" << this->client_to_colony[client_fd]->get_project_status();
-    }
-    else {
-      reply = Formatter() << "error|query not understood: \"" << query << "\"";
-    }
-
-  }
-  else if (category.compare("getmessages") == 0) {
-
-    auto colony = this->client_to_colony[client_fd];
-    auto messages = colony->get_messages();
-    if (messages.size()) {
-      std::stringstream ss;
-      ss << "reply|";
-      for (auto message : messages) {
-        ss << message << "|";
-      }
-      reply = ss.str();
+    if (sync_target.compare("colony") == 0) {
+      reply["type"] = "success";
+      // TODO determine if sync necessary
+      // `if (input["mtime"] < colony.mtime())`
+      // or perhaps a finer grained approch with mtimes for stats, messages,
+      // abilities, or other members of colony
+      reply["sync_data"] = this->client_to_colony[client_fd]->to_serial();
     }
     else {
-      reply = "reply|No messages.";
+      // TODO: check for other types of sync (generated objects/systems/galaxies, other players)
+      // TODO: log this error
+      reply["error_detail"] = Formatter() << "Sync failed: sync_target not understood: \"" << sync_target << "\"";
     }
 
   }
-  else if (category.compare("leaving") == 0) {
-    reply = "acknowledged|acknowledged";
+  else if (command.compare("leaving") == 0) {
+    reply["type"] = "acknowledge";
   }
   else {
-    reply = Formatter() << "error|instruction not understood: \"" << category << "\"";
+    reply["error_string"] = Formatter() << "Command not understood: \"" << command << "\"";
   }
 
   this->send(client_fd, reply);
 }
 
 
-void GameServer::send(int client_fd, std::string message)
+void GameServer::send(int client_fd, nlohmann::json payload)
 {
-  buffered_send(client_fd, message);
+  if (payload.type() != nlohmann::json::value_t::object) {
+    throw Exception("GameServer::send", "server payload needs to be object");
+  }
+  std::string payload_string = payload.dump();
+  buffered_send(client_fd, payload_string);
 }

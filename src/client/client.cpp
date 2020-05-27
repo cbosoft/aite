@@ -8,6 +8,8 @@
 #include "args.hpp"
 #include "client.hpp"
 
+#include <nlohmann/json.hpp>
+
 int (*oconnect)(int, const struct sockaddr *, unsigned int) = &connect;
 
 
@@ -44,7 +46,9 @@ void GameClient::disconnect()
   if (not this->connected)
     return;
 
-  this->send("leaving");
+  nlohmann::json payload;
+  payload["command"] = "leaving";
+  this->send(payload);
   close(this->fd);
   this->connected = false;
 }
@@ -56,11 +60,17 @@ GameClient::~GameClient()
 }
 
 
-ServerReply GameClient::send(std::string message)
+nlohmann::json GameClient::send(const nlohmann::json& to_send)
 {
+  if (to_send.type() != nlohmann::json::value_t::object) {
+    throw Exception("GameClient::send", Formatter() << "client payload " << to_send << " needs to be object");
+  }
+
   this->connect();
 
-  buffered_send(this->fd, message);
+  std::string payload = to_send.dump();
+
+  buffered_send(this->fd, payload);
 
   // get reply
   std::string buffer;
@@ -70,8 +80,13 @@ ServerReply GameClient::send(std::string message)
     throw SocketError("Error reading reply.", true);
   }
 
-  return ServerReply(buffer);
+  auto reply = nlohmann::json::parse(buffer);
+
+  // TODO check if error
+
+  return reply;
 }
+
 
 void GameClient::execute(std::string command, std::list<std::string> args)
 {
@@ -110,11 +125,19 @@ void GameClient::execute(std::string command, std::list<std::string> args)
 
 void GameClient::join(std::string colony_name)
 {
-  auto reply = this->send(Formatter() << "join|" << colony_name);
+  nlohmann::json payload;
+  payload["command"] = "join";
+  payload["colony_name"] = colony_name;
+  // payload["colony_key"] = <COLONY_KEY>;
+  auto reply = this->send(payload);
 
-  if (reply.category().compare("welcome") == 0) {
+  std::string category = reply["type"];
+  if (category.compare("welcome") == 0) {
     this->welcome();
     usleep(500000);
+  }
+  else {
+    // other categories?
   }
 
   this->sync();
@@ -192,5 +215,9 @@ void GameClient::show_status_projects()
 void GameClient::request_project(std::string project_name)
 {
   // TODO send project settings (number of people, focus, etc)
-  this->send(Formatter() << "project|" << project_name);
+  nlohmann::json payload;
+  payload["command"] = "add";
+  payload["add_type"] = "project";
+  payload["project_name"] = project_name;
+  this->send(payload);
 }
