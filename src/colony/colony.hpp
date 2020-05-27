@@ -25,14 +25,25 @@ enum ResearchFocus {
   RF_Agriculture, RF_MaterialsGathering, RF_MaterialsProcessing, RF_Power, RF_Astrogation
 };
 
+
+// A Colony is a player controlled civilisation, controlled via commands issued
+// by the client to the server. A colony grows over time, and has needs to be
+// met. A colony has resources, and uses resources to engage in projects. Stats
+// about the colony give indications of what can be done to improve the
+// situation for the colony, increasing growth rate and opening up available
+// living situations.
 class Colony {
 
   private:
 
+    // A ptr to the universe the colony exists within
     Universe_ptr universe;
-
-    // std::list<Ability> abilities; // list of abilities the colony has acquired
-    std::map<std::string, Project_ptr> projects; // list of projects the colony is doing
+    
+    // list of abilities the colony has acquired
+    // std::list<Ability> abilities;
+    
+    // list of projects the colony is doing
+    std::map<std::string, Project_ptr> projects; 
 
     std::mutex messages_mutex;
     std::list<std::string> messages;
@@ -141,5 +152,7 @@ class Colony {
     static Colony_ptr from_serial(nlohmann::json json);
     static Colony_ptr from_serial(std::string s);
     nlohmann::json to_serial() const;
+
+    friend class GameClient;
 
 };
