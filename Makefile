@@ -37,6 +37,7 @@ COLONY = \
 				 obj/colony/bootstrap.o \
 				 obj/colony/status.o \
 				 obj/colony/update.o \
+				 obj/colony/serial.o \
 				 obj/colony/describe.o
 
 RESOURCES = \

@@ -12,6 +12,8 @@
 #include "../resources/processed_resources.hpp"
 #include "../project/project.hpp"
 
+#include <nlohmann/json.hpp>
+
 enum ResearchFocus {
   // split equally
   RF_Equal,
@@ -136,5 +138,8 @@ class Colony {
     bool try_inhabit(SystemObject_ptr object, double number);
     bool can_inhabit(SystemObject_ptr object);
 
+    static Colony_ptr from_serial(nlohmann::json json);
+    static Colony_ptr from_serial(std::string s);
+    nlohmann::json to_serial() const;
 
 };
