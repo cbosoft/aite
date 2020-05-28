@@ -4,6 +4,8 @@
 #include "new_colony_event.hpp"
 #include "../util/exception.hpp"
 
+// Manages creation of event object pointers given the name of the event to
+// create.
 Event_ptr Event::from_string(std::string s)
 {
   std::stringstream ss(s);
