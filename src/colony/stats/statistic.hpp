@@ -19,6 +19,7 @@ class Statistic {
   public:
 
     Statistic();
+    Statistic(const Statistic &other);
     Statistic(double base_value);
     ~Statistic();
 

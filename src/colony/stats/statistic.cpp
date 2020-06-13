@@ -16,6 +16,11 @@ Statistic::Statistic(double base_value)
   this->inital_value = this->get_base();
 }
 
+Statistic::Statistic(const Statistic &other)
+{
+  (*this) = other;
+}
+
 Statistic::~Statistic()
 {
   // do nothing
