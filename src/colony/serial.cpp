@@ -14,6 +14,8 @@ nlohmann::json Colony::to_serial() const
 
   data["name"] = this->name;
   // TODO: other data members
+  // stats
+  // planets etc
   return data;
 }
 
@@ -29,5 +31,7 @@ Colony_ptr Colony::from_serial(nlohmann::json data)
 
   rv->name = data["name"];
   // TODO: other data members
+  // stats
+  // planets etc
   return rv;
 }
