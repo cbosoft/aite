@@ -3,6 +3,8 @@
 #include <string>
 #include <mutex>
 
+#include <nlohmann/json.hpp>
+
 class Statistic {
 
   private:
@@ -45,5 +47,8 @@ class Statistic {
       this->multiplicative_modifiers = other.multiplicative_modifiers;
       return *this;
     }
+
+    nlohmann::json to_serial() const;
+    static Statistic from_serial(nlohmann::json ser);
 
 };
