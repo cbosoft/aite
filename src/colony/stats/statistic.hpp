@@ -9,7 +9,7 @@ class Statistic {
 
   private:
 
-    double inital_value;
+    double initial_value;
     double base_value;
     std::map<std::string, double> additive_modifiers;
     std::map<std::string, double> multiplicative_modifiers;
@@ -42,7 +42,7 @@ class Statistic {
 
     Statistic &operator =(const Statistic &other)
     {
-      this->inital_value = other.inital_value;
+      this->initial_value = other.initial_value;
       this->base_value = other.base_value;
       this->additive_modifiers = other.additive_modifiers;
       this->multiplicative_modifiers = other.multiplicative_modifiers;

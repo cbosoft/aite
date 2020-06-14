@@ -23,7 +23,7 @@ nlohmann::json Statistic::to_serial() const
 {
     nlohmann::json json;
     json["base_value"] = this->base_value;
-    json["initial_value"] = this->inital_value;
+    json["initial_value"] = this->initial_value;
     json["additive_modifiers"] = modifier_to_json(this->additive_modifiers);
     json["multiplicative_modifiers"] = modifier_to_json(this->multiplicative_modifiers);
     return json;
@@ -34,7 +34,7 @@ Statistic Statistic::from_serial(nlohmann::json json)
     Statistic rv;
     // TODO safe get to avoid loading from broken JSON
     rv.base_value = json["base_value"];
-    rv.inital_value = json["initial_value"];
+    rv.initial_value = json["initial_value"];
     rv.additive_modifiers = json_to_modifier(json["additive_modifiers"]);
     rv.multiplicative_modifiers = json_to_modifier(json["multiplicative_modifiers"]);
     return rv;

@@ -13,7 +13,7 @@ Statistic::Statistic()
 Statistic::Statistic(double base_value)
   : base_value(base_value)
 {
-  this->inital_value = this->get_base();
+  this->initial_value = this->get_base();
 }
 
 Statistic::Statistic(const Statistic &other)
@@ -139,5 +139,5 @@ double Statistic::get_delta() const
   double base = this->get_base();
 
   std::lock_guard<std::mutex> l(this->m);
-  return base - this->inital_value;
+  return base - this->initial_value;
 }
