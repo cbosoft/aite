@@ -9,6 +9,7 @@ class Statistic {
 
   private:
 
+    std::string name;
     double initial_value;
     double base_value;
     std::map<std::string, double> additive_modifiers;
@@ -20,7 +21,7 @@ class Statistic {
 
     Statistic();
     Statistic(const Statistic &other);
-    Statistic(double base_value);
+    Statistic(double base_value, std::string name="anon");
     ~Statistic();
 
     virtual double get_base() const;
@@ -34,7 +35,9 @@ class Statistic {
     void multiply_base(double factor);
     double get_value() const;
     double get_delta() const;
+    std::string get_name() const;
     std::string get_repr() const;
+
 
     operator double() const {
       return this->get_value();
@@ -42,6 +45,7 @@ class Statistic {
 
     Statistic &operator =(const Statistic &other)
     {
+      this->name = other.name;
       this->initial_value = other.initial_value;
       this->base_value = other.base_value;
       this->additive_modifiers = other.additive_modifiers;

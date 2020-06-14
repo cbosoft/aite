@@ -6,12 +6,13 @@
 #include "statistic.hpp"
 
 Statistic::Statistic()
+  : Statistic(0.0)
 {
   // do nothing
 }
 
-Statistic::Statistic(double base_value)
-  : base_value(base_value)
+Statistic::Statistic(double base_value, std::string name)
+  : base_value(base_value), name(name)
 {
   this->initial_value = this->get_base();
 }
@@ -90,12 +91,21 @@ double Statistic::get_value() const
   return tot;
 }
 
+
+std::string Statistic::get_name() const
+{
+  return this->name;
+}
+
+
 std::string Statistic::get_repr() const
 {
   std::stringstream ss;
 
+  ss << this->name << " = ";
+
   if (this->additive_modifiers.size() and this->multiplicative_modifiers.size()) {
-    ss << "[";
+    ss << "(";
   }
 
   ss << this->base_value << DIM " base" RESET;
@@ -109,7 +119,7 @@ std::string Statistic::get_repr() const
         << RESET;
     }
     if (this->multiplicative_modifiers.size()) {
-      ss << "]";
+      ss << ")";
     }
   }
 
@@ -128,11 +138,13 @@ std::string Statistic::get_repr() const
   return ss.str();
 }
 
+
 double Statistic::get_base() const
 {
   std::lock_guard<std::mutex> l(this->m);
   return this->base_value;
 }
+
 
 double Statistic::get_delta() const
 {

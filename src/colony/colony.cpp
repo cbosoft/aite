@@ -19,25 +19,25 @@ Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_incepti
 
   // set up stats
   this->stats.population = {
-      .number    = Statistic(100),
-      .medecine  = Statistic(0),
-      .longevity = Statistic(75)
+      .number    = Statistic(100, "number"),
+      .medecine  = Statistic(0, "medecine"),
+      .longevity = Statistic(75, "longevity")
   };
 
   this->stats.technology = {
-    .research_effort      = Statistic(0),
-    .agriculture          = Statistic(0),
-    .materials_gathering  = Statistic(0),
-    .materials_processing = Statistic(0),
-    .power_generation     = Statistic(0),
-    .astrogation          = Statistic(0)
+    .research_effort      = Statistic(0, "research effort"),
+    .agriculture          = Statistic(0, "agriculture"),
+    .materials_gathering  = Statistic(0, "materials (gathering)"),
+    .materials_processing = Statistic(0, "materials (processing)"),
+    .power_generation     = Statistic(0, "power generation"),
+    .astrogation          = Statistic(0, "astrogation")
   };
 
   this->stats.culture = {
-    .religion = Statistic(0),
-    .art      = Statistic(0),
-    .social   = Statistic(0),
-    .politics = Statistic(50),
+    .religion = Statistic(0, "religion"),
+    .art      = Statistic(0, "art"),
+    .social   = Statistic(0, "social"),
+    .politics = Statistic(50, "politics"),
   };
 
 
