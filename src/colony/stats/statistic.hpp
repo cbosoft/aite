@@ -19,7 +19,7 @@ class Statistic {
 
   public:
 
-    Statistic();
+    Statistic(std::string name="anon");
     Statistic(const Statistic &other);
     Statistic(double base_value, std::string name="anon");
     ~Statistic();

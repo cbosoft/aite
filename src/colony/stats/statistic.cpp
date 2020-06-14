@@ -5,8 +5,8 @@
 
 #include "statistic.hpp"
 
-Statistic::Statistic()
-  : Statistic(0.0)
+Statistic::Statistic(std::string name)
+  : Statistic(0.0, name)
 {
   // do nothing
 }
