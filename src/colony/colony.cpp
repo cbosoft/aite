@@ -43,24 +43,24 @@ Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_incepti
 
   // set up derived stats
   this->stats.derived.growth_rate =
-    std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 0.0, 0.2);
+    std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 0.0, 0.2, "growth rate");
   this->stats.derived.required_habitable_volume =
-    std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 80.0, 0.0); // roughly 80m3 per person
+    std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 80.0, 0.0, "required habitable volume"); // roughly 80m3 per person
   this->stats.derived.required_habitable_volume->set_use_total();
 
   this->stats.derived.travel_speed =
-    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 3.0, 1.0, 1.0);
+    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 3.0, 1.0, 1.0, "travel speed");
   this->stats.derived.max_habitable_temperature =
-    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 0.5, 100.0, 373.0);
+    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 0.5, 100.0, 373.0, "max temperature");
   this->stats.derived.max_habitable_gravity =
-    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 0.33, 1.1, 5.0);
+    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 0.33, 1.1, 5.0, "max gravity");
 
   DerivedStatistic_ptr cramped = std::make_shared<LessThanDerivedStatistic>(
         this->stats.derived.required_habitable_volume,
         std::make_shared<DerivedResource<Resource>>(&this->processed_resources.habitable_volume),
         0.0, -10.0
       );
-  this->stats.derived.mood = std::make_shared<SumDerivedStatistic>(std::list<DerivedStatistic_ptr>({cramped}));
+  this->stats.derived.mood = std::make_shared<SumDerivedStatistic>(std::list<DerivedStatistic_ptr>({cramped}), "population mood");
 
 
   // add reference to universe

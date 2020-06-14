@@ -1,7 +1,12 @@
 #include "derived_statistic.hpp"
 
-LessThanDerivedStatistic::LessThanDerivedStatistic(DerivedStatistic_ptr left, DerivedStatistic_ptr right, double value_true, double value_false)
-  : left(left), right(right), value_true(value_true), value_false(value_false)
+LessThanDerivedStatistic::LessThanDerivedStatistic(DerivedStatistic_ptr left, DerivedStatistic_ptr right, double value_true, double value_false, std::string name)
+  : 
+    Statistic(name),
+    left(left),
+    right(right),
+    value_true(value_true),
+    value_false(value_false)
 {
   // do nothing
 }

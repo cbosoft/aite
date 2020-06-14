@@ -1,7 +1,7 @@
 #include "derived_statistic.hpp"
 
-SumDerivedStatistic::SumDerivedStatistic(std::list<DerivedStatistic_ptr> components)
-  : DerivedStatistic(components)
+SumDerivedStatistic::SumDerivedStatistic(std::list<DerivedStatistic_ptr> components, std::string name)
+  : DerivedStatistic(components, name)
 {
   // do nothing
 }

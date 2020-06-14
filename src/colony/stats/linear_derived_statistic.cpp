@@ -1,7 +1,7 @@
 #include "derived_statistic.hpp"
 
-LinearDerivedStatistic::LinearDerivedStatistic(Statistic *base_stat, double m, double c)
-  : DerivedStatistic(base_stat), m(m), c(c)
+LinearDerivedStatistic::LinearDerivedStatistic(Statistic *base_stat, double m, double c, std::string name)
+  : DerivedStatistic(base_stat, name), m(m), c(c)
 {
   // do nothing
 }

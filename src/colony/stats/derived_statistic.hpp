@@ -19,11 +19,11 @@ class DerivedStatistic : public virtual Statistic {
 
   public:
 
-    DerivedStatistic();
-    DerivedStatistic(Statistic *base_stat);
-    DerivedStatistic(std::list<Statistic *> base_stats);
-    DerivedStatistic(DerivedStatistic_ptr base_stat);
-    DerivedStatistic(std::list<DerivedStatistic_ptr> base_stats);
+    DerivedStatistic(std::string name="anon");
+    DerivedStatistic(Statistic *base_stat, std::string name="anon");
+    DerivedStatistic(std::list<Statistic *> base_stats, std::string name="anon");
+    DerivedStatistic(DerivedStatistic_ptr base_stat, std::string name="anon");
+    DerivedStatistic(std::list<DerivedStatistic_ptr> base_stats, std::string name="anon");
     ~DerivedStatistic();
 
     void set_use_total();
@@ -43,8 +43,10 @@ class DerivedResource : public virtual DerivedStatistic {
 
   public:
 
-    DerivedResource(R *base_resource)
-      : base_resource(base_resource)
+    DerivedResource(R *base_resource, std::string name="anon")
+      : 
+        Statistic(name),
+        base_resource(base_resource)
     {
     }
     ~DerivedResource() {}
@@ -61,7 +63,7 @@ class LinearDerivedStatistic : public virtual DerivedStatistic {
 
   public:
 
-    LinearDerivedStatistic(Statistic *base_stat, double m, double c);
+    LinearDerivedStatistic(Statistic *base_stat, double m, double c, std::string name="anon");
     ~LinearDerivedStatistic();
 
 };
@@ -76,7 +78,7 @@ class PowerDerivedStatistic : public virtual DerivedStatistic {
 
   public:
 
-    PowerDerivedStatistic(Statistic *base_stat, double p, double m, double c);
+    PowerDerivedStatistic(Statistic *base_stat, double p, double m, double c, std::string name="anon");
     ~PowerDerivedStatistic();
 
 };
@@ -90,7 +92,7 @@ class SumDerivedStatistic : public virtual DerivedStatistic {
 
   public:
 
-    SumDerivedStatistic(std::list<DerivedStatistic_ptr> parts);
+    SumDerivedStatistic(std::list<DerivedStatistic_ptr> parts, std::string name="anon");
     ~SumDerivedStatistic();
 
 };
@@ -105,7 +107,7 @@ class LessThanDerivedStatistic : public virtual DerivedStatistic {
 
   public:
 
-    LessThanDerivedStatistic(DerivedStatistic_ptr base_stat, DerivedStatistic_ptr compared_to, double if_true, double if_false);
+    LessThanDerivedStatistic(DerivedStatistic_ptr base_stat, DerivedStatistic_ptr compared_to, double if_true, double if_false, std::string name="anon");
     ~LessThanDerivedStatistic();
 
 };

@@ -1,32 +1,35 @@
 #include "derived_statistic.hpp"
 
-DerivedStatistic::DerivedStatistic()
+DerivedStatistic::DerivedStatistic(std::string name)
+  : Statistic(name)
 {
   // do nothing
 }
 
-DerivedStatistic::DerivedStatistic(Statistic * base_stat)
-  : DerivedStatistic(std::list<Statistic *>({base_stat}))
+DerivedStatistic::DerivedStatistic(Statistic * base_stat, std::string name)
+  : DerivedStatistic(std::list<Statistic *>({base_stat}), name)
 {
   // do nothing
 }
 
-DerivedStatistic::DerivedStatistic(std::list<Statistic *> base_stats)
+DerivedStatistic::DerivedStatistic(std::list<Statistic *> base_stats, std::string name)
   :
+    Statistic(name),
     rawptr(true),
     use_total(false),
     base_stats_rawptr(base_stats)
 {
 }
 
-DerivedStatistic::DerivedStatistic(DerivedStatistic_ptr base_stat)
-  : DerivedStatistic(std::list<DerivedStatistic_ptr>({base_stat}))
+DerivedStatistic::DerivedStatistic(DerivedStatistic_ptr base_stat, std::string name)
+  : DerivedStatistic(std::list<DerivedStatistic_ptr>({base_stat}), name)
 {
   // do nothing
 }
 
-DerivedStatistic::DerivedStatistic(std::list<DerivedStatistic_ptr> base_stats)
+DerivedStatistic::DerivedStatistic(std::list<DerivedStatistic_ptr> base_stats, std::string name)
   :
+    Statistic(name),
     rawptr(false),
     base_stats_shrd(base_stats)
 {

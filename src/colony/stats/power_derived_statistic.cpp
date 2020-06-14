@@ -2,8 +2,8 @@
 
 #include "derived_statistic.hpp"
 
-PowerDerivedStatistic::PowerDerivedStatistic(Statistic *base_stat, double p, double m, double c)
-  : DerivedStatistic(base_stat), p(p), m(m), c(c)
+PowerDerivedStatistic::PowerDerivedStatistic(Statistic *base_stat, double p, double m, double c, std::string name)
+  : DerivedStatistic(base_stat, name), p(p), m(m), c(c)
 {
   // do nothing
 }
