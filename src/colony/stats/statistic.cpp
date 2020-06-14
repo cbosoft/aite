@@ -12,7 +12,7 @@ Statistic::Statistic(std::string name)
 }
 
 Statistic::Statistic(double base_value, std::string name)
-  : base_value(base_value), name(name)
+  : name(name), base_value(base_value)
 {
   this->initial_value = this->get_base();
 }
