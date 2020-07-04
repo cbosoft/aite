@@ -32,8 +32,6 @@ class GameClient {
 
     void sync();
     void execute(std::string command, std::list<std::string> args);
-    void request_project(std::string activity_name);
     void show_messages();
     void show_status();
-    void show_status_projects();
 };

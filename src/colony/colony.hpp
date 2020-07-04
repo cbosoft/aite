@@ -5,25 +5,11 @@
 #include <list>
 #include <mutex>
 
-#include "stats/statistic.hpp"
-#include "stats/derived_statistic.hpp"
 #include "../types.hpp"
 #include "../resources/resource_pool.hpp"
 #include "../resources/processed_resources.hpp"
-#include "../project/project.hpp"
 
 #include <nlohmann/json.hpp>
-
-enum ResearchFocus {
-  // split equally
-  RF_Equal,
-
-  // split between relevant stats
-  RF_Food, RF_Resource, RF_Exploration,
-
-  // specific stat
-  RF_Agriculture, RF_MaterialsGathering, RF_MaterialsProcessing, RF_Power, RF_Astrogation
-};
 
 
 // A Colony is a player controlled civilisation, controlled via commands issued
@@ -41,9 +27,6 @@ class Colony {
     
     // list of abilities the colony has acquired
     // std::list<Ability> abilities;
-    
-    // list of projects the colony is doing
-    std::map<std::string, Project_ptr> projects; 
 
     std::mutex messages_mutex;
     std::list<std::string> messages;
@@ -66,48 +49,9 @@ class Colony {
 
   public:
 
-    ResearchFocus research_focus;
-    struct {
-
-      // TODO: move derived stats into their own section
-      struct {
-        Statistic number;
-        Statistic medecine;
-        Statistic longevity;
-      } population;
-
-      struct {
-        Statistic research_effort;
-        Statistic agriculture;
-        Statistic materials_gathering;
-        Statistic materials_processing;
-        Statistic power_generation;
-        Statistic astrogation;
-      } technology;
-
-      struct {
-        Statistic religion;
-        Statistic art;
-        Statistic social;
-        Statistic politics;
-      } culture;
-
-      struct {
-        DerivedStatistic_ptr growth_rate;
-        DerivedStatistic_ptr required_habitable_volume;
-        DerivedStatistic_ptr food_production_power_efficiency;
-        DerivedStatistic_ptr food_production_efficiency;
-        DerivedStatistic_ptr material_harvesting_power_efficiency;
-        DerivedStatistic_ptr advanced_material_technique_progress;
-        DerivedStatistic_ptr solar_generation_efficiency;
-        DerivedStatistic_ptr nulear_power_minimum_activity;
-        DerivedStatistic_ptr detection_distance;
-        DerivedStatistic_ptr travel_speed;
-        DerivedStatistic_ptr max_habitable_temperature;
-        DerivedStatistic_ptr max_habitable_gravity;
-        DerivedStatistic_ptr mood;
-      } derived;
-    } stats;
+    double number;
+    double inhabited_volume;
+    double growth_rate;
 
     ResourcePool resources;
     ProcessedResources processed_resources;
@@ -128,7 +72,6 @@ class Colony {
     bool have_discovered(const System_ptr system) const;
     bool have_discovered(const Galaxy_ptr galaxy) const;
 
-    void startoff(SystemObject_ptr planet);
     void update(double dt);
 
     bool has_free_item(std::string name) const;
@@ -146,8 +89,7 @@ class Colony {
     double get_number();
     double get_inception_time();
 
-    bool try_inhabit(SystemObject_ptr object, double number);
-    bool can_inhabit(SystemObject_ptr object);
+    bool inhabit(SystemObject_ptr object);
 
     static Colony_ptr from_serial(nlohmann::json json);
     static Colony_ptr from_serial(std::string s);

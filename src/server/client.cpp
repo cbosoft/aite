@@ -9,7 +9,6 @@
 #include "../util/socket.hpp"
 #include "../universe/universe.hpp"
 #include "../colony/colony.hpp"
-#include "../project/project.hpp"
 #include "../event/event.hpp"
 #include "../limits.hpp"
 

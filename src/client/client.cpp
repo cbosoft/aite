@@ -92,6 +92,8 @@ nlohmann::json GameClient::send(const nlohmann::json& to_send)
 void GameClient::execute(std::string command, std::list<std::string> args)
 {
 
+  (void) args;
+
   if (not command.size()) {
     throw ArgumentError("Command required.");
   }
@@ -101,16 +103,6 @@ void GameClient::execute(std::string command, std::list<std::string> args)
 
     this->sync();
     //this->show_status();
-
-  }
-  else if (command.compare("startproject") == 0) {
-
-    if (args.size() != 1)
-      throw ArgumentError("Command startproject needs an argument: project name");
-
-    this->request_project(args.front());
-    this->sync();
-    this->show_messages();
 
   }
   else {
@@ -169,25 +161,4 @@ void GameClient::show_messages()
       std::cout << "  " << m << std::endl;
     }
   }
-}
-
-void GameClient::show_status_projects()
-{
-  // if (this->state.projects_status.size()) {
-  //   std::cout << "\n" BOLD "Projects:" RESET "\n";
-  //   for (auto kv : this->state.projects_status) {
-  //     std::cout << "  " << kv.first << ": " << kv.second << "\n";
-  //   }
-  // }
-}
-
-
-void GameClient::request_project(std::string project_name)
-{
-  // TODO send project settings (number of people, focus, etc)
-  nlohmann::json payload;
-  payload["command"] = "add";
-  payload["add_type"] = "project";
-  payload["project_name"] = project_name;
-  this->send(payload);
 }

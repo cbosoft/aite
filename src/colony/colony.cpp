@@ -3,7 +3,6 @@
 #include "../universe/universe.hpp"
 #include "../object/object.hpp"
 #include "../system/system.hpp"
-#include "../project/project.hpp"
 #include "../item/item.hpp"
 
 #include "colony.hpp"
@@ -17,61 +16,9 @@ Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_incepti
   : time_of_inception(time_of_inception), name(name)
 {
 
-  // set up stats
-  this->stats.population = {
-      .number    = Statistic(100, "number"),
-      .medecine  = Statistic(0, "medecine"),
-      .longevity = Statistic(75, "longevity")
-  };
-
-  this->stats.technology = {
-    .research_effort      = Statistic(0, "research effort"),
-    .agriculture          = Statistic(0, "agriculture"),
-    .materials_gathering  = Statistic(0, "materials (gathering)"),
-    .materials_processing = Statistic(0, "materials (processing)"),
-    .power_generation     = Statistic(0, "power generation"),
-    .astrogation          = Statistic(0, "astrogation")
-  };
-
-  this->stats.culture = {
-    .religion = Statistic(0, "religion"),
-    .art      = Statistic(0, "art"),
-    .social   = Statistic(0, "social"),
-    .politics = Statistic(50, "politics"),
-  };
-
-
-  // set up derived stats
-  this->stats.derived.growth_rate =
-    std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 0.0, 0.2, "growth rate");
-  this->stats.derived.required_habitable_volume =
-    std::make_shared<LinearDerivedStatistic>(&this->stats.population.number, 80.0, 0.0, "required habitable volume"); // roughly 80m3 per person
-  this->stats.derived.required_habitable_volume->set_use_total();
-
-  this->stats.derived.travel_speed =
-    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 3.0, 1.0, 1.0, "travel speed");
-  this->stats.derived.max_habitable_temperature =
-    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 0.5, 100.0, 373.0, "max temperature");
-  this->stats.derived.max_habitable_gravity =
-    std::make_shared<PowerDerivedStatistic>(&this->stats.technology.astrogation, 0.33, 1.1, 5.0, "max gravity");
-
-  DerivedStatistic_ptr cramped = std::make_shared<LessThanDerivedStatistic>(
-        this->stats.derived.required_habitable_volume,
-        std::make_shared<DerivedResource<Resource>>(&this->processed_resources.habitable_volume),
-        0.0, -10.0
-      );
-  this->stats.derived.mood = std::make_shared<SumDerivedStatistic>(std::list<DerivedStatistic_ptr>({cramped}), "population mood");
-
-
-  // add reference to universe
-  this->universe = Universe::get_universe();
-
-  this->startoff(planet);
-
-  double starting_vol = this->stats.population.number.get_value() * 10;
-  this->resources.volume -= starting_vol;
-  this->processed_resources.habitable_volume += starting_vol;
-
+  this->number = 100;
+  this->inhabited_volume = 0;
+  this->inhabit(planet);
 }
 
 
@@ -82,7 +29,7 @@ Colony::~Colony()
 
 double Colony::get_number()
 {
-  return this->stats.population.number;
+  return this->number;
 }
 
 double Colony::get_inception_time()
@@ -104,95 +51,18 @@ std::list<std::string> Colony::get_messages()
   return rv;
 }
 
-void Colony::startoff(SystemObject_ptr planet)
+bool Colony::inhabit(SystemObject_ptr object)
 {
-  this->discover(planet);
-  if (not this->try_inhabit(planet, this->stats.population.number)) {
-    throw AuthorError(Formatter() << "Starting planet not inhabitable!");
-  }
-  else {
-    this->resources.add_source(planet->get_resources_rawptr());
-  }
-  this->inhabited_objects.push_back(planet);
+  // TODO check if object is already inhabited
+  this->discover(object);
+  this->inhabited_objects.push_back(object);
 
-  auto system = planet->get_system();
+  auto system = object->get_system();
   this->inhabited_systems.push_back(system);
   auto galaxy = system->get_galaxy();
   this->inhabited_galaxies.push_back(galaxy);
-}
-
-bool Colony::can_inhabit(SystemObject_ptr object)
-{
-  double temperature = object->get_temperature();
-  double gravity = object->get_gravity();
-  bool temp_ok = temperature < this->stats.derived.max_habitable_temperature->get_value();
-  bool gravity_ok = gravity < this->stats.derived.max_habitable_gravity->get_value();
-  return temp_ok && gravity_ok;
-}
-
-bool Colony::try_inhabit(SystemObject_ptr object, double number)
-{
-  if (not this->can_inhabit(object))
-    return false;
-
-  // TODO: set population on planet
-  (void) number;
-
-  this->add_message(Formatter()
-      << BOLD << "Inhabited " << object->get_object_name() << " "
-      << this->get_name(object) << "." << RESET);
+  this->resources.add_source(object->get_resources_rawptr());
   return true;
-}
-
-void Colony::add_project(Project_ptr project)
-{
-  std::string name = project->get_name();
-
-  ProjectData orig = {0};
-  bool updating = false;
-  {
-    auto it = this->projects.find(name);
-
-    if (it != this->projects.end()) {
-      orig = it->second->get_data();
-
-      if (project->get_data() == orig) {
-        this->add_message(Formatter() << BOLD << "Project \"" << name << "\" parameters unchanged." << RESET);
-        return;
-      }
-
-      updating = true;
-      this->projects.erase(it);
-    }
-  }
-
-
-  if (project->check_can_start()) {
-
-    this->projects[name] = project;
-    project->start();
-
-    if (updating) {
-      this->add_message(Formatter() << BOLD << "Updated project \"" << name << "\" parameters." << RESET);
-    }
-    else {
-      this->add_message(Formatter() << BOLD << "Started project \"" << name << "\"." << RESET);
-    }
-
-  }
-  else {
-
-    if (updating) {
-      this->add_message(Formatter() << BOLD << "Cannot change project \"" << name << "\" parameters: " << RESET << project->get_error());
-      this->projects[name] = project;
-      this->projects[name]->set_data(orig);
-    }
-    else {
-      this->add_message(Formatter() << BOLD << "Cannot start project \"" << name << "\": " << RESET << project->get_error());
-    }
-
-  }
-
 }
 
 
