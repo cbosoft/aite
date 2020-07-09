@@ -104,6 +104,7 @@ DEFS =
 COL_OBJ = $(shell tput setaf 3)
 COL_EXE = $(shell tput setaf 4)
 COL_RST = $(shell tput sgr0)
+COL_BLD = $(shell tput bold)
 
 .SECONDARY:
 
@@ -113,10 +114,12 @@ obj/%.o: src/%.cpp $(HDR)
 	@$(CXX) $(CFLAGS) $(DEFS) $< -c -o $@
 
 
-.PHONY: all
+.PHONY: all options
 
+all: options aite_client aite_server
 
-all: aite_client aite_server
+options:
+	@printf "Compiler: $(COL_BLD)$(CXX)$(COL_RST)\n"
 
 aite_client: $(CLIENT) $(OBJ) $(HDR)
 	@printf "$(COL_OBJ)LINKING OBJECTS TO EXECUTABLE $@$(COL_RST)\n"
