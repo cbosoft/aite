@@ -100,32 +100,38 @@ OBJ = $(UNIVERSE) $(GALAXY) $(SYSTEM) $(OBJECT) $(COLONY) $(RESOURCES) $(CHEMIST
 LINK = -lpthread -lsqlite3
 DEFS =
 
+## Colours
+COL_OBJ = $(shell tput setaf 3)
+COL_EXE = $(shell tput setaf 4)
+COL_RST = $(shell tput sgr0)
+
 .SECONDARY:
 
 obj/%.o: src/%.cpp $(HDR)
-	@echo -e "\u001b[33mASSEMBLING OBJECT $@\u001b[0m"
+	@printf "$(COL_OBJ)ASSEMBLING OBJECT $@$(COL_RST)\n"
 	@mkdir -p `dirname $@`
 	@$(CXX) $(CFLAGS) $(DEFS) $< -c -o $@
 
 
 .PHONY: all
 
+
 all: aite_client aite_server
 
 aite_client: $(CLIENT) $(OBJ) $(HDR)
-	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
+	@printf "$(COL_OBJ)LINKING OBJECTS TO EXECUTABLE $@$(COL_RST)\n"
 	@$(CXX) $(CFLAGS) $(DEFS) $(CLIENT) $(OBJ) -o $@ $(LINK)
 
 aite_server: $(SERVER) $(OBJ) $(HDR)
-	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
+	@printf "$(COL_OBJ)LINKING OBJECTS TO EXECUTABLE $@$(COL_RST)\n"
 	@$(CXX) $(CFLAGS) $(DEFS) $(SERVER) $(OBJ) -o $@ $(LINK)
 
 test: obj/main.o $(OBJ) $(HDR)
-	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
+	@printf "$(COL_OBJ)LINKING OBJECTS TO EXECUTABLE $@$(COL_RST)\n"
 	@$(CXX) $(CFLAGS) $(DEFS) obj/main.o $(OBJ) -o $@ $(LINK)
 
 resed: $(RESOURCE_EDITOR) $(HDR)
-	@echo -e "\u001b[34mLINKING OBJECTS TO EXECUTABLE $@\u001b[0m"
+	@printf "$(COL_OBJ)LINKING OBJECTS TO EXECUTABLE $@$(COL_RST)\n"
 	@$(CXX) $(CFLAGS) $(DEFS) $(RESOURCE_EDITOR) -o $@ $(LINK)
 
 
