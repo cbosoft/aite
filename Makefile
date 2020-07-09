@@ -1,5 +1,5 @@
-CFLAGS = -g -pg -Wall -Wextra -Werror -std=c++17 -O2
 CXX ?= g++
+CFLAGS = -Wall -Wextra -Werror -std=c++17 -O2
 
 UNIVERSE = \
 					 obj/universe/universe.o \
