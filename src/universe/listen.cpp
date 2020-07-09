@@ -18,7 +18,11 @@ void Universe::listen(int port)
   if (!this->server_fd)
     throw SocketError("Failed to create server socket.", true);
 
-  if (setsockopt(this->server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+  int socket_flags = SO_REUSEADDR;
+#ifdef LINUX
+  socket_flags |= SO_REUSEPORT;
+#endif
+  if (setsockopt(this->server_fd, SOL_SOCKET, socket_flags, &opt, sizeof(opt))) {
     throw SocketError("Failed to set socket options.", true);
   }
 

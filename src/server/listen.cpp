@@ -22,7 +22,11 @@ void GameServer::listen()
     throw SocketError("Failed to create server socket.", true);
 
   int opt = 1;
-  if (setsockopt(this->fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+  int socket_flags = SO_REUSEADDR;
+#ifdef LINUX
+  socket_flags |= SO_REUSEPORT;
+#endif
+  if (setsockopt(this->fd, SOL_SOCKET, socket_flags, &opt, sizeof(opt))) {
     throw SocketError("Failed to set socket options.", true);
   }
 
