@@ -5,7 +5,7 @@
 #include "object.hpp"
 
 
-class Star : public SystemObject {
+class Star final: public SystemObject {
 
   public:
 

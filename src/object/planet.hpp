@@ -5,7 +5,7 @@
 #include "object.hpp"
 
 
-class Planet : public SystemObject {
+class Planet final: public SystemObject {
 
   public:
 
@@ -20,7 +20,7 @@ class Planet : public SystemObject {
 };
 
 
-class EarthlikePlanet : public SystemObject {
+class EarthlikePlanet final: public SystemObject {
 
   public:
 
