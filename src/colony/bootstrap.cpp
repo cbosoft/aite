@@ -19,5 +19,6 @@ Event_ptr Colony::get_bootstrap_event()
 void BootstrapColonyEvent::execute(Universe_ptr universe)
 {
   (void) universe;
+  (void) this->colony;
   // TODO
 }
