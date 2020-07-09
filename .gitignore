@@ -9,5 +9,5 @@ test
 obj
 analysis.txt
 d.dot
-*/.*.un~
+*.un~
 resed
