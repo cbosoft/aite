@@ -13,7 +13,7 @@ class PooledResource {
 
     void add_dummy(double amount);
     void add_resource(Resource *resource);
-    void use(double amount);
+    double use(double amount);
     void add_equally(double amount);
     double get_amount_available() const;
 

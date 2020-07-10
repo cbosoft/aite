@@ -2,7 +2,7 @@
 
 #include "pooled_resource.hpp"
 
-void PooledResource::use(double amount)
+double PooledResource::use(double amount)
 {
   double remainder = double(this->pool.size());
   double per_source_cost = amount / remainder;
@@ -29,8 +29,7 @@ void PooledResource::use(double amount)
 
   }
 
-  if (amount > 0.0)
-    throw ResourceError("Insufficient resource!");
+  return amount;
 }
 
 void PooledResource::add_resource(Resource *resource)
