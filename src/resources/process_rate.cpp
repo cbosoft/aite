@@ -1,5 +1,25 @@
 #include "process_rate.hpp"
 
+ProcessingRates::ProcessingRates(
+		double food,
+		double metal,
+		double ceramics,
+		double heavy_metal,
+		double nuclear_fuel,
+		double solar,
+		double volume)
+	:
+	OCHNPS_food(food),
+	metallic_ore_metal(metal),
+	nonmetallic_ore_ceramics(ceramics),
+	high_density_ore_heavy_metal(heavy_metal),
+	high_activity_ore_nuclear_fuel(nuclear_fuel),
+	luminosity_solar_collection_area(solar),
+	volume_habitable_volume(volume)
+{
+	// do nothing
+}
+
 void ProcessingRates::process(ResourcePool &res, ProcessedResources &pres, double dt)
 {
 	{

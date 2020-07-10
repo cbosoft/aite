@@ -14,6 +14,15 @@ public:
 	double luminosity_solar_collection_area;
 	double volume_habitable_volume;
 
+	ProcessingRates(
+		double food=0.0,
+		double metal=0.0,
+		double ceramics=0.0,
+		double heavy_metal=0.0,
+		double nuclear_fuel=0.0,
+		double solar=0.0,
+		double volume=0.0
+		);
 
 	void process(ResourcePool &res, ProcessedResources &pres, double dt);
 
