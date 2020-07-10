@@ -116,3 +116,8 @@ bool Colony::has_free_item(std::string name) const
   auto it = this->items_not_in_use.find(name);
   return (it != this->items_not_in_use.end());
 }
+
+const std::string &Colony::get_name() const
+{
+  return this->name;
+}

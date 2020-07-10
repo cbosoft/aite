@@ -92,6 +92,7 @@ class Colony {
 
     Event_ptr get_bootstrap_event();
     double get_number();
+    const std::string &get_name() const;
     double get_inception_time();
 
     bool inhabit(SystemObject_ptr object);
