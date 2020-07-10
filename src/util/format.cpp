@@ -24,3 +24,14 @@ std::string format_number(double number)
     ss << number;
   return ss.str();
 }
+
+std::string format_number_no_decimal(double number)
+{
+  std::stringstream ss;
+
+  if ((number != 0.0) and ((number > 1000) or (std::log10(number) < -1.0)))
+    ss << format_number_as_scientific(number);
+  else
+    ss << int(number);
+  return ss.str();
+}
