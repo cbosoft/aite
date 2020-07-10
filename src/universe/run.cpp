@@ -16,12 +16,13 @@ double get_hours_since_start(unsigned long start)
 // Called by the game server once, taking over the main thread. This thread
 // manages the timestepping of the universe (incremental progress of the
 // colonies) and manages events (not timestepped, but predetermined).
-void Universe::run_events()
+void Universe::run_events(int print_every)
 {
   unsigned long start = get_system_time();
   double prev_time = 0.0;
 
   this->running = true;
+  int seconds_ish = 0;
   while (this->running) {
 
     // Game time is calculated from real-world time: there is a 1:1 conversion
@@ -32,7 +33,10 @@ void Universe::run_events()
     double dt = this->_get_time() - prev_time;
 
     // output time to (server-side) user.
-    std::cerr << "t: " << this->_get_time() << "   dt: " << dt << std::endl;
+    if ( print_every and (seconds_ish / print_every)) {
+      std::cerr << "t: " << this->_get_time() << "   dt: " << dt << std::endl;
+      seconds_ish = 0;
+    }
 
     if (this->events.size()) {
       this->events.sort(EventCompareByTime());
@@ -56,6 +60,7 @@ void Universe::run_events()
     }
 
     sleep(1);
+    seconds_ish += 1;
   }
 
 }

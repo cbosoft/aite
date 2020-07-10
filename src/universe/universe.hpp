@@ -50,7 +50,7 @@ class Universe {
     Galaxy_ptr get_galaxy(unsigned long id) const;
     Colony_ptr get_colony(std::string name);
 
-    void run_events();
+    void run_events(int print_every=1);
     void stop();
 
     void add_event(Event_ptr event);
