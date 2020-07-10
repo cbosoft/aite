@@ -4,7 +4,10 @@
 
 bool Colony::ready_to_expand() const
 {
-  return this->resources.volume < 1e3;
+  double total_and_potential_volume = double(this->resources.volume) + double(this->processed_resources.habitable_volume);
+
+  // TODO better calculation of necessary volume?
+  return total_and_potential_volume < 1e3;
 }
 
 void Colony::explore()
