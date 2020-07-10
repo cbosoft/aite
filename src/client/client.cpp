@@ -89,33 +89,6 @@ nlohmann::json GameClient::send(const nlohmann::json& to_send)
 }
 
 
-void GameClient::execute(std::string command, std::list<std::string> args)
-{
-
-  (void) args;
-
-  if (not command.size()) {
-    throw ArgumentError("Command required.");
-  }
-
-
-  if (command.compare("status") == 0) {
-
-    this->sync();
-    //this->show_status();
-
-  }
-  else {
-    throw ArgumentError(Formatter() << "Unknown command " << command << ".");
-  }
-
-}
-
-
-
-
-
-
 void GameClient::join(std::string colony_name)
 {
   nlohmann::json payload;

@@ -31,7 +31,6 @@ class GameClient {
     ~GameClient();
 
     void sync();
-    void execute(std::string command, std::list<std::string> args);
     void show_messages();
     void show_status();
 };
