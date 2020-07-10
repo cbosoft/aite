@@ -27,7 +27,7 @@ ProcessingRates::process(Resources &res, ProcessedResources &pres, double dt)
 	}
 
 	{
-		double nuclear_conv = dt*this->high_activity_ore_nuclear_fuel
+		double nuclear_conv = dt*this->high_activity_ore_nuclear_fuel;
 		double remainder = res.high_activity_ore.use(nuclear_conv);
 		pres.nuclear_fuel += (nuclear_conv - remainder);
 	}
