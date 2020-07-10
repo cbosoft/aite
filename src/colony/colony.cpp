@@ -17,7 +17,15 @@ Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_incepti
    time_of_inception(time_of_inception),
    name(name),
    number(100),
-   growth_rate(0.2)
+   growth_rate(0.2),
+   resource_processing(ProcessingRates(
+    10,
+    0.27,
+    1.5,
+    0.1,
+    0.001,
+    5.2,
+    9))
 {
   this->inhabit(planet);
 }
