@@ -13,11 +13,12 @@ Colony::Colony()
 }
 
 Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_inception)
-  : time_of_inception(time_of_inception), name(name)
+  :
+   time_of_inception(time_of_inception),
+   name(name),
+   number(100),
+   growth_rate(0.2)
 {
-
-  this->number = 100;
-  this->inhabited_volume = 0;
   this->inhabit(planet);
 }
 
