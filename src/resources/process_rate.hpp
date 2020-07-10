@@ -5,7 +5,7 @@
 
 class ProcessingRates {
 
-private:
+public:
 	double OCHNPS_food;
 	double metallic_ore_metal;
 	double nonmetallic_ore_ceramics;
@@ -14,7 +14,6 @@ private:
 	double luminosity_solar_collection_area;
 	double volume_habitable_volume;
 
-public:
 
 	void process(ResourcePool &res, ProcessedResources &pres, double dt);
 
