@@ -135,3 +135,12 @@ void GameClient::show_messages()
     }
   }
 }
+
+
+void GameClient::show_status()
+{
+  std::cerr
+  << "  Name: " << this->colony->get_name() << "\n"
+  << "Number: " << this->colony->get_number() << "\n"
+  ;
+}
