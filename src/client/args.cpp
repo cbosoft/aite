@@ -97,24 +97,9 @@ ClientArgs parse_args(int argc, const char **argv)
       args.try_load_config_from_file = false;
       args.colony_name = argv[++i];
     }
-    else if (ARG_EITHER("-m", "--mode")) {
-      i++;
-      if (ARG_EQ("batch")) {
-        args.mode = CM_Batch;
-      }
-      else if (ARG_EQ("tui")) {
-        args.mode = CM_TUI;
-      }
-      else if (ARG_EQ("gui")) {
-        args.mode = CM_GUI;
-      }
-      else {
-        throw ArgumentError(Formatter() << "Argument " << argv[i] << " not a valid mode.");
-      }
-    }
     else {
-      reading_args = true;
-      args.command = std::string(argv[i]);
+      std::cerr << "Unknown argument: '" << argv[i] << "'." << std::endl;
+      exit(1);
     }
   }
 
