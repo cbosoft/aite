@@ -1,6 +1,6 @@
 #include "process_rate.hpp"
 
-ProcessingRates::process(Resources &res, ProcessedResources &pres, double dt)
+void ProcessingRates::process(ResourcePool &res, ProcessedResources &pres, double dt)
 {
 	{
 		double food_conv = dt*this->OCHNPS_food;

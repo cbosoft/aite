@@ -1,6 +1,6 @@
 #pragma once
 
-#include "resources.hpp"
+#include "resource_pool.hpp"
 #include "processed_resources.hpp"
 
 class ProcessingRates {
@@ -16,6 +16,6 @@ private:
 
 public:
 
-	void process(Resources &res, ProcessedResources &pres);
+	void process(ResourcePool &res, ProcessedResources &pres, double dt);
 
 };
