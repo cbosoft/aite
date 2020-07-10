@@ -8,7 +8,7 @@ GameServer::GameServer(int port)
     port(port),
     universe(Universe::get_universe())
 {
-  // do nothing
+  this->load_config();
 }
 
 
@@ -41,5 +41,5 @@ void GameServer::start()
   this->listen_in_bg();
 
   // run game!
-  this->universe->run_events();
+  this->universe->run_events(this->config["print every"]);
 }

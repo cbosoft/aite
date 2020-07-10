@@ -90,6 +90,7 @@ SERVER = \
 				 obj/server/main.o \
 				 obj/server/listen.o \
 				 obj/server/client.o \
+				 obj/server/config.o \
 				 obj/server/args.o
 
 RESOURCE_EDITOR = \

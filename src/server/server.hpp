@@ -20,6 +20,7 @@ class GameServer {
     std::map<int, Colony_ptr> client_to_colony;
     std::mutex fds_mutex;
     std::list<int> invalid_fds;
+    nlohmann::json config;
 
     Universe_ptr universe;
 
@@ -32,6 +33,9 @@ class GameServer {
 
     void process_client_requests(int client_fd);
     void process_client_requests_in_bg(int client_fd);
+
+    bool load_config(const std::string &path);
+    void load_config();
 
   public:
 
