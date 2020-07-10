@@ -23,7 +23,8 @@ void GameServer::process_client_requests(int client_fd)
 
     int l = buffered_read(client_fd, buffer);
     if (l < 0) {
-      std::cerr << FG_YELLOW << "WARNING" << RESET << " read error for client " << client_fd << " (" << errno << ", " << strerror(errno) << ")" << std::endl;
+      // read error; wait a wee bit and retry
+      usleep(500);
     }
     else if (l == 0) {
       // read of 0 in blocking read: connection is closed.
