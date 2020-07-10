@@ -47,6 +47,8 @@ class Colony {
     std::list<System_ptr> inhabited_systems;
     std::list<Galaxy_ptr> inhabited_galaxies;
 
+    std::list<SystemObject_ptr> get_uninhabited(System_ptr system) const;
+
   public:
 
     double number;
@@ -71,6 +73,9 @@ class Colony {
     bool have_discovered(const SystemObject_ptr object) const;
     bool have_discovered(const System_ptr system) const;
     bool have_discovered(const Galaxy_ptr galaxy) const;
+
+    bool ready_to_expand() const;
+    void explore();
 
     void update(double dt);
 
