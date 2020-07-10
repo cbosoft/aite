@@ -27,21 +27,19 @@ Colony::~Colony()
   // do nothing
 }
 
-double Colony::get_number()
-{
-  return this->number;
-}
 
 double Colony::get_inception_time()
 {
   return this->time_of_inception;
 }
 
+
 void Colony::add_message(std::string message)
 {
   std::lock_guard<std::mutex> lock(this->messages_mutex);
   this->messages.push_back(message);
 }
+
 
 std::list<std::string> Colony::get_messages()
 {
@@ -50,6 +48,7 @@ std::list<std::string> Colony::get_messages()
   this->messages.erase(this->messages.begin(), this->messages.end());
   return rv;
 }
+
 
 bool Colony::inhabit(SystemObject_ptr object)
 {
@@ -120,4 +119,9 @@ bool Colony::has_free_item(std::string name) const
 const std::string &Colony::get_name() const
 {
   return this->name;
+}
+
+double Colony::get_number() const
+{
+  return this->number;
 }
