@@ -12,8 +12,10 @@ int main(int argc, const char **argv)
   ClientArgs args = parse_args(argc, argv);
 
   try {
-    GameClient conn = GameClient(args.server_address, args.server_port, args.colony_name);
-    conn.execute(args.command, args.args);
+    GameClient game_client = GameClient(args.server_address, args.server_port, args.colony_name);
+    game_client.sync();
+    game_client.show_status();
+    
   }
   catch (const SocketError &e) {
     std::cerr
