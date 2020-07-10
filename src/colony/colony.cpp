@@ -126,3 +126,9 @@ double Colony::get_number() const
 {
   return this->number;
 }
+
+
+double Colony::get_required_volume() const
+{
+  return this->number*100;
+}

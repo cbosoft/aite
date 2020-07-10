@@ -95,6 +95,7 @@ class Colony {
     const std::string &get_name() const;
     double get_number() const;
     double get_inception_time();
+    double get_required_volume() const;
 
     bool inhabit(SystemObject_ptr object);
 
