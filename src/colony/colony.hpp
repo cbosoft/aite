@@ -8,6 +8,7 @@
 #include "../types.hpp"
 #include "../resources/resource_pool.hpp"
 #include "../resources/processed_resources.hpp"
+#include "../resources/process_rate.hpp"
 
 #include <nlohmann/json.hpp>
 
@@ -56,6 +57,7 @@ class Colony {
 
     ResourcePool resources;
     ProcessedResources processed_resources;
+    ProcessingRates resource_processing;
 
     Colony();
     Colony(std::string name, SystemObject_ptr starting_world, double time_of_inception);

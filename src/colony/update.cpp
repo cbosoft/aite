@@ -9,4 +9,6 @@ void Colony::update(double dt)
 
   // Explore?
   if (this->ready_to_expand()) this->explore();
+
+  this->resource_processing.process(this->resources, this->processed_resources, dt);
 }
