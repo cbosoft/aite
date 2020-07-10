@@ -55,3 +55,10 @@ double PooledResource::get_amount_available() const
   }
   return tot;
 }
+
+
+void PooledResource::add_dummy(double amount)
+{
+  this->obj_pool.push_back(Resource(amount));
+  this->pool.push_back(&this->obj_pool.back());
+}

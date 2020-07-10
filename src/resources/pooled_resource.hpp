@@ -8,9 +8,10 @@ class PooledResource {
   private:
 
     std::list<Resource *> pool;
-
+    std::list<Resource> obj_pool;
   public:
 
+    void add_dummy(double amount);
     void add_resource(Resource *resource);
     void use(double amount);
     void add_equally(double amount);
