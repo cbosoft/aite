@@ -5,6 +5,7 @@
 
 #include "../util/exception.hpp"
 #include "../util/socket.hpp"
+#include "../util/format.hpp"
 #include "../colony/colony.hpp"
 #include "args.hpp"
 #include "client.hpp"
@@ -140,7 +141,22 @@ void GameClient::show_messages()
 void GameClient::show_status()
 {
   std::cerr
-  << "  Name: " << this->colony->get_name() << "\n"
-  << "Number: " << this->colony->get_number() << "\n"
+  << "                 Name: " << this->colony->get_name() << "\n"
+  << "               Number: " << format_number_no_decimal(this->colony->get_number()) << "\n"
+  << "                 Food: " << format_number(this->colony->processed_resources.food) << "\n"
+  << "                Metal: " << format_number(this->colony->processed_resources.metal) << "\n"
+  << "          Heavy Metal: " << format_number(this->colony->processed_resources.heavy_metal) << "\n"
+  << "             Ceramics: " << format_number(this->colony->processed_resources.ceramics) << "\n"
+  << "         Nuclear Fuel: " << format_number(this->colony->processed_resources.nuclear_fuel) << "\n"
+  << "     Habitable Volume: " << format_number(this->colony->processed_resources.habitable_volume) << "\n"
+  << "Solar Collection Area: " << format_number(this->colony->processed_resources.solar_collection_area) << "\n"
   ;
 }
+
+
+
+
+
+
+
+
