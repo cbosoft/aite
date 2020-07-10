@@ -52,7 +52,6 @@ class Colony {
   public:
 
     double number;
-    double inhabited_volume;
     double growth_rate;
 
     ResourcePool resources;
