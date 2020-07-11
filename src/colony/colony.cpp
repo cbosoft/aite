@@ -16,7 +16,7 @@ Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_incepti
   :
    time_of_inception(time_of_inception),
    name(name),
-   number(100),
+   number(5e4),
    growth_rate(0.2),
    resource_processing(ProcessingRates(
     10,
