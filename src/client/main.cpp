@@ -15,6 +15,7 @@ int main(int argc, const char **argv)
     GameClient game_client = GameClient(args.server_address, args.server_port, args.colony_name);
     game_client.sync();
     game_client.show_status();
+    game_client.show_messages();
     
   }
   catch (const SocketError &e) {
