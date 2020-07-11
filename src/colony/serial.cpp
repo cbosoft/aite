@@ -37,6 +37,8 @@ nlohmann::json Colony::to_serial() const
   pres["solar_collection_area"] = double(this->processed_resources.solar_collection_area);
 
   data["processed_resources"] = pres;
+
+  data["messages"] = nlohmann::json(this->messages);
   // TODO: other data members
   // stats
   // planets etc
@@ -75,6 +77,10 @@ Colony_ptr Colony::from_serial(nlohmann::json data)
   rv->processed_resources.power = pres["power"];
   rv->processed_resources.solar_collection_area = pres["solar_collection_area"];
   
+  for (const auto& message : data["messages"]) {
+    rv->messages.push_back(message);
+  }
+
   // TODO: other data members
   // stats
   // planets etc
