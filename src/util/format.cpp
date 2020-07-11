@@ -8,7 +8,7 @@ std::string format_number_as_scientific(double number)
 {
   std::stringstream ss;
 
-  double p = std::round(std::log10(number));
+  double p = std::round(std::log10(number)) - 1;
   double v = number / std::pow(10.0, p);
 
   ss << std::setprecision(3) << v << "×10^" << int(p);
