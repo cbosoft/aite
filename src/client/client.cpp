@@ -130,7 +130,7 @@ void GameClient::sync()
 void GameClient::show_messages()
 {
   if (this->colony->messages.size()) {
-    std::cout << BOLD "Notifications:" RESET "\n";
+    std::cout << BOLD "Messages:" RESET "\n";
     for (auto m : this->colony->messages) {
       std::cout << "  " << m << std::endl;
     }
