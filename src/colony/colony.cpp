@@ -59,6 +59,12 @@ std::list<std::string> Colony::get_messages()
 }
 
 
+void Colony::clear_messages()
+{
+  this->messages.clear();
+}
+
+
 bool Colony::inhabit(SystemObject_ptr object)
 {
   // TODO check if object is already inhabited

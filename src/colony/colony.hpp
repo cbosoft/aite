@@ -87,6 +87,7 @@ class Colony {
     void add_project(Project_ptr project);
     void add_message(std::string message);
     std::list<std::string> get_messages();
+    void clear_messages();
 
     std::string get_status() const;
     std::string get_project_status() const;
