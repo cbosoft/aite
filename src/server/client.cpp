@@ -97,6 +97,7 @@ void GameServer::process_input(int client_fd, std::string s)
       // or perhaps a finer grained approch with mtimes for stats, messages,
       // abilities, or other members of colony
       reply["sync_data"] = this->client_to_colony[client_fd]->to_serial();
+      this->client_to_colony[client_fd]->clear_messages();
     }
     else {
       // TODO: check for other types of sync (generated objects/systems/galaxies, other players)
