@@ -104,10 +104,10 @@ LINK = -lpthread -lsqlite3
 DEFS =
 
 ## Colours
-COL_OBJ = $(shell tput setaf 3)
-COL_EXE = $(shell tput setaf 4)
-COL_RST = $(shell tput sgr0)
-COL_BLD = $(shell tput bold)
+COL_OBJ = $(shell tput setaf 3 2>/dev/null)
+COL_EXE = $(shell tput setaf 4 2>/dev/null)
+COL_RST = $(shell tput sgr0 2>/dev/null)
+COL_BLD = $(shell tput bold 2>/dev/null)
 
 .SECONDARY:
 
