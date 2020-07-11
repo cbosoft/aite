@@ -28,6 +28,11 @@ Colony::Colony(std::string name, SystemObject_ptr planet, double time_of_incepti
     9))
 {
   this->inhabit(planet);
+
+  // Colony starts off with enough volume to satisfy the pop.
+  double required_volume = this->get_required_volume();
+  double remainder = this->resources.volume.use(required_volume);
+  this->processed_resources.habitable_volume += (required_volume - remainder);
 }
 
 
