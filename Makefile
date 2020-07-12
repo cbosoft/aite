@@ -84,6 +84,7 @@ CLIENT = \
 				 obj/client/help.o \
 				 obj/client/reply.o \
 				 obj/client/welcome.o \
+				 obj/client/status.o \
 				 obj/client/client.o
 
 SERVER = \

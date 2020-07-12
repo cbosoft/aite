@@ -138,22 +138,6 @@ void GameClient::show_messages()
 }
 
 
-void GameClient::show_status()
-{
-  std::cerr
-  << "                 Name: " << this->colony->get_name() << "\n"
-  << "               Number: " << format_number_no_decimal(this->colony->get_number()) << "\n"
-  << "                 Food: " << format_number(this->colony->processed_resources.food) << "\n"
-  << "                Metal: " << format_number(this->colony->processed_resources.metal) << "\n"
-  << "          Heavy Metal: " << format_number(this->colony->processed_resources.heavy_metal) << "\n"
-  << "             Ceramics: " << format_number(this->colony->processed_resources.ceramics) << "\n"
-  << "         Nuclear Fuel: " << format_number(this->colony->processed_resources.nuclear_fuel) << "\n"
-  << "     Habitable Volume: " << format_number(this->colony->processed_resources.habitable_volume) << "\n"
-  << "Solar Collection Area: " << format_number(this->colony->processed_resources.solar_collection_area) << "\n"
-  ;
-}
-
-
 
 
 
